@@ -1,0 +1,239 @@
+.main {
+    background: #0D0D0D;
+    min-height: 100vh;
+}
+
+.cartSection {
+    padding-top: 8rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+}
+
+.subtitle {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(200, 191, 178, 0.6);
+    margin-top: 0.5rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 4rem;
+    align-items: start;
+}
+
+/* Items List */
+.itemsList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(198, 167, 94, 0.1);
+}
+
+.itemInfo {
+    flex: 1;
+}
+
+.itemName {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #C6A75E;
+}
+
+.itemCategory {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(200, 191, 178, 0.5);
+    margin-top: 0.3rem;
+}
+
+.itemActions {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    background: rgba(198, 167, 94, 0.05);
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(198, 167, 94, 0.1);
+}
+
+.quantity button {
+    background: none;
+    border: none;
+    color: #C6A75E;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.quantity button:hover {
+    transform: scale(1.2);
+}
+
+.quantity span {
+    font-size: 1rem;
+    color: #C8BFB2;
+    min-width: 20px;
+    text-align: center;
+}
+
+.itemPrice {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: #C8BFB2;
+    min-width: 80px;
+    text-align: right;
+}
+
+.removeBtn {
+    background: none;
+    border: none;
+    color: rgba(200, 191, 178, 0.3);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.removeBtn:hover {
+    color: #ff4d4d;
+}
+
+/* Summary Card */
+.summaryCard {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(198, 167, 94, 0.15);
+    padding: 2.5rem;
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
+}
+
+.summaryTitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(198, 167, 94, 0.1);
+    padding-bottom: 1rem;
+}
+
+.summaryDetail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+    font-size: 0.9rem;
+    color: rgba(200, 191, 178, 0.7);
+}
+
+.complimentary {
+    color: #C6A75E;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.summaryTotal {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(198, 167, 94, 0.3);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.checkoutBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.2rem !important;
+}
+
+.secureText {
+    font-size: 0.65rem;
+    color: rgba(200, 191, 178, 0.4);
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.continueLink {
+    display: inline-block;
+    margin-top: 2rem;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(200, 191, 178, 0.5);
+    transition: color 0.3s ease;
+}
+
+.continueLink:hover {
+    color: #C6A75E;
+}
+
+/* Empty State */
+.empty {
+    text-align: center;
+    padding: 6rem 0;
+}
+
+.emptyIcon {
+    color: rgba(198, 167, 94, 0.2);
+    margin-bottom: 2rem;
+}
+
+.empty p {
+    font-size: 1.1rem;
+    color: rgba(200, 191, 178, 0.6);
+    margin-bottom: 2.5rem;
+}
+
+@media (max-width: 1000px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .itemActions {
+        width: 100%;
+        gap: 1.5rem;
+        justify-content: space-between;
+    }
+
+    .itemPrice {
+        min-width: auto;
+    }
+}

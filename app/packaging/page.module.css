@@ -1,0 +1,261 @@
+.main {
+    background: #0D0D0D;
+    color: #FFF;
+    padding-top: 80px;
+}
+
+.hero {
+    height: 60vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+        linear-gradient(rgba(13, 13, 13, 0.7), rgba(13, 13, 13, 0.7)),
+        url("/Our Packaging for بخور الدلال/1.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.heroContent {
+    max-width: 800px;
+    padding: 2rem;
+}
+
+.heroOverline {
+    font-size: 0.7rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #C6A75E;
+    margin-bottom: 1.5rem;
+}
+
+.heroTitle {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+}
+
+.heroSubtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: #C8BFB2;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+/* Narrative Section */
+.narrative {
+    padding: 100px 0;
+    background: linear-gradient(to bottom, #0D0D0D, #1A1A1A);
+}
+
+.inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sectionTitle {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    margin-bottom: 2rem;
+}
+
+.description {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: #C8BFB2;
+    margin-bottom: 4rem;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+}
+
+.feature {
+    text-align: center;
+}
+
+.featureIcon {
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(198, 167, 94, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+}
+
+.feature h3 {
+    font-size: 1.1rem;
+    color: #C6A75E;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.feature p {
+    font-size: 0.85rem;
+    color: #888;
+    line-height: 1.6;
+}
+
+/* Gallery - Masonry */
+.gallerySection {
+    padding: 0 0 100px;
+    background: #1A1A1A;
+}
+
+.masonryGrid {
+    columns: 3 300px;
+    column-gap: 1.5rem;
+}
+
+.galleryItem {
+    break-inside: avoid;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    cursor: pointer;
+}
+
+.image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    image-rendering: -webkit-optimize-contrast;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.galleryItem:hover .image {
+    transform: scale(1.05);
+}
+
+/* Lightbox */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    cursor: zoom-out;
+    padding: 2rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.lightboxContent {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: default;
+}
+
+.fullImage {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 0 50px rgba(198, 167, 94, 0.2);
+    object-fit: contain;
+}
+
+.closeBtn {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: #C6A75E;
+    font-size: 2.5rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.galleryItem:hover .image {
+    transform: scale(1.05);
+}
+
+.imageOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(13, 13, 13, 0.8), transparent);
+    display: flex;
+    align-items: flex-end;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.galleryItem:hover .imageOverlay {
+    opacity: 1;
+}
+
+.overlayContent {
+    letter-spacing: 2px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+}
+
+/* CTA */
+.cta {
+    padding: 100px 0;
+    background: #0D0D0D;
+}
+
+.ctaBox {
+    background: linear-gradient(135deg, rgba(74, 14, 26, 0.2) 0%, rgba(13, 13, 13, 0.2) 100%);
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    padding: 5rem 2rem;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.ctaBox h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.ctaBox p {
+    color: #C8BFB2;
+    margin-bottom: 2.5rem;
+}
+
+@media (max-width: 900px) {
+    .features {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .masonryGrid {
+        columns: 1;
+    }
+
+    .hero {
+        height: 50vh;
+    }
+}

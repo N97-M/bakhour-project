@@ -3,21 +3,22 @@ import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/utils/translations';
 import styles from './page.module.css';
+import { flyToCart } from '@/utils/flyToCart';
 
 const ProductHero = dynamic(() => import('@/components/ui/ProductHero'), { ssr: false });
 
-const PRODUCTS = [
-    { id: 1, name: 'Oud Al Dalal', price: '$89', category: 'Signature', notes: 'Sandalwood · Amber · Musk', desc: 'Our flagship creation — a deep, resinous oud wrapped in warm amber.' },
-    { id: 2, name: 'Zuhoor', price: '$65', category: 'Floral', notes: 'Rose · Jasmine · Oud', desc: 'A delicate floral bouquet lifted by a base of aged African oud.' },
-    { id: 3, name: 'Aseel', price: '$120', category: 'Heritage', notes: 'African Oud · Neroli · Vetiver', desc: 'Pure African oud in its most authentic expression.' },
-    { id: 4, name: 'Amber Nights', price: '$75', category: 'Warm', notes: 'Amber · Vanilla · Incense', desc: 'A sumptuous amber accord ideal for evenings and celebrations.' },
-    { id: 5, name: 'Sultani', price: '$110', category: 'Signature', notes: 'Royal Oud · Saffron · Patchouli', desc: 'A regal blend fit for royalty — rich, complex, unforgettable.' },
-    { id: 6, name: 'Tahara', price: '$55', category: 'Fresh', notes: 'White Musk · Sandalwood · Cedar', desc: 'A clean, purifying scent for everyday serenity.' },
-];
+
 
 export default function GalleryPage() {
     const [active, setActive] = useState(null);
+    const { addToCart } = useCart();
+    const { lang } = useLanguage();
+    const t = translations[lang];
+    const products = t.products;
 
     return (
         <>
@@ -29,9 +30,11 @@ export default function GalleryPage() {
                         <ProductHero />
                     </div>
                     <div className={styles.headerContent}>
-                        <p className={styles.overline}>Full Collection</p>
+                        <p className={styles.overline}>{lang === 'en' ? 'Full Collection' : 'التشكيلة الكاملة'}</p>
                         <h1 className={styles.title}>
-                            The <span className="gold-text">Bakhour</span> Gallery
+                            {lang === 'en' ? 'The ' : ''}
+                            <span className="gold-text">{lang === 'en' ? 'Bakhour' : 'بخور'}</span>
+                            {lang === 'en' ? ' Gallery' : ' الدلال'}
                         </h1>
                         <span className="gold-divider" />
                     </div>
@@ -41,7 +44,7 @@ export default function GalleryPage() {
                 <section className={`${styles.grid} section-padding`}>
                     <div className="container">
                         <div className={styles.products}>
-                            {PRODUCTS.map((p, i) => (
+                            {products.map((p, i) => (
                                 <div
                                     key={p.id}
                                     className={`${styles.card} ${active === p.id ? styles.active : ''}`}
@@ -55,8 +58,15 @@ export default function GalleryPage() {
                                     <p className={styles.cardDesc}>{p.desc}</p>
                                     <div className={styles.cardBottom}>
                                         <span className={styles.price}>{p.price}</span>
-                                        <button className="btn-luxury" onClick={(e) => { e.stopPropagation(); }}>
-                                            <span>Add to Cart</span>
+                                        <button
+                                            className="btn-luxury"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                addToCart(p);
+                                                flyToCart(e);
+                                            }}
+                                        >
+                                            <span>{translations[lang].nav.cart}</span>
                                         </button>
                                     </div>
                                 </div>

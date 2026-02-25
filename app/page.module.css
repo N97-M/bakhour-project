@@ -35,6 +35,20 @@
     gap: 2px;
 }
 
+.viewMoreWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease 0.4s;
+}
+
+.sectionVisible .viewMoreWrapper {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Product Card */
 .productCard {
     padding: 2.5rem 2rem;
@@ -181,6 +195,16 @@
     grid-template-columns: 1fr 1fr;
     gap: 6rem;
     align-items: center;
+}
+
+.quizSimpleBox {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    background: rgba(198, 167, 94, 0.02);
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    border-radius: 20px;
 }
 
 .quizText h2 {

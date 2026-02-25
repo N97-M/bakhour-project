@@ -2,36 +2,20 @@
 import Navbar from '@/components/ui/Navbar';
 import Hero from '@/components/ui/Hero';
 import Footer from '@/components/ui/Footer';
+import Link from 'next/link';
 import { useEffect, useRef } from 'react';
+import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/utils/translations';
 import styles from './page.module.css';
+import { flyToCart } from '@/utils/flyToCart';
 
-// Product data for the featured section
-const FEATURED = [
-    {
-        id: 1,
-        name: 'Oud Al Dalal',
-        desc: 'The signature blend — deep, woody, divine.',
-        price: '$89',
-        notes: ['Sandalwood', 'Amber', 'Musk'],
-    },
-    {
-        id: 2,
-        name: 'Zuhoor',
-        desc: 'A floral symphony of rose and jasmine.',
-        price: '$65',
-        notes: ['Rose', 'Jasmine', 'Oud'],
-    },
-    {
-        id: 3,
-        name: 'Aseel',
-        desc: 'The authenticity of genuine African Oud.',
-        price: '$120',
-        notes: ['African Oud', 'Neroli', 'Vetiver'],
-    },
-];
+
 
 function FeaturedCard({ product, index }) {
     const ref = useRef(null);
+    const { addToCart } = useCart();
+    const { lang } = useLanguage();
 
     useEffect(() => {
         const el = ref.current;
@@ -53,7 +37,7 @@ function FeaturedCard({ product, index }) {
             <div className={styles.cardTop}>
                 <div className={styles.cardNumber}>0{product.id}</div>
                 <div className={styles.cardNotes}>
-                    {product.notes.map((n) => (
+                    {product.notes.split(' · ').map((n) => (
                         <span key={n}>{n}</span>
                     ))}
                 </div>
@@ -62,8 +46,11 @@ function FeaturedCard({ product, index }) {
             <p className={styles.cardDesc}>{product.desc}</p>
             <div className={styles.cardFooter}>
                 <span className={styles.price}>{product.price}</span>
-                <button className={`${styles.addBtn} btn-luxury`}>
-                    <span>Add to Cart</span>
+                <button
+                    className={`${styles.addBtn} btn-luxury`}
+                    onClick={(e) => { addToCart(product); flyToCart(e); }}
+                >
+                    <span>{translations[lang].nav.cart}</span>
                 </button>
             </div>
         </div>
@@ -72,6 +59,9 @@ function FeaturedCard({ product, index }) {
 
 export default function Home() {
     const sectionRef = useRef(null);
+    const { lang } = useLanguage();
+    const t = translations[lang];
+    const featured = t.products.slice(0, 3);
 
     useEffect(() => {
         const el = sectionRef.current;
@@ -95,16 +85,22 @@ export default function Home() {
                 <section className={`${styles.featured} section-padding`} ref={sectionRef}>
                     <div className="container">
                         <div className={styles.sectionHeader}>
-                            <p className={styles.overline}>Curated for You</p>
+                            <p className={styles.overline}>{lang === 'en' ? 'Curated for You' : 'مختارات لأجلك'}</p>
                             <h2 className={styles.sectionTitle}>
-                                The <span className="gold-text">Collection</span>
+                                {lang === 'en' ? 'The ' : ''}
+                                <span className="gold-text">{lang === 'en' ? 'Collection' : 'التشكيلة'}</span>
                             </h2>
                             <span className="gold-divider" />
                         </div>
                         <div className={styles.grid}>
-                            {FEATURED.map((p, i) => (
+                            {featured.map((p, i) => (
                                 <FeaturedCard key={p.id} product={p} index={i} />
                             ))}
+                        </div>
+                        <div className={styles.viewMoreWrapper}>
+                            <Link href="/gallery" className="btn-luxury">
+                                <span>{t.nav.viewMore}</span>
+                            </Link>
                         </div>
                     </div>
                 </section>
@@ -113,51 +109,18 @@ export default function Home() {
                 <section className={styles.heritageBanner}>
                     <div className={styles.heritageOverlay} />
                     <div className={styles.heritageContent}>
-                        <p className={styles.overline}>Est. 1987 · Khartoum, Sudan</p>
+                        <p className={styles.overline}>{lang === 'en' ? 'Heritage · Luxury · Art' : 'تراث · فخامة · فن'}</p>
                         <h2 className={styles.heritageTitle}>
-                            Three decades of <span className="gold-text">olfactory mastery</span>
+                            {t.heritage.title}{' '}
+                            <span className="gold-text">{t.heritage.goldTitle}</span>
                         </h2>
                         <span className="gold-divider" />
                         <p className={styles.heritageText}>
-                            Every piece of bakhoor is hand-crafted in small batches,<br />
-                            using ingredients sourced from across seven countries.
+                            {t.heritage.subtitle}
                         </p>
                         <a href="/story" className="btn-luxury">
-                            <span>Discover Our Heritage</span>
+                            <span>{lang === 'en' ? 'Discover Our Heritage' : 'اكتشف تراثنا'}</span>
                         </a>
-                    </div>
-                </section>
-
-                {/* ── AI Scent Quiz Teaser ── */}
-                <section className={`${styles.quizSection} section-padding`}>
-                    <div className="container">
-                        <div className={styles.quizInner}>
-                            <div className={styles.quizText}>
-                                <p className={styles.overline}>Personalised</p>
-                                <h2>Find Your <span className="gold-text">Perfect Scent</span></h2>
-                                <span className="gold-divider" style={{ margin: '1.5rem 0' }} />
-                                <p className={styles.quizDesc}>
-                                    Our AI Scent Advisor matches your preferences to the ideal bakhoor — traditional versus modern, soft versus bold.
-                                </p>
-                                <a href="#quiz" className="btn-luxury" style={{ marginTop: '2rem' }}>
-                                    <span>Take the Quiz</span>
-                                </a>
-                            </div>
-                            <div className={styles.quizCard}>
-                                <div className={styles.quizStep}>
-                                    <span>01</span>
-                                    <p>Tell us your scent preference</p>
-                                </div>
-                                <div className={styles.quizStep}>
-                                    <span>02</span>
-                                    <p>Set the occasion &amp; intensity</p>
-                                </div>
-                                <div className={styles.quizStep}>
-                                    <span>03</span>
-                                    <p>Receive your curated match</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </main>

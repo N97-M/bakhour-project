@@ -1,17 +1,14 @@
 'use client';
 import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/utils/translations';
 import styles from './page.module.css';
 
-const TIMELINE = [
-    { year: '1987', title: 'The Beginning', text: 'Founded in the heart of Khartoum, Al Dalal started as a small family atelier crafting bakhoor for weddings and celebrations.' },
-    { year: '1995', title: 'The Craft Refined', text: 'A decade of experimentation culminated in our signature oud sourcing from East African forests — a process we still honor today.' },
-    { year: '2006', title: 'Heritage Preserved', text: 'We partnered with master wood carvers to create our iconic dark vessels — functional art that has become our visual identity.' },
-    { year: '2015', title: 'Global Recognition', text: 'Al Dalal bakhour crossed borders, reaching fragrance connoisseurs across the Gulf, Europe, and beyond.' },
-    { year: '2024', title: 'Digital Luxury', text: 'Bringing our boutique experience to the world — a seamless digital encounter that honors our timeless heritage.' },
-];
-
 export default function StoryPage() {
+    const { lang } = useLanguage();
+    const t = translations[lang].story;
+
     return (
         <>
             <Navbar />
@@ -20,13 +17,13 @@ export default function StoryPage() {
                 <section className={styles.hero}>
                     <div className={styles.heroOverlay} />
                     <div className={styles.heroContent}>
-                        <p className={styles.overline}>Est. 1987</p>
+                        <p className={styles.overline}>{lang === 'en' ? 'Heritage · Luxury' : 'تراث · فخامة'}</p>
                         <h1 className={styles.title}>
-                            The Journey of <span className="gold-text">Fragrance</span>
+                            {t.heroTitle} <span className="gold-text">{t.heroGoldTitle}</span>
                         </h1>
                         <span className="gold-divider" />
                         <p className={styles.subtitle}>
-                            A legacy written in smoke, wood, and memory.
+                            {t.heroSubtitle}
                         </p>
                     </div>
                 </section>
@@ -36,16 +33,16 @@ export default function StoryPage() {
                     <div className="container">
                         <div className={styles.philosophyGrid}>
                             <div className={styles.philosophyText}>
-                                <p className={styles.overline}>Our Philosophy</p>
+                                <p className={styles.overline}>{lang === 'en' ? 'Our Philosophy' : 'فلسفتنا'}</p>
                                 <h2 className={styles.sectionTitle}>
-                                    Scent is <span className="gold-text">Memory</span>
+                                    {t.philosophyTitle} <span className="gold-text">{t.philosophyGold}</span>
                                 </h2>
                                 <span className="gold-divider" style={{ margin: '1.5rem 0' }} />
-                                <p>Every fragrance we create carries a story — of the land where the wood was harvested, the hands that blended it, and the moment it was shared. We believe bakhour is not merely an aroma; it is an invitation to feel.</p>
-                                <p style={{ marginTop: '1.2rem' }}>At Al Dalal, we refuse to compromise. Each ingredient is selected for its authenticity, purity, and contribution to a nuanced, layered experience that unfolds slowly, just as it should.</p>
+                                <p>{t.philosophyText1}</p>
+                                <p style={{ marginTop: '1.2rem' }}>{t.philosophyText2}</p>
                             </div>
                             <div className={styles.philosophyValues}>
-                                {['Authenticity', 'Craftsmanship', 'Heritage', 'Purity'].map((v) => (
+                                {t.values.map((v) => (
                                     <div key={v} className={styles.valueTag}>
                                         <div className={styles.valueDot} />
                                         <span>{v}</span>
@@ -56,19 +53,19 @@ export default function StoryPage() {
                     </div>
                 </section>
 
-                {/* Timeline */}
+                {/* Timeline - Styled more as Story Milestones */}
                 <section className={`${styles.timeline} section-padding`}>
                     <div className="container">
                         <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                            <p className={styles.overline}>Our Journey</p>
+                            <p className={styles.overline}>{lang === 'en' ? 'Our Journey' : 'رحلتنا'}</p>
                             <h2 className={styles.sectionTitle}>
-                                Four Decades of <span className="gold-text">Excellence</span>
+                                {t.journeyTitle} <span className="gold-text">{t.journeyGold}</span>
                             </h2>
                         </div>
                         <div className={styles.timelineItems}>
-                            {TIMELINE.map((item, i) => (
-                                <div key={item.year} className={`${styles.timelineItem} ${i % 2 === 0 ? styles.left : styles.right}`}>
-                                    <div className={styles.timelineYear}>{item.year}</div>
+                            {t.timeline.map((item, i) => (
+                                <div key={i} className={`${styles.timelineItem} ${i % 2 === 0 ? styles.left : styles.right}`}>
+                                    <div className={styles.timelineYear}>0{i + 1}</div>
                                     <div className={styles.timelineDot} />
                                     <div className={styles.timelineCard}>
                                         <h3>{item.title}</h3>
@@ -85,3 +82,4 @@ export default function StoryPage() {
         </>
     );
 }
+

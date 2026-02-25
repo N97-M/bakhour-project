@@ -1,11 +1,14 @@
-'use client';
-import ProductHero from '@/components/ui/ProductHero';
-import Link from 'next/link';
 import { useEffect, useRef } from 'react';
+import Link from 'next/link';
+import ProductHero from '@/components/ui/ProductHero';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/utils/translations';
 import styles from './Hero.module.css';
 
 export default function Hero() {
     const textRef = useRef(null);
+    const { lang } = useLanguage();
+    const t = translations[lang].hero;
 
     useEffect(() => {
         const el = textRef.current;
@@ -17,23 +20,22 @@ export default function Hero() {
         <section className={styles.hero}>
             {/* ── Left: Text Content ── */}
             <div className={styles.textSide} ref={textRef}>
-                <p className={styles.overline}>Sudan · Heritage · Luxury</p>
+                <p className={styles.overline}>{lang === 'en' ? 'Sudan · Heritage · Luxury' : 'السودان · تراث · فخامة'}</p>
                 <h1 className={styles.title}>
-                    <span className="gold-text">Al Dalal</span>
+                    <span className="gold-text">{lang === 'en' ? 'Al Dalal' : 'بخور'}</span>
                     <br />
-                    Bakhour
+                    {lang === 'en' ? 'Bakhour' : 'الدلال'}
                 </h1>
                 <span className="gold-divider" />
                 <p className={styles.subtitle}>
-                    An intimate encounter with centuries-old<br />
-                    Sudanese tradition, elevated to its purest form.
+                    {t.subtitle}
                 </p>
                 <div className={styles.ctas}>
                     <Link href="/gallery" className="btn-luxury">
-                        <span>Explore the Collection</span>
+                        <span>{t.cta}</span>
                     </Link>
                     <Link href="/story" className={styles.secondaryCta}>
-                        Our Story →
+                        {lang === 'en' ? 'Our Story →' : '← قصتنا'}
                     </Link>
                 </div>
             </div>
