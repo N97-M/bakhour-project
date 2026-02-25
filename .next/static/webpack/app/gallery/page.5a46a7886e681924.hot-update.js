@@ -1,0 +1,21 @@
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+self["webpackHotUpdate_N_E"]("app/gallery/page",{
+
+/***/ "(app-pages-browser)/./app/gallery/page.module.css":
+/*!*************************************!*\
+  !*** ./app/gallery/page.module.css ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval(__webpack_require__.ts("// extracted by mini-css-extract-plugin\nmodule.exports = {\"main\":\"page_main__2hRkE\",\"header\":\"page_header__p8Oq8\",\"sceneWrapper\":\"page_sceneWrapper__l3kX7\",\"headerContent\":\"page_headerContent__DsTPt\",\"overline\":\"page_overline__DUHnf\",\"title\":\"page_title__Sks6O\",\"grid\":\"page_grid__9Dh58\",\"products\":\"page_products__OFENA\",\"card\":\"page_card__RjgJ8\",\"fadeUp\":\"page_fadeUp__hdDL_\",\"active\":\"page_active__Xo4Nc\",\"cardGlow\":\"page_cardGlow__7FMjv\",\"cardCategory\":\"page_cardCategory__N60_G\",\"cardName\":\"page_cardName__nbvnO\",\"cardNotes\":\"page_cardNotes__kKGI8\",\"cardDesc\":\"page_cardDesc__jGZ1a\",\"cardBottom\":\"page_cardBottom__5T8wA\",\"price\":\"page_price__HyfKP\"};\n    if(true) {\n      // 1771993980182\n      var cssReload = __webpack_require__(/*! ./node_modules/next/dist/compiled/mini-css-extract-plugin/hmr/hotModuleReplacement.js */ \"(app-pages-browser)/./node_modules/next/dist/compiled/mini-css-extract-plugin/hmr/hotModuleReplacement.js\")(module.id, {\"publicPath\":\"/_next/\",\"esModule\":false,\"locals\":true});\n      module.hot.dispose(cssReload);\n      \n    }\n  \nmodule.exports.__checksum = \"a7efcf93aea5\"\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwcC1wYWdlcy1icm93c2VyKS8uL2FwcC9nYWxsZXJ5L3BhZ2UubW9kdWxlLmNzcyIsIm1hcHBpbmdzIjoiQUFBQTtBQUNBLGtCQUFrQjtBQUNsQixPQUFPLElBQVU7QUFDakI7QUFDQSxzQkFBc0IsbUJBQU8sQ0FBQyx3TUFBcUksY0FBYyxzREFBc0Q7QUFDdk8sTUFBTSxVQUFVO0FBQ2hCO0FBQ0E7QUFDQTtBQUNBLHlCQUF5QiIsInNvdXJjZXMiOlsiQzpcXFVzZXJzXFxtb256ZVxcT25lRHJpdmVcXERlc2t0b3BcXNio2K7ZiNixINin2YTYr9mE2KfZhCBncHRcXGFwcFxcZ2FsbGVyeVxccGFnZS5tb2R1bGUuY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxubW9kdWxlLmV4cG9ydHMgPSB7XCJtYWluXCI6XCJwYWdlX21haW5fXzJoUmtFXCIsXCJoZWFkZXJcIjpcInBhZ2VfaGVhZGVyX19wOE9xOFwiLFwic2NlbmVXcmFwcGVyXCI6XCJwYWdlX3NjZW5lV3JhcHBlcl9fbDNrWDdcIixcImhlYWRlckNvbnRlbnRcIjpcInBhZ2VfaGVhZGVyQ29udGVudF9fRHNUUHRcIixcIm92ZXJsaW5lXCI6XCJwYWdlX292ZXJsaW5lX19EVUhuZlwiLFwidGl0bGVcIjpcInBhZ2VfdGl0bGVfX1NrczZPXCIsXCJncmlkXCI6XCJwYWdlX2dyaWRfXzlEaDU4XCIsXCJwcm9kdWN0c1wiOlwicGFnZV9wcm9kdWN0c19fT0ZFTkFcIixcImNhcmRcIjpcInBhZ2VfY2FyZF9fUmpnSjhcIixcImZhZGVVcFwiOlwicGFnZV9mYWRlVXBfX2hkRExfXCIsXCJhY3RpdmVcIjpcInBhZ2VfYWN0aXZlX19YbzROY1wiLFwiY2FyZEdsb3dcIjpcInBhZ2VfY2FyZEdsb3dfXzdGTWp2XCIsXCJjYXJkQ2F0ZWdvcnlcIjpcInBhZ2VfY2FyZENhdGVnb3J5X19ONjBfR1wiLFwiY2FyZE5hbWVcIjpcInBhZ2VfY2FyZE5hbWVfX25idm5PXCIsXCJjYXJkTm90ZXNcIjpcInBhZ2VfY2FyZE5vdGVzX19rS0dJOFwiLFwiY2FyZERlc2NcIjpcInBhZ2VfY2FyZERlc2NfX2pHWjFhXCIsXCJjYXJkQm90dG9tXCI6XCJwYWdlX2NhcmRCb3R0b21fXzVUOHdBXCIsXCJwcmljZVwiOlwicGFnZV9wcmljZV9fSHlmS1BcIn07XG4gICAgaWYobW9kdWxlLmhvdCkge1xuICAgICAgLy8gMTc3MTk5Mzk4MDE4MlxuICAgICAgdmFyIGNzc1JlbG9hZCA9IHJlcXVpcmUoXCJDOi9Vc2Vycy9tb256ZS9PbmVEcml2ZS9EZXNrdG9wL9io2K7ZiNixINin2YTYr9mE2KfZhCBncHQvbm9kZV9tb2R1bGVzL25leHQvZGlzdC9jb21waWxlZC9taW5pLWNzcy1leHRyYWN0LXBsdWdpbi9obXIvaG90TW9kdWxlUmVwbGFjZW1lbnQuanNcIikobW9kdWxlLmlkLCB7XCJwdWJsaWNQYXRoXCI6XCIvX25leHQvXCIsXCJlc01vZHVsZVwiOmZhbHNlLFwibG9jYWxzXCI6dHJ1ZX0pO1xuICAgICAgbW9kdWxlLmhvdC5kaXNwb3NlKGNzc1JlbG9hZCk7XG4gICAgICBcbiAgICB9XG4gIFxubW9kdWxlLmV4cG9ydHMuX19jaGVja3N1bSA9IFwiYTdlZmNmOTNhZWE1XCJcbiJdLCJuYW1lcyI6W10sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(app-pages-browser)/./app/gallery/page.module.css\n"));
+
+/***/ })
+
+});

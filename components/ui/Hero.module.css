@@ -1,0 +1,192 @@
+.hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    min-height: 700px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 70% 50%, rgba(74, 14, 26, 0.25) 0%, transparent 60%),
+        #0D0D0D;
+}
+
+/* ── Left Side — Text ── */
+.textSide {
+    position: relative;
+    z-index: 3;
+    padding: 0 4rem 0 5rem;
+    opacity: 0;
+    transform: translateX(-24px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.textSide.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.overline {
+    font-size: 0.62rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #C6A75E;
+    margin-bottom: 1.2rem;
+}
+
+.title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 6rem);
+    font-weight: 300;
+    line-height: 1.05;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 0.88rem;
+    line-height: 1.9;
+    color: #C8BFB2;
+    font-weight: 300;
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+}
+
+.ctas {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.secondaryCta {
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    color: #C6A75E;
+    text-transform: uppercase;
+    transition: letter-spacing 0.3s ease;
+}
+
+.secondaryCta:hover {
+    letter-spacing: 4px;
+}
+
+/* ── Right Side — 3D Scene ── */
+.sceneSide {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    z-index: 2;
+}
+
+.sceneLoader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sceneLoader::after {
+    content: '';
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px solid rgba(198, 167, 94, 0.3);
+    animation: spin 2s ease-in-out infinite;
+}
+
+@keyframes spin {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* ── Overlays ── */
+.overlayBottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(to top, #0D0D0D 0%, transparent 100%);
+    z-index: 4;
+    pointer-events: none;
+}
+
+/* ── Scroll Indicator ── */
+.scrollIndicator {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 3rem;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.scrollIndicator span {
+    font-size: 0.6rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(198, 167, 94, 0.5);
+    writing-mode: vertical-rl;
+}
+
+.scrollLine {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, #C6A75E, transparent);
+    animation: scrollAnim 2.2s ease-in-out infinite;
+}
+
+@keyframes scrollAnim {
+    0% {
+        transform: scaleY(0);
+        transform-origin: top;
+    }
+
+    49% {
+        transform: scaleY(1);
+        transform-origin: top;
+    }
+
+    50% {
+        transform: scaleY(1);
+        transform-origin: bottom;
+    }
+
+    100% {
+        transform: scaleY(0);
+        transform-origin: bottom;
+    }
+}
+
+/* ── Mobile ── */
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 55vh;
+    }
+
+    .textSide {
+        padding: 9rem 1.8rem 2rem;
+    }
+
+    .sceneSide {
+        height: 55vh;
+        min-height: unset;
+    }
+
+    .scrollIndicator {
+        display: none;
+    }
+}

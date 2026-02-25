@@ -1,0 +1,146 @@
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.8rem 3rem;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav.scrolled {
+    padding: 1.2rem 3rem;
+    background: rgba(13, 13, 13, 0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(198, 167, 94, 0.1);
+}
+
+.logo a {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.logo .gold-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 4px;
+}
+
+.logoSub {
+    font-size: 0.6rem;
+    letter-spacing: 6px;
+    color: #C8BFB2;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+}
+
+.links li a {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #C8BFB2;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.links li a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold, #C6A75E);
+    transition: width 0.4s ease;
+}
+
+.links li a:hover {
+    color: #C6A75E;
+}
+
+.links li a:hover::after {
+    width: 100%;
+}
+
+.ctaNav {
+    background: transparent !important;
+    border: 1px solid rgba(198, 167, 94, 0.6) !important;
+    padding: 0.6rem 1.4rem !important;
+    color: #C6A75E !important;
+    border-radius: 2px;
+    transition: all 0.3s ease !important;
+}
+
+.ctaNav:hover {
+    background: rgba(198, 167, 94, 0.1) !important;
+    border-color: #C6A75E !important;
+}
+
+.burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.burger span {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: #C8BFB2;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .nav {
+        padding: 1.4rem 1.5rem;
+    }
+
+    .nav.scrolled {
+        padding: 1rem 1.5rem;
+    }
+
+    .burger {
+        display: flex;
+    }
+
+    .links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70vw;
+        max-width: 320px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 4rem 2.5rem;
+        background: rgba(13, 13, 13, 0.97);
+        border-left: 1px solid rgba(198, 167, 94, 0.15);
+        transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        z-index: 99;
+    }
+
+    .links.open {
+        right: 0;
+    }
+
+    .links li a {
+        font-size: 0.85rem;
+    }
+}

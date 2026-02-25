@@ -1,0 +1,487 @@
+/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[3]!./components/ui/Navbar.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************/
+.Navbar_nav__ePUuC {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.8rem 3rem;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.Navbar_nav__ePUuC.Navbar_scrolled__kzw_X {
+    padding: 1.2rem 3rem;
+    background: rgba(13, 13, 13, 0.92);
+    -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(198, 167, 94, 0.1);
+}
+
+.Navbar_logo___bnq9 a {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.Navbar_logo___bnq9 .Navbar_gold-text__EI46j {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 4px;
+}
+
+.Navbar_logoSub__hX9wg {
+    font-size: 0.6rem;
+    letter-spacing: 6px;
+    color: #C8BFB2;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+.Navbar_links__e0BJ9 {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+}
+
+.Navbar_links__e0BJ9 li a {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #C8BFB2;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.Navbar_links__e0BJ9 li a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold, #C6A75E);
+    transition: width 0.4s ease;
+}
+
+.Navbar_links__e0BJ9 li a:hover {
+    color: #C6A75E;
+}
+
+.Navbar_links__e0BJ9 li a:hover::after {
+    width: 100%;
+}
+
+.Navbar_ctaNav__pYLa4 {
+    background: transparent !important;
+    border: 1px solid rgba(198, 167, 94, 0.6) !important;
+    padding: 0.6rem 1.4rem !important;
+    color: #C6A75E !important;
+    border-radius: 2px;
+    transition: all 0.3s ease !important;
+}
+
+.Navbar_ctaNav__pYLa4:hover {
+    background: rgba(198, 167, 94, 0.1) !important;
+    border-color: #C6A75E !important;
+}
+
+.Navbar_burger__vlJs_ {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.Navbar_burger__vlJs_ span {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: #C8BFB2;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .Navbar_nav__ePUuC {
+        padding: 1.4rem 1.5rem;
+    }
+
+    .Navbar_nav__ePUuC.Navbar_scrolled__kzw_X {
+        padding: 1rem 1.5rem;
+    }
+
+    .Navbar_burger__vlJs_ {
+        display: flex;
+    }
+
+    .Navbar_links__e0BJ9 {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70vw;
+        max-width: 320px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 4rem 2.5rem;
+        background: rgba(13, 13, 13, 0.97);
+        border-left: 1px solid rgba(198, 167, 94, 0.15);
+        transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        z-index: 99;
+    }
+
+    .Navbar_links__e0BJ9.Navbar_open__3kufw {
+        right: 0;
+    }
+
+    .Navbar_links__e0BJ9 li a {
+        font-size: 0.85rem;
+    }
+}
+/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[3]!./components/ui/Footer.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************/
+.Footer_footer__Hn8qK {
+    border-top: 1px solid rgba(198, 167, 94, 0.1);
+    padding: 5rem 3rem 2rem;
+    background: #0D0D0D;
+}
+
+.Footer_inner__koMAF {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+.Footer_brand__qT5NC {
+    max-width: 280px;
+}
+
+.Footer_tagline__fBzje {
+    font-size: 0.75rem;
+    color: rgba(200, 191, 178, 0.6);
+    margin-top: 1rem;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.Footer_links__ClHDq {
+    display: flex;
+    gap: 5rem;
+}
+
+.Footer_col__cB_Yk {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.Footer_col__cB_Yk h4 {
+    font-size: 0.6rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #C6A75E;
+    margin-bottom: 0.4rem;
+}
+
+.Footer_col__cB_Yk a {
+    font-size: 0.78rem;
+    color: #C8BFB2;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.Footer_col__cB_Yk a:hover {
+    color: #C6A75E;
+}
+
+.Footer_bottom__LHDT3 {
+    text-align: center;
+    padding-top: 2rem;
+}
+
+.Footer_bottom__LHDT3 p {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: rgba(200, 191, 178, 0.4);
+    text-transform: uppercase;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .Footer_footer__Hn8qK {
+        padding: 4rem 1.5rem 1.5rem;
+    }
+
+    .Footer_inner__koMAF {
+        flex-direction: column;
+    }
+
+    .Footer_links__ClHDq {
+        gap: 3rem;
+    }
+}
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[5].use[3]!./app/story/page.module.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+.page_hero__mB11m {
+    position: relative;
+    height: 70vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(160deg, #1A0A10 0%, #2D0810 40%, #0D0D0D 100%);
+    overflow: hidden;
+    padding-top: 80px;
+}
+
+.page_heroOverlay__9NKcf {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 80%, rgba(198, 167, 94, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.page_heroContent__ERTD_ {
+    position: relative;
+    z-index: 2;
+}
+
+.page_overline__eG5vu {
+    font-size: 0.62rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #C6A75E;
+    margin-bottom: 1rem;
+}
+
+.page_title__BaBxR {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 300;
+}
+
+.page_subtitle__TEGR4 {
+    color: #C8BFB2;
+    font-size: 0.9rem;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    margin-top: 1rem;
+}
+
+.page_sectionTitle__pevY7 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+}
+
+/* Philosophy */
+.page_philosophy__h33EI {
+    background: #111;
+}
+
+.page_philosophyGrid__CLhu7 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 6rem;
+    gap: 6rem;
+    align-items: center;
+}
+
+.page_philosophyText__Q2c4g p {
+    font-size: 0.85rem;
+    color: #C8BFB2;
+    line-height: 1.9;
+}
+
+.page_philosophyValues__Lstgr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1.5rem;
+    gap: 1.5rem;
+}
+
+.page_valueTag__d6m2J {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(198, 167, 94, 0.12);
+    background: rgba(74, 14, 26, 0.1);
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.page_valueTag__d6m2J:hover {
+    border-color: rgba(198, 167, 94, 0.35);
+    background: rgba(74, 14, 26, 0.2);
+}
+
+.page_valueDot__2eVbD {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #C6A75E;
+    flex-shrink: 0;
+}
+
+.page_valueTag__d6m2J span {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #C8BFB2;
+}
+
+/* Timeline */
+.page_timeline__7MF4P {
+    background: #0D0D0D;
+}
+
+.page_timelineItems__jlrg_ {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.page_timelineLine__X3Uun {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(198, 167, 94, 0.3), transparent);
+    transform: translateX(-50%);
+}
+
+.page_timelineItem__vM_bA {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    align-items: center;
+    grid-gap: 2rem;
+    gap: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.page_timelineItem__vM_bA.page_left__hm7hq .page_timelineYear__QIpsU {
+    grid-column: 1;
+    text-align: right;
+}
+
+.page_timelineItem__vM_bA.page_left__hm7hq .page_timelineDot__6Cupl {
+    grid-column: 2;
+}
+
+.page_timelineItem__vM_bA.page_left__hm7hq .page_timelineCard__Z7LKw {
+    grid-column: 3;
+}
+
+.page_timelineItem__vM_bA.page_right__nnl_5 .page_timelineYear__QIpsU {
+    order: 3;
+    text-align: left;
+}
+
+.page_timelineItem__vM_bA.page_right__nnl_5 .page_timelineDot__6Cupl {
+    order: 2;
+}
+
+.page_timelineItem__vM_bA.page_right__nnl_5 .page_timelineCard__Z7LKw {
+    order: 1;
+    text-align: right;
+}
+
+.page_timelineYear__QIpsU {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    color: rgba(198, 167, 94, 0.3);
+    font-weight: 300;
+}
+
+.page_timelineDot__6Cupl {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #C6A75E;
+    border: 2px solid #0D0D0D;
+    box-shadow: 0 0 0 4px rgba(198, 167, 94, 0.2);
+    justify-self: center;
+}
+
+.page_timelineCard__Z7LKw {
+    padding: 1.5rem 2rem;
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    background: rgba(26, 26, 26, 0.5);
+    transition: border-color 0.3s ease;
+}
+
+.page_timelineCard__Z7LKw:hover {
+    border-color: rgba(198, 167, 94, 0.28);
+}
+
+.page_timelineCard__Z7LKw h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #C6A75E;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.page_timelineCard__Z7LKw p {
+    font-size: 0.78rem;
+    color: #C8BFB2;
+    line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+    .page_philosophyGrid__CLhu7 {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .page_philosophyValues__Lstgr {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .page_timelineItems__jlrg_ {
+        gap: 2.5rem;
+    }
+
+    .page_timelineLine__X3Uun {
+        left: 20px;
+    }
+
+    .page_timelineItem__vM_bA {
+        grid-template-columns: 40px 1fr;
+    }
+
+    .page_timelineItem__vM_bA.page_left__hm7hq .page_timelineYear__QIpsU,
+    .page_timelineItem__vM_bA.page_right__nnl_5 .page_timelineYear__QIpsU {
+        display: none;
+    }
+
+    .page_timelineItem__vM_bA.page_left__hm7hq .page_timelineDot__6Cupl,
+    .page_timelineItem__vM_bA.page_right__nnl_5 {
+        order: unset;
+    }
+
+    .page_timelineItem__vM_bA.page_right__nnl_5 .page_timelineCard__Z7LKw {
+        text-align: left;
+        order: unset;
+    }
+}

@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" width="500" height="650">
+  <defs>
+    <!-- Body gradient -->
+    <radialGradient id="bodyGrad" cx="35%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#5C3018"/>
+      <stop offset="60%" stop-color="#2A1408"/>
+      <stop offset="100%" stop-color="#1A0A04"/>
+    </radialGradient>
+    <!-- Lid gradient (bamboo) -->
+    <linearGradient id="lidGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8B6520"/>
+      <stop offset="30%" stop-color="#D4A840"/>
+      <stop offset="55%" stop-color="#F0C860"/>
+      <stop offset="75%" stop-color="#C89030"/>
+      <stop offset="100%" stop-color="#8B6520"/>
+    </linearGradient>
+    <!-- Lid ridge gradient -->
+    <linearGradient id="ridgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7A5515"/>
+      <stop offset="50%" stop-color="#E8B840"/>
+      <stop offset="100%" stop-color="#7A5515"/>
+    </linearGradient>
+    <!-- Glow at lid top -->
+    <radialGradient id="glowGrad" cx="50%" cy="100%" r="50%">
+      <stop offset="0%" stop-color="#FFB830" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#FF8800" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#FF6600" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Body sheen -->
+    <radialGradient id="sheenGrad" cx="25%" cy="30%" r="40%">
+      <stop offset="0%" stop-color="#7A4028" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#1A0A04" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Drop shadow -->
+    <radialGradient id="shadowGrad" cx="50%" cy="0%" r="50%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur4" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <filter id="blur8" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+  </defs>
+
+  <!-- Drop shadow on ground -->
+  <ellipse cx="250" cy="600" rx="130" ry="22" fill="url(#shadowGrad)" filter="url(#blur4)"/>
+
+  <!-- ── JAR BODY ── -->
+  <!-- Outer shape: wide squat cylinder -->
+  <rect x="95" y="340" width="310" height="250" rx="20" ry="20" fill="url(#bodyGrad)"/>
+  <!-- Top of body (ellipse) -->
+  <ellipse cx="250" cy="340" rx="155" ry="28" fill="#3A1A08"/>
+  <!-- Bottom of body -->
+  <ellipse cx="250" cy="590" rx="155" ry="22" fill="#150702"/>
+  <!-- Body sheen highlight -->
+  <ellipse cx="175" cy="410" rx="55" ry="80" fill="url(#sheenGrad)"/>
+  <!-- Subtle rim highlight -->
+  <ellipse cx="250" cy="340" rx="155" ry="28" fill="none" stroke="#6B3010" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- ── LOGO area on body ── -->
+  <g transform="translate(250, 470)" opacity="0.9">
+    <!-- Arch frame -->
+    <rect x="-38" y="-52" width="76" height="95" rx="4" fill="none" stroke="#E0D0B0" stroke-width="1.2"/>
+    <path d="M -38,-52 Q -38,-80 0,-80 Q 38,-80 38,-52" fill="none" stroke="#E0D0B0" stroke-width="1.2"/>
+    <!-- Simplified flame/oud icon -->
+    <ellipse cx="0" cy="-22" rx="6" ry="10" fill="#E0D0B0" opacity="0.85"/>
+    <path d="M -6,-28 Q 0,-40 6,-28" fill="#E0D0B0" opacity="0.7"/>
+    <!-- ياء/دال strokes -->
+    <path d="M -22,10 Q -15,18 -8,12 Q -2,8 4,14 Q 10,20 18,12 Q 24,6 28,10" fill="none" stroke="#E0D0B0" stroke-width="1.8" stroke-linecap="round"/>
+    <!-- Arabic text placeholder lines -->
+    <line x1="-30" y1="28" x2="30" y2="28" stroke="#D4C090" stroke-width="1" opacity="0.6"/>
+    <text x="0" y="42" text-anchor="middle" font-family="serif" font-size="9" fill="#D4C090" opacity="0.8" letter-spacing="1">AlDalal Bakhour</text>
+  </g>
+
+  <!-- ── LID ── -->
+  <!-- Lid body -->
+  <rect x="88" y="268" width="324" height="80" rx="6" ry="6" fill="url(#lidGrad)"/>
+  <!-- Lid top face -->
+  <ellipse cx="250" cy="268" rx="162" ry="24" fill="#C89030"/>
+  <!-- Lid bottom edge -->
+  <ellipse cx="250" cy="348" rx="162" ry="18" fill="#8B6520"/>
+  <!-- Ribbed texture on lid (vertical lines) -->
+  <g opacity="0.6">
+    <!-- generate ~24 ridge lines -->
+    <line x1="102" y1="268" x2="102" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+    <line x1="116" y1="268" x2="116" y2="348" stroke="#F0C840" stroke-width="1.5"/>
+    <line x1="129" y1="268" x2="129" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+    <line x1="142" y1="268" x2="142" y2="348" stroke="#F0C840" stroke-width="1.5"/>
+    <line x1="155" y1="268" x2="155" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+    <line x1="168" y1="268" x2="168" y2="348" stroke="#F0C840" stroke-width="1.5"/>
+    <line x1="181" y1="268" x2="181" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+    <line x1="194" y1="268" x2="194" y2="348" stroke="#F0C840" stroke-width="1.5"/>
+    <line x1="207" y1="268" x2="207" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+    <line x1="220" y1="268" x2="220" y2="348" stroke="#F0C840" stroke-width="1.5"/>
+    <line x1="233" y1="268" x2="233" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+    <line x1="246" y1="268" x2="246" y2="348" stroke="#F0C840" stroke-width="1.5"/>
+    <line x1="259" y1="268" x2="259" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+    <line x1="272" y1="268" x2="272" y2="348" stroke="#F0C840" stroke-width="1.5"/>
+    <line x1="285" y1="268" x2="285" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+    <line x1="298" y1="268" x2="298" y2="348" stroke="#F0C840" stroke-width="1.5"/>
+    <line x1="311" y1="268" x2="311" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+    <line x1="324" y1="268" x2="324" y2="348" stroke="#F0C840" stroke-width="1.5"/>
+    <line x1="337" y1="268" x2="337" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+    <line x1="350" y1="268" x2="350" y2="348" stroke="#F0C840" stroke-width="1.5"/>
+    <line x1="363" y1="268" x2="363" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+    <line x1="376" y1="268" x2="376" y2="348" stroke="#F0C840" stroke-width="1.5"/>
+    <line x1="389" y1="268" x2="389" y2="348" stroke="#7A5515" stroke-width="2.5"/>
+  </g>
+  <!-- Lid glow emanating from top -->
+  <ellipse cx="250" cy="268" rx="120" ry="45" fill="url(#glowGrad)" opacity="0.85"/>
+  <!-- Lid highlight rim -->
+  <ellipse cx="250" cy="268" rx="162" ry="24" fill="none" stroke="#FFD060" stroke-width="1.5" opacity="0.7"/>
+
+  <!-- ── SMOKE ── animated paths -->
+  <g opacity="0.55">
+    <!-- Smoke thread 1 -->
+    <path d="M 235,265 C 230,220 250,190 240,155 C 228,120 248,90 238,55 C 228,25 245,5 240,0"
+          fill="none" stroke="#CCBBAA" stroke-width="20" stroke-linecap="round" opacity="0.3" filter="url(#blur4)"/>
+    <path d="M 235,265 C 230,220 252,188 242,152 C 230,115 250,88 240,52 C 228,22 247,4 240,0"
+          fill="none" stroke="#E8DDD0" stroke-width="10" stroke-linecap="round" opacity="0.4" filter="url(#blur2)"/>
+    <!-- Smoke thread 2 -->
+    <path d="M 265,264 C 275,215 255,182 272,148 C 290,112 268,80 282,48 C 294,20 272,5 278,0"
+          fill="none" stroke="#CCBBAA" stroke-width="16" stroke-linecap="round" opacity="0.28" filter="url(#blur4)"/>
+    <path d="M 255,264 C 270,215 250,182 265,150 C 280,115 260,82 272,50 C 282,22 262,6 268,0"
+          fill="none" stroke="#DACCBC" stroke-width="8" stroke-linecap="round" opacity="0.35" filter="url(#blur2)"/>
+    <!-- Smoke thread 3 curling -->
+    <path d="M 248,263 C 240,230 260,205 250,175 C 238,142 255,115 245,85 C 235,55 250,32 244,10"
+          fill="none" stroke="#F0E8DC" stroke-width="6" stroke-linecap="round" opacity="0.5" filter="url(#blur2)"/>
+  </g>
+
+  <!-- ── OUD WOOD PIECES at base ── -->
+  <g opacity="0.8">
+    <!-- Left piece -->
+    <path d="M 60,580 Q 80,560 115,570 Q 140,578 130,595 Q 110,608 80,598 Z" fill="#4A2808"/>
+    <path d="M 62,582 Q 82,562 117,572 Q 130,576 128,590" fill="none" stroke="#6B3A10" stroke-width="1.5" opacity="0.5"/>
+    <!-- Right piece -->
+    <path d="M 370,565 Q 400,555 435,568 Q 450,578 440,595 Q 415,605 385,595 Q 365,585 370,565 Z" fill="#3A1E06"/>
+    <path d="M 375,570 Q 405,560 437,572 Q 442,578 438,590" fill="none" stroke="#5A2E08" stroke-width="1.5" opacity="0.4"/>
+    <!-- Center piece small -->
+    <path d="M 175,590 Q 195,582 230,585 Q 245,590 238,600 Q 218,608 195,602 Z" fill="#5A3010" opacity="0.7"/>
+  </g>
+</svg>
