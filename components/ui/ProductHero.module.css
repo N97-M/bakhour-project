@@ -62,24 +62,53 @@
     height: auto;
 }
 
-/* ── CSS Smoke overlay ── */
-/* ── Canvas Smoke Area ── */
-.smokeArea {
+/* ── Smoke Container (inside jarWrapper) ── */
+.smokeContainer {
     position: absolute;
-    inset: 0;
-    z-index: 1;
-    /* Temporarily in front to test visibility */
+    bottom: 85%;
+    /* Lid area precisely */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 400px;
+    /* Drift distance upwards */
     pointer-events: none;
+    z-index: -1;
+    /* Behind the jar */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    /* Smoke originates from the bottom (lid) */
+}
+
+@media (max-width: 900px) {
+    .smokeContainer {
+        bottom: 82%;
+        /* Mobile adjust lid */
+        width: 200px;
+        height: 300px;
+    }
 }
 
 /* ── Mobile ── */
 @media (max-width: 900px) {
+    .wrapper {
+        align-items: flex-start;
+        justify-content: center;
+        padding-bottom: 1.5rem;
+    }
+
     .jarWrapper {
-        padding: 1rem;
+        padding: 0.5rem 1rem 0;
+    }
+
+    .jarImage {
+        max-height: 55vh;
     }
 
     .glowRing {
         width: 220px;
         height: 220px;
+        bottom: 10%;
     }
 }

@@ -7,6 +7,7 @@
     grid-template-columns: 1fr 1fr;
     align-items: center;
     overflow: hidden;
+    /* Prevent smoke from bleeding into other sections */
     background: radial-gradient(ellipse at 70% 50%, rgba(74, 14, 26, 0.25) 0%, transparent 60%),
         #0D0D0D;
 }
@@ -170,20 +171,40 @@
     }
 }
 
+/* ── Smoke Background Overlay ── */
+.smokeBackground {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    /* Behind all content but in front of hero bg color */
+    pointer-events: none;
+    overflow: hidden;
+}
+
 /* ── Mobile ── */
 @media (max-width: 900px) {
+    .smokeBackground {
+        height: 100%;
+        min-height: 100vh;
+    }
+
     .hero {
         grid-template-columns: 1fr;
-        grid-template-rows: auto 55vh;
+        grid-template-rows: auto auto;
+        height: auto;
+        min-height: auto;
+        overflow: hidden;
+        /* Ensure clipping on mobile too */
     }
 
     .textSide {
-        padding: 9rem 1.8rem 2rem;
+        padding: 7rem 1.5rem 2.5rem;
     }
 
     .sceneSide {
-        height: 55vh;
-        min-height: unset;
+        height: auto;
+        min-height: 320px;
+        margin-top: 1.5rem;
     }
 
     .scrollIndicator {
