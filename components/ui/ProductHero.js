@@ -11,13 +11,11 @@ export default function ProductHero() {
             {/* Ambient glow behind jar */}
             <div className={styles.glowRing} />
 
-            {/* Smoke canvas — z-index 1, BEHIND the jar image */}
-            <div className={styles.smokeArea}>
-                <SmokeCanvas />
-            </div>
-
-            {/* Product image — z-index 2, IN FRONT of smoke */}
+            {/* Product area with internal smoke positioned relative to the lid */}
             <div className={styles.jarWrapper}>
+                <div className={styles.smokeContainer}>
+                    <SmokeCanvas />
+                </div>
                 <Image
                     src="/product-hero.png"
                     alt="Al Dalal Bakhour - Premium Sudanese Incense Jar"

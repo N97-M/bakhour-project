@@ -70,15 +70,30 @@
 
 @media (max-width: 768px) {
     .footer {
-        padding: 4rem 1.5rem 1.5rem;
+        padding: 3rem 1.5rem 2rem;
     }
 
     .inner {
+        display: flex;
         flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 3rem;
     }
 
-    .links {
-        gap: 3rem;
+    .brand {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .socials {
+        justify-content: center;
+    }
+
+    .col {
+        align-items: center;
     }
 }
 

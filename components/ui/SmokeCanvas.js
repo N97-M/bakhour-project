@@ -12,21 +12,22 @@ export default function SmokeCanvas({ style }) {
         let W = 0, H = 0;
 
         const updateDimensions = () => {
-            const rect = canvas.getBoundingClientRect();
-            if (rect.width === 0 || rect.height === 0) return false;
-
             const dpr = window.devicePixelRatio || 1;
-            W = rect.width;
-            H = rect.height;
+            W = canvas.offsetWidth;
+            H = canvas.offsetHeight;
+
+            if (W === 0 || H === 0) return false;
+
             canvas.width = W * dpr;
             canvas.height = H * dpr;
             ctx.scale(dpr, dpr);
             return true;
         };
 
-        // The jar lid top is at approximately 38% height in a centered layout
-        const getOriginY = () => H * 0.38;
+        // Local coordinates (Relative to the SmokeContainer)
+        // The container is centered on the lid, so origin is bottom-center
         const getOriginX = () => W * 0.5;
+        const getOriginY = () => H;
 
         class Tendril {
             constructor(offset = 0, delay = 0) {
@@ -38,12 +39,21 @@ export default function SmokeCanvas({ style }) {
             reset() {
                 this.pts = [];
                 this.age = -this.delay;
-                this.life = 450 + Math.random() * 250;
-                this.speed = 0.6 + Math.random() * 0.4;
-                this.amplitude = 20 + Math.random() * 30; // Elegant curls
-                this.freq = 0.01 + Math.random() * 0.008;
-                this.lineWidth = 1.0 + Math.random() * 1.5; // Natural silk-like lines
-                this.maxAlpha = 0.4 + Math.random() * 0.3; // Sophisticated transparency
+                this.life = 400 + Math.random() * 200;
+
+                // Very slow, delicate drifting
+                this.speed = 0.4 + Math.random() * 0.2;
+
+                // Subtle curls
+                this.amplitude = 8 + Math.random() * 8;
+                this.freq = 0.008 + Math.random() * 0.006;
+
+                // Thin, silk-like lines
+                this.lineWidth = 0.5 + Math.random() * 0.8;
+
+                // Low alpha for sophistication
+                this.maxAlpha = 0.15 + Math.random() * 0.2;
+
                 this.phase = Math.random() * Math.PI * 2;
             }
 
@@ -54,7 +64,6 @@ export default function SmokeCanvas({ style }) {
                 if (this.age < 0) return;
 
                 const t = this.age;
-                // Organic drifting
                 const x = getOriginX() + this.offset
                     + Math.sin(t * this.freq + this.phase) * this.amplitude
                     + Math.sin(t * 0.04) * 6;
@@ -85,8 +94,7 @@ export default function SmokeCanvas({ style }) {
                     ctx.quadraticCurveTo(this.pts[i].x, this.pts[i].y, xc, yc);
                 }
 
-                // Soft subtle glow
-                ctx.shadowBlur = 8;
+                ctx.shadowBlur = W < 600 ? 12 : 8; // More glow on mobile
                 ctx.shadowColor = 'rgba(255, 255, 255, 0.4)';
                 ctx.strokeStyle = `rgba(245, 240, 230, ${alpha})`;
                 ctx.lineWidth = this.lineWidth;

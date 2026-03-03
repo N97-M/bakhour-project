@@ -1,0 +1,8 @@
+Copy this entire line and paste it into GitHub → Settings → SSH and GPG keys → Add new SSH key → Key:
+
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICO5J1FY7AqQvkftRCxxalz6qTWVmu3mtM5o9imUjysq github
+
+Then click "Add SSH key". After that, run in your project folder:
+  git push -u origin main
+
+You can delete this file after the key is added.
