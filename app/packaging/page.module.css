@@ -256,6 +256,15 @@
     }
 
     .hero {
-        height: 50vh;
+        height: 40vh;
+        min-height: 350px;
+    }
+
+    .ctaBox {
+        padding: 3rem 1.5rem;
+    }
+
+    .sectionTitle {
+        font-size: 2.2rem;
     }
 }

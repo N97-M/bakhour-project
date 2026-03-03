@@ -185,11 +185,20 @@
 }
 
 @media (max-width: 600px) {
+    .header {
+        padding: 8rem 1.5rem 4rem;
+    }
+
     .reviewsGrid {
         grid-template-columns: 1fr;
     }
 
     .statsGrid {
         grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .cardInner {
+        padding: 2rem 1.5rem;
     }
 }

@@ -152,7 +152,20 @@
         grid-template-columns: 1fr;
     }
 
+    .header {
+        padding: 5rem 1rem 2rem;
+    }
+
+    .sceneWrapper {
+        height: 300px;
+        margin-bottom: -1rem;
+    }
+
     .headerContent {
-        padding: 2rem 1.5rem;
+        padding: 1rem;
+    }
+
+    .title {
+        font-size: 2.2rem;
     }
 }

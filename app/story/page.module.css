@@ -206,6 +206,11 @@
 }
 
 @media (max-width: 768px) {
+    .hero {
+        height: 50vh;
+        min-height: 400px;
+    }
+
     .philosophyGrid {
         grid-template-columns: 1fr;
         gap: 3rem;
@@ -225,6 +230,7 @@
 
     .timelineItem {
         grid-template-columns: 40px 1fr;
+        gap: 1rem;
     }
 
     .timelineItem.left .timelineYear,
@@ -240,5 +246,9 @@
     .timelineItem.right .timelineCard {
         text-align: left;
         order: unset;
+    }
+
+    .timelineCard {
+        padding: 1.2rem 1.5rem;
     }
 }
