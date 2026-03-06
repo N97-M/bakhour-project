@@ -229,8 +229,8 @@
     }
 
     .timelineItem {
-        grid-template-columns: 40px 1fr;
-        gap: 1rem;
+        grid-template-columns: 30px 1fr;
+        gap: 1.5rem;
     }
 
     .timelineItem.left .timelineYear,

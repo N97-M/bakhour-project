@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
 import { useLanguage } from '@/context/LanguageContext';
@@ -28,9 +28,9 @@ export default function QuizPage() {
         if (step === t.questions.length + 1) {
             calculateResult();
         }
-    }, [step]);
+    }, [step, t.questions.length, calculateResult]);
 
-    const calculateResult = () => {
+    const calculateResult = useCallback(() => {
         setIsCalculating(true);
 
         // Match logic
@@ -55,7 +55,7 @@ export default function QuizPage() {
             setRecommendation(product);
             setIsCalculating(false);
         }, 2000);
-    };
+    }, [answers, allProducts]);
 
     const resetQuiz = () => {
         setStep(0);
