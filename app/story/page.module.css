@@ -239,11 +239,14 @@
     }
 
     .timelineItem.left .timelineDot,
-    .timelineItem.right {
+    .timelineItem.right .timelineDot {
+        grid-column: 1;
         order: unset;
     }
 
+    .timelineItem.left .timelineCard,
     .timelineItem.right .timelineCard {
+        grid-column: 2;
         text-align: left;
         order: unset;
     }

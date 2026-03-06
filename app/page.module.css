@@ -252,8 +252,36 @@
 
 @media (max-width: 900px) {
     .grid {
-        grid-template-columns: 1fr;
-        gap: 0;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .productCard {
+        padding: 1.5rem 1.2rem;
+    }
+
+    .cardNumber {
+        font-size: 2rem;
+    }
+
+    .cardName {
+        font-size: 1.2rem;
+    }
+
+    .cardDesc {
+        font-size: 0.75rem;
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+    }
+
+    .price {
+        font-size: 1.1rem;
+    }
+
+    .addBtn {
+        padding: 0.5rem 0.8rem !important;
+        font-size: 0.55rem !important;
+        letter-spacing: 2px !important;
     }
 
     .quizInner {
