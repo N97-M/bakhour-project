@@ -68,7 +68,7 @@ export default function TestimonialsPage() {
                                 >
                                     <div className={styles.cardInner}>
                                         <StarRating count={r.rating} />
-                                        <p className={styles.reviewText}>"{r.text}"</p>
+                                        <p className={styles.reviewText}>&quot;{r.text}&quot;</p>
                                         <div className={styles.reviewer}>
                                             <div className={styles.reviewerAvatar}>{r.name[0]}</div>
                                             <div>
