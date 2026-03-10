@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/utils/supabase';
 import {
     Save,
@@ -18,23 +18,25 @@ export default function AdminSettingsPage() {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
 
-    const fetchSettings = async () => {
+    const fetchSettings = useCallback(async () => {
         setLoading(true);
         const { data } = await supabase.from('site_config').select('*');
 
         if (data) {
-            const newSettings = { ...settings };
-            data.forEach(item => {
-                newSettings[item.key] = item.value;
+            setSettings(prev => {
+                const updated = { ...prev };
+                data.forEach(item => {
+                    updated[item.key] = item.value;
+                });
+                return updated;
             });
-            setSettings(newSettings);
         }
         setLoading(false);
-    };
+    }, []);
 
     useEffect(() => {
         fetchSettings();
-    }, []);
+    }, [fetchSettings]);
 
     const handleSave = async (key, value) => {
         setSaving(true);

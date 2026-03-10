@@ -1,0 +1,164 @@
+.container {
+    padding: 2rem;
+    color: #C8BFB2;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+}
+
+.secTitle {
+    font-size: 1.8rem;
+    color: #C6A75E;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: rgba(200, 191, 178, 0.6);
+    font-size: 0.95rem;
+}
+
+.searchBar {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.7rem 1.2rem;
+    border-radius: 4px;
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    min-width: 350px;
+}
+
+.searchBar input {
+    background: transparent;
+    border: none;
+    color: #C8BFB2;
+    font-size: 0.95rem;
+    outline: none;
+    width: 100%;
+}
+
+/* Table Styles */
+.tableWrapper {
+    background: rgba(200, 191, 178, 0.02);
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table th {
+    background: rgba(198, 167, 94, 0.05);
+    padding: 1.2rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #C6A75E;
+    border-bottom: 1px solid rgba(198, 167, 94, 0.1);
+}
+
+.table td {
+    padding: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.95rem;
+}
+
+.customerRow:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.custMain {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    background: rgba(198, 167, 94, 0.2);
+    color: #C6A75E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.contactItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(200, 191, 178, 0.6);
+}
+
+.badge {
+    padding: 0.2rem 0.6rem;
+    background: rgba(198, 167, 94, 0.1);
+    color: #C6A75E;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.date {
+    font-size: 0.85rem;
+    color: rgba(200, 191, 178, 0.5);
+}
+
+.center {
+    text-align: center;
+}
+
+.viewBtn {
+    background: transparent;
+    border: none;
+    color: rgba(198, 167, 94, 0.6);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.viewBtn:hover {
+    color: #C6A75E;
+    background: rgba(198, 167, 94, 0.1);
+}
+
+.empty {
+    padding: 4rem !important;
+    text-align: center;
+    color: rgba(200, 191, 178, 0.4);
+    font-style: italic;
+}
+
+@media (max-width: 900px) {
+    .header {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .searchBar {
+        min-width: 100%;
+    }
+
+    .tableWrapper {
+        overflow-x: auto;
+    }
+}

@@ -10,6 +10,7 @@ import { translations } from '@/utils/translations';
 import { supabase } from '@/utils/supabase';
 import styles from './page.module.css';
 import { flyToCart } from '@/utils/flyToCart';
+import Image from 'next/image';
 
 const ProductHero = dynamic(() => import('@/components/ui/ProductHero'), { ssr: false });
 
@@ -81,7 +82,13 @@ export default function GalleryPage() {
                                         style={{ animationDelay: `${i * 0.1}s`, cursor: 'pointer' }}
                                     >
                                         <div className={styles.cardImageWrapper}>
-                                            <img src={p.image} alt={p.name} className={styles.cardImage} />
+                                            <Image
+                                                src={p.image_url || '/product-hero.png'}
+                                                alt={p.name_en}
+                                                width={400}
+                                                height={400}
+                                                className={styles.image}
+                                            />
                                         </div>
                                         <div className={styles.cardInfo}>
                                             <h2 className={styles.cardName}>{p.name}</h2>

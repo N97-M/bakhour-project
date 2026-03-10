@@ -4,6 +4,7 @@ import Hero from '@/components/ui/Hero';
 import { useRouter } from 'next/navigation';
 import Footer from '@/components/ui/Footer';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -37,7 +38,13 @@ function FeaturedCard({ product, index }) {
             onClick={() => router.push(`/products/${product.id}`)}
         >
             <div className={styles.cardImageWrapper}>
-                <img src={product.image} alt={product.name} className={styles.cardImage} />
+                <Image
+                    src={product.image || '/product-hero.png'}
+                    alt={product.name}
+                    width={400}
+                    height={400}
+                    className={styles.cardImage}
+                />
             </div>
             <div className={styles.cardInfo}>
                 <h3 className={styles.cardName}>{product.name}</h3>

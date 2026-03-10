@@ -1,5 +1,6 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { supabase } from '@/utils/supabase';
 import {
     Plus,
@@ -188,7 +189,13 @@ export default function AdminProductsPage() {
                             {filteredProducts.map(p => (
                                 <tr key={p.id}>
                                     <td className={styles.productCell}>
-                                        <img src={p.image_url} alt="" className={styles.thumb} />
+                                        <Image
+                                            src={p.image_url || '/product-hero.png'}
+                                            alt={p.name_en}
+                                            width={40}
+                                            height={40}
+                                            className={styles.productImg}
+                                        />
                                         <div className={styles.nameGrp}>
                                             <span className={styles.enName}>{p.name_en}</span>
                                             <span className={styles.arName}>{p.name_ar}</span>
@@ -229,7 +236,13 @@ export default function AdminProductsPage() {
                                 <div className={styles.imageUploadSection}>
                                     <label>Product Photo</label>
                                     <div className={styles.imagePreviewWrapper}>
-                                        {imagePreview && <img src={imagePreview} alt="Preview" className={styles.mainPreview} />}
+                                        <Image
+                                            src={imagePreview}
+                                            alt="Preview"
+                                            width={200}
+                                            height={200}
+                                            className={styles.previewImage}
+                                        />
                                         <div className={styles.uploadControls}>
                                             <label htmlFor="product-image" className={styles.fileLabel}>
                                                 {selectedFile ? 'Change Selected' : 'Upload New Photo'}

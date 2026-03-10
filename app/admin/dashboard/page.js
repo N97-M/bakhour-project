@@ -5,7 +5,11 @@ import {
     TrendingUp,
     ShoppingBag,
     AlertCircle,
-    Clock
+    Clock,
+    DollarSign,
+    ShoppingCart,
+    Package,
+    Truck
 } from 'lucide-react';
 import styles from '../AdminDashboard.module.css';
 
@@ -76,10 +80,10 @@ export default function DashboardPage() {
     if (loading) return <div className="gold-text">Loading insights...</div>;
 
     const cards = [
-        { title: 'Total Revenue', value: `${stats.totalSales} AED`, icon: <TrendingUp />, color: '#C6A75E' },
-        { title: 'Active Orders', value: stats.activeOrders, icon: <ShoppingBag />, color: '#44ff44' },
-        { title: 'Low Stock Items', value: stats.lowStock, icon: <AlertCircle />, color: '#ff4444' },
-        { title: 'Pending Shipment', value: stats.pendingShipment, icon: <Clock />, color: '#C8BFB2' },
+        { title: 'Total Revenue', value: `${stats.totalSales.toFixed(2)} AED`, icon: <DollarSign />, color: '#C6A75E' },
+        { title: 'Active Orders', value: stats.activeOrders, icon: <ShoppingCart />, color: '#3498db' },
+        { title: 'Low Stock Items', value: stats.lowStock, icon: <Package />, color: '#e74c3c' },
+        { title: 'Pending Shipment', value: stats.pendingShipment, icon: <Truck />, color: '#2ecc71' },
     ];
 
     return (

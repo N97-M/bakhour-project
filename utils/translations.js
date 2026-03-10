@@ -113,6 +113,14 @@ export const translations = {
             secure: 'Secure and Encrypted Transaction',
             continue: '← Continue Shopping'
         },
+        checkout: {
+            title: 'Checkout',
+            shipping: 'Shipping Information',
+            gift: 'Gift Options',
+            confirm: 'Confirm Order',
+            success: 'Order Successful',
+            thankyou: 'Thank you for choosing Al Dalal. Your order is being prepared with care.'
+        },
         products: [
             { id: 1, name: 'Bakhour Al Shaf (500ml)', price: '80 AED', category: 'Heritage', image: '/product-hero.png', notes: 'Sudanese Shaf · Oudh', desc: 'Premium Sudanese Shaf bakhour in 500ml size. Handcrafted with care. Preserve in a cool, dry place.' },
             { id: 2, name: 'Bakhour Al Anfar (500ml)', price: '80 AED', category: 'Heritage', image: '/product-hero.png', notes: 'Anfar · Oudh · Amber', desc: 'Elite Al Anfar bakhour blend in a generous 500ml jar. Handcrafted with care. Preserve in a cool, dry place.' },
@@ -240,6 +248,14 @@ export const translations = {
             checkout: 'إتمام الشراء',
             secure: 'معاملة آمنة ومشفرة',
             continue: '← متابعة التسوق'
+        },
+        checkout: {
+            title: 'إتمام الطلب',
+            shipping: 'معلومات الشحن',
+            gift: 'خيارات الهدايا',
+            confirm: 'تأكيد الطلب',
+            success: 'تم الطلب بنجاح',
+            thankyou: 'شكراً لاختيارك بخور الدلال. سيتم تجهيز طلبك بكل عناية واهتمام.'
         },
         products: [
             { id: 1, name: 'بخور الشاف (٥٠٠ مل)', price: '٨٠ درهم', category: 'تراثي', image: '/product-hero.png', notes: 'شاف سوداني · عود', desc: 'بخور الشاف السوداني الفاخر بحجم ٥٠٠ مل. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },

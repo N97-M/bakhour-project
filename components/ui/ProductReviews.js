@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/utils/supabase';
 import { useLanguage } from '@/context/LanguageContext';
 import { Star, Image as ImageIcon, CheckCircle, Filter, Trash2 } from 'lucide-react';
@@ -19,10 +19,10 @@ export default function ProductReviews({ productId }) {
     const [submitting, setSubmitting] = useState(false);
     const [submitSuccess, setSubmitSuccess] = useState('');
 
-    const fetchReviewsAndUser = async () => {
+    const fetchReviewsAndUser = useCallback(async () => {
         setLoading(true);
-        const { data: userData } = await supabase.auth.getUser();
-        setUser(userData.user);
+        const { data: { user: userData } } = await supabase.auth.getUser();
+        setUser(userData);
 
         // Mock data for display purposes
         const mockReviews = [
@@ -40,7 +40,7 @@ export default function ProductReviews({ productId }) {
         // Fetch actual reviews from Supabase
         const { data: dbReviews, error } = await supabase
             .from('reviews')
-            .select('review_id, rating, comment, review_date, image_urls, is_verified_purchase, user_name')
+            .select('review_id, rating, comment, review_date, image_urls, is_verified_purchase, user_name, user_id')
             .eq('product_id', productId)
             .order('review_date', { ascending: false });
 
@@ -61,11 +61,11 @@ export default function ProductReviews({ productId }) {
             setReviews(mockReviews);
         }
         setLoading(false);
-    };
+    }, [productId]);
 
     useEffect(() => {
         fetchReviewsAndUser();
-    }, [productId]);
+    }, [fetchReviewsAndUser]);
 
     const handlePhotoUpload = async (e) => {
         const selectedFiles = Array.from(e.target.files);

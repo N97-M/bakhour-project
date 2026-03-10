@@ -1,0 +1,247 @@
+.main {
+    padding-top: 120px;
+    background: #000;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.successCard {
+    background: rgba(200, 191, 178, 0.03);
+    border: 1px solid rgba(198, 167, 94, 0.2);
+    padding: 4rem 2rem;
+    max-width: 600px;
+    width: 100%;
+    margin: 3rem auto;
+    text-align: center;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animations */
+.iconWrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 2rem;
+}
+
+.checkCircle {
+    width: 100%;
+    height: 100%;
+    background: #C6A75E;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 30px rgba(198, 167, 94, 0.3);
+    animation: bounceIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #C6A75E;
+    margin-bottom: 1rem;
+    animation: fadeInDown 1s ease 0.3s backwards;
+}
+
+.thankyou {
+    font-size: 1.1rem;
+    color: rgba(200, 191, 178, 0.8);
+    margin-bottom: 3rem;
+    line-height: 1.6;
+    animation: fadeInDown 1s ease 0.5s backwards;
+}
+
+/* Order Details */
+.orderInfo {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    border-radius: 4px;
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    margin-bottom: 3rem;
+    animation: fadeInUp 1s ease 0.7s backwards;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.infoRow:last-child {
+    margin-bottom: 0;
+}
+
+.statusBadge {
+    padding: 0.3rem 0.8rem;
+    background: rgba(68, 255, 68, 0.1);
+    color: #44ff44;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Next Steps */
+.nextSteps {
+    text-align: left;
+    margin-bottom: 3.5rem;
+    padding: 0 1rem;
+    animation: fadeInUp 1s ease 0.9s backwards;
+}
+
+.nextSteps h3 {
+    font-size: 1.1rem;
+    color: #C6A75E;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.step p {
+    font-size: 0.95rem;
+    color: rgba(200, 191, 178, 0.7);
+    line-height: 1.4;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.outlineBtn {
+    padding: 0.8rem 1.5rem;
+    background: transparent;
+    border: 1px solid rgba(198, 167, 94, 0.4);
+    color: #C6A75E;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.outlineBtn:hover {
+    background: rgba(198, 167, 94, 0.05);
+    border-color: #C6A75E;
+}
+
+/* Animations Keyframes */
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    70% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sparkles */
+.sparkle,
+.sparkle2 {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #C6A75E;
+    border-radius: 50%;
+    animation: float 3s infinite;
+}
+
+.sparkle {
+    top: 0;
+    right: 0;
+}
+
+.sparkle2 {
+    bottom: 10px;
+    left: -10px;
+    animation-delay: 1.5s;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
+
+/* RTL Support for Arabic */
+[dir="rtl"] .nextSteps {
+    text-align: right;
+}
+
+[dir="rtl"] .outlineBtn {
+    flex-direction: row-reverse;
+}
+
+@media (max-width: 600px) {
+    .successCard {
+        padding: 3rem 1.5rem;
+        margin: 1.5rem;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+}

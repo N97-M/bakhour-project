@@ -82,7 +82,7 @@ CREATE POLICY "Public Read Products" ON public.products FOR SELECT USING (true);
 CREATE POLICY "Public Read Config" ON public.site_config FOR SELECT USING (true);
 CREATE POLICY "Public Create Orders" ON public.orders FOR INSERT WITH CHECK (true);
 CREATE POLICY "Public Create Order Items" ON public.order_items FOR INSERT WITH CHECK (true);
-CREATE POLICY "Users Read Own Orders" ON public.orders FOR SELECT USING (auth.uid() = user_id OR user_id IS NULL);
+CREATE POLICY "Users Read Own Orders" ON public.orders FOR SELECT USING (auth.uid() = user_id);
 
 -- 9. ADMIN POLICIES
 DO $$ 

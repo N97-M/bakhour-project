@@ -163,10 +163,12 @@ export default function CartPage() {
                                             <span className="gold-text">{finalTotal.toFixed(2)} AED</span>
                                         </div>
 
-                                        <button className={`${styles.checkoutBtn} btn-luxury w-100`}>
-                                            <span>{t.checkout}</span>
-                                            <ArrowRight size={18} />
-                                        </button>
+                                        <Link href="/checkout" className="w-100">
+                                            <button className={`${styles.checkoutBtn} btn-luxury w-100`}>
+                                                <span>{t.checkout}</span>
+                                                <ArrowRight size={18} />
+                                            </button>
+                                        </Link>
 
                                         <p className={styles.secureText}>
                                             {t.secure}

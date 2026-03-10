@@ -15,13 +15,13 @@ import {
 } from 'lucide-react';
 import styles from './AdminLayout.module.css';
 
+const allowedAdmins = ['aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'];
+
 export default function AdminLayout({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     const pathname = usePathname();
-
-    const allowedAdmins = ['aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'];
 
     useEffect(() => {
         const checkAdmin = async () => {

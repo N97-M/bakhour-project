@@ -1,0 +1,331 @@
+.container {
+    padding: 2rem;
+    color: #C8BFB2;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+}
+
+.secTitle {
+    font-size: 1.8rem;
+    color: #C6A75E;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: rgba(200, 191, 178, 0.6);
+    font-size: 0.95rem;
+}
+
+.filters {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.filterGroup {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: 1px solid rgba(198, 167, 94, 0.1);
+}
+
+.statusSelect {
+    background: transparent;
+    border: none;
+    color: #C8BFB2;
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Order Cards */
+.ordersList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.orderCard {
+    background: rgba(200, 191, 178, 0.03);
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.orderCard:hover {
+    border-color: rgba(198, 167, 94, 0.3);
+    background: rgba(200, 191, 178, 0.05);
+}
+
+.orderSummary {
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.mainInfo {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+.orderRef {
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+}
+
+.orderId {
+    font-family: monospace;
+    font-weight: 600;
+    color: #C6A75E;
+    letter-spacing: 1px;
+}
+
+.orderDate {
+    font-size: 0.8rem;
+    color: rgba(200, 191, 178, 0.5);
+}
+
+.customerSummary {
+    display: flex;
+    flex-direction: column;
+}
+
+.statusInfo {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.statusBadge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: rgba(0, 0, 0, 0.3);
+    width: 130px;
+}
+
+.statusBadge[data-status="pending"] {
+    color: #ffa500;
+    border: 1px solid rgba(255, 165, 0, 0.2);
+}
+
+.statusBadge[data-status="processing"] {
+    color: #C6A75E;
+    border: 1px solid rgba(198, 167, 94, 0.2);
+}
+
+.statusBadge[data-status="shipped"] {
+    color: #3498db;
+    border: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+.statusBadge[data-status="delivered"] {
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.statusBadge[data-status="cancelled"] {
+    color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+.orderTotal {
+    font-weight: 600;
+    font-size: 1.1rem;
+    width: 100px;
+    text-align: right;
+}
+
+/* Expanded Details */
+.orderDetails {
+    padding: 2.5rem;
+    border-top: 1px solid rgba(198, 167, 94, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.3s ease-out;
+}
+
+.detailsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    gap: 3rem;
+}
+
+.infoColumn h4,
+.itemsColumn h4,
+.actionsColumn h4 {
+    color: #C6A75E;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(198, 167, 94, 0.1);
+}
+
+.infoRow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+}
+
+.giftMessage {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(198, 167, 94, 0.05);
+    border-radius: 4px;
+    border-left: 2px solid #C6A75E;
+}
+
+.giftHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: #C6A75E;
+}
+
+.giftMessage p {
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* Items Column */
+.itemRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.itemMain {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.itemImg {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    background: #1a1a1a;
+}
+
+.itemName {
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+}
+
+.itemPrice {
+    font-size: 0.8rem;
+    color: rgba(200, 191, 178, 0.5);
+}
+
+/* Actions Column */
+.statusActions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.statusBtn {
+    padding: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: #C8BFB2;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.statusBtn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.statusBtn[data-status="processing"]:hover {
+    background: rgba(198, 167, 94, 0.1);
+    border-color: #C6A75E;
+}
+
+.statusBtn[data-status="shipped"]:hover {
+    background: rgba(52, 152, 219, 0.1);
+    border-color: #3498db;
+}
+
+.statusBtn[data-status="delivered"]:hover {
+    background: rgba(46, 204, 113, 0.1);
+    border-color: #2ecc71;
+}
+
+.cancelBtn {
+    padding: 0.8rem;
+    background: transparent;
+    border: 1px solid rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.cancelBtn:hover {
+    background: rgba(231, 76, 60, 0.05);
+}
+
+.divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 1rem 0;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1200px) {
+    .detailsGrid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 800px) {
+    .mainInfo {
+        gap: 1rem;
+    }
+
+    .statusInfo {
+        gap: 1rem;
+    }
+}
