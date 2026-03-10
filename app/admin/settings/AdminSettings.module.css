@@ -1,0 +1,120 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 900px;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.sectionHeader h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+    color: #C6A75E;
+}
+
+.sectionHeader p {
+    font-size: 0.85rem;
+    color: rgba(200, 191, 178, 0.5);
+}
+
+.card {
+    background: rgba(26, 26, 26, 0.5);
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    padding: 2rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup label {
+    font-size: 0.85rem;
+    color: rgba(200, 191, 178, 0.6);
+}
+
+.formGroup input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    padding: 0.8rem;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.checkboxGroup {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.checkboxGroup label {
+    font-size: 0.9rem;
+    color: rgba(200, 191, 178, 0.8);
+}
+
+.saveBtn {
+    background: #C6A75E;
+    color: #000;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    transition: all 0.3s;
+}
+
+.saveBtn:hover {
+    background: #d4b87a;
+}
+
+.outlineBtn {
+    background: transparent;
+    border: 1px solid rgba(198, 167, 94, 0.3);
+    color: #C6A75E;
+    padding: 0.8rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    transition: all 0.3s;
+}
+
+.outlineBtn:hover {
+    background: rgba(198, 167, 94, 0.1);
+}
+
+@media (max-width: 700px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+}

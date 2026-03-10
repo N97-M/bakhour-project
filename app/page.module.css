@@ -31,8 +31,8 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
 }
 
 .viewMoreWrapper {
@@ -51,14 +51,20 @@
 
 /* Product Card */
 .productCard {
-    padding: 2.5rem 2rem;
-    border: 1px solid rgba(198, 167, 94, 0.08);
-    background: rgba(26, 26, 26, 0.5);
     position: relative;
+    padding: 0;
+    border: 1px solid rgba(198, 167, 94, 0.2);
+    background: #1c1811;
+    /* Distinct warm dark gold/brown color */
     cursor: pointer;
+    overflow: hidden;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
     transform: translateY(24px);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .productCard.visible {
@@ -66,81 +72,59 @@
     transform: translateY(0);
 }
 
-.productCard::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(74, 14, 26, 0.3) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.productCard:hover::before {
-    opacity: 1;
-}
-
 .productCard:hover {
-    border-color: rgba(198, 167, 94, 0.3);
-    transform: translateY(-4px);
+    border-color: rgba(198, 167, 94, 0.6);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(198, 167, 94, 0.2);
 }
 
-.cardTop {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 2rem;
+.cardImageWrapper {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #0a0905;
 }
 
-.cardNumber {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3rem;
-    color: rgba(198, 167, 94, 0.15);
-    line-height: 1;
+.cardImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
 }
 
-.cardNotes {
+.productCard:hover .cardImage {
+    transform: scale(1.1);
+}
+
+.cardInfo {
+    padding: 1.5rem 1.2rem;
+    text-align: center;
+    background: linear-gradient(to top, #110f0a, #1c1811);
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 0.3rem;
-}
-
-.cardNotes span {
-    font-size: 0.58rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(200, 191, 178, 0.5);
+    flex: 1;
 }
 
 .cardName {
-    font-size: 1.6rem;
-    font-weight: 300;
-    margin-bottom: 0.75rem;
-}
-
-.cardDesc {
-    font-size: 0.8rem;
-    color: #C8BFB2;
-    line-height: 1.7;
-    margin-bottom: 2rem;
-}
-
-.cardFooter {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #f7eed7;
+    margin-bottom: 0.5rem;
 }
 
 .price {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: #C6A75E;
+    margin-bottom: 1.2rem;
 }
 
 .addBtn {
-    padding: 0.65rem 1.4rem !important;
-    font-size: 0.6rem !important;
+    width: 100%;
+    padding: 0.8rem !important;
+    font-size: 0.65rem !important;
+    margin-top: auto;
 }
 
 /* ── Heritage Banner ── */
@@ -253,25 +237,12 @@
 @media (max-width: 1024px) {
     .grid {
         grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+        gap: 1.5rem;
     }
 
-    .productCard {
-        padding: 1.5rem 1.2rem;
-    }
-
-    .cardNumber {
-        font-size: 2rem;
-    }
 
     .cardName {
         font-size: 1.2rem;
-    }
-
-    .cardDesc {
-        font-size: 0.75rem;
-        line-height: 1.5;
-        margin-bottom: 1.5rem;
     }
 
     .price {
@@ -279,9 +250,9 @@
     }
 
     .addBtn {
-        padding: 0.5rem 0.8rem !important;
-        font-size: 0.55rem !important;
-        letter-spacing: 2px !important;
+        padding: 0.7rem 0.6rem !important;
+        font-size: 0.6rem !important;
+        letter-spacing: 1px !important;
     }
 
     .quizInner {

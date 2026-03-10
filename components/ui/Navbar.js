@@ -1,10 +1,12 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { ShoppingBag, User, LogOut } from 'lucide-react';
 import Link from 'next/link';
-import { ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/utils/translations';
+import { supabase } from '@/utils/supabase';
+import { useRouter } from 'next/navigation';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
@@ -14,11 +16,35 @@ export default function Navbar() {
     const { lang, toggleLanguage } = useLanguage();
     const t = translations[lang].nav;
 
+    const [user, setUser] = useState(null);
+    const router = useRouter();
+
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 60);
         window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
+
+        // Check current session
+        const getSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            setUser(session?.user || null);
+        };
+        getSession();
+
+        // Listen for auth changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user || null);
+        });
+
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            subscription.unsubscribe();
+        };
     }, []);
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        router.push('/');
+    };
 
     const links = [
         { href: '/', label: t.home },
@@ -53,6 +79,26 @@ export default function Navbar() {
                 </ul>
 
                 <div className={styles.controls}>
+                    {user ? (
+                        <div className={styles.userSection}>
+                            {['aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'].includes(user.email) && (
+                                <Link href="/admin/dashboard" className={styles.adminLink} title="Admin Dashboard">
+                                    Admin
+                                </Link>
+                            )}
+                            <span className={styles.userName}>
+                                <User size={16} /> {user.user_metadata?.full_name?.split(' ')[0] || 'Member'}
+                            </span>
+                            <button onClick={handleLogout} className={styles.logoutBtn} title="Logout">
+                                <LogOut size={16} />
+                            </button>
+                        </div>
+                    ) : (
+                        <Link href="/login" className={styles.loginLink}>
+                            {lang === 'en' ? 'Login' : 'دخول'}
+                        </Link>
+                    )}
+
                     <button className={styles.langToggle} onClick={toggleLanguage}>
                         {lang === 'en' ? 'AR' : 'EN'}
                     </button>

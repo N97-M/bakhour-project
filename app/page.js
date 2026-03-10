@@ -1,21 +1,22 @@
 'use client';
 import Navbar from '@/components/ui/Navbar';
 import Hero from '@/components/ui/Hero';
+import { useRouter } from 'next/navigation';
 import Footer from '@/components/ui/Footer';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/utils/translations';
+import { supabase } from '@/utils/supabase';
 import styles from './page.module.css';
 import { flyToCart } from '@/utils/flyToCart';
-
-
 
 function FeaturedCard({ product, index }) {
     const ref = useRef(null);
     const { addToCart } = useCart();
     const { lang } = useLanguage();
+    const router = useRouter();
 
     useEffect(() => {
         const el = ref.current;
@@ -32,23 +33,22 @@ function FeaturedCard({ product, index }) {
         <div
             ref={ref}
             className={styles.productCard}
-            style={{ transitionDelay: `${index * 0.15}s` }}
+            style={{ transitionDelay: `${index * 0.15}s`, cursor: 'pointer' }}
+            onClick={() => router.push(`/products/${product.id}`)}
         >
-            <div className={styles.cardTop}>
-                <div className={styles.cardNumber}>0{product.id}</div>
-                <div className={styles.cardNotes}>
-                    {product.notes.split(' · ').map((n) => (
-                        <span key={n}>{n}</span>
-                    ))}
-                </div>
+            <div className={styles.cardImageWrapper}>
+                <img src={product.image} alt={product.name} className={styles.cardImage} />
             </div>
-            <h3 className={`${styles.cardName} gold-text`}>{product.name}</h3>
-            <p className={styles.cardDesc}>{product.desc}</p>
-            <div className={styles.cardFooter}>
-                <span className={styles.price}>{product.price}</span>
+            <div className={styles.cardInfo}>
+                <h3 className={styles.cardName}>{product.name}</h3>
+                <p className={styles.price}>{product.price}</p>
                 <button
                     className={`${styles.addBtn} btn-luxury`}
-                    onClick={(e) => { addToCart(product); flyToCart(e); }}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        addToCart(product);
+                        flyToCart(e);
+                    }}
                 >
                     <span>{translations[lang].nav.cart}</span>
                 </button>
@@ -60,8 +60,32 @@ function FeaturedCard({ product, index }) {
 export default function Home() {
     const sectionRef = useRef(null);
     const { lang } = useLanguage();
+    const [featured, setFeatured] = useState([]);
+    const [loading, setLoading] = useState(true);
     const t = translations[lang];
-    const featured = t.products.slice(0, 3);
+
+    useEffect(() => {
+        const fetchFeatured = async () => {
+            setLoading(true);
+            const { data } = await supabase
+                .from('products')
+                .select('*')
+                .eq('is_featured', true)
+                .limit(4);
+
+            if (data) {
+                const mapped = data.map(p => ({
+                    ...p,
+                    name: lang === 'en' ? p.name_en : p.name_ar,
+                    price: `${p.price} AED`,
+                    image: p.image_url
+                }));
+                setFeatured(mapped);
+            }
+            setLoading(false);
+        };
+        fetchFeatured();
+    }, [lang]);
 
     useEffect(() => {
         const el = sectionRef.current;
@@ -92,11 +116,24 @@ export default function Home() {
                             </h2>
                             <span className="gold-divider" />
                         </div>
-                        <div className={styles.grid}>
-                            {featured.map((p, i) => (
-                                <FeaturedCard key={p.id} product={p} index={i} />
-                            ))}
-                        </div>
+
+                        {loading ? (
+                            <div className="gold-text" style={{ textAlign: 'center', padding: '2rem' }}>
+                                {lang === 'en' ? 'Discovering treasures...' : 'جاري عرض المجموعات المميزة...'}
+                            </div>
+                        ) : (
+                            <div className={styles.grid}>
+                                {featured.map((p, i) => (
+                                    <FeaturedCard key={p.id} product={p} index={i} />
+                                ))}
+                                {featured.length === 0 && (
+                                    <p className="gold-text" style={{ gridColumn: '1/-1', textAlign: 'center' }}>
+                                        {lang === 'en' ? 'More treasures coming soon.' : 'المزيد من الروائع قريباً.'}
+                                    </p>
+                                )}
+                            </div>
+                        )}
+
                         <div className={styles.viewMoreWrapper}>
                             <Link href="/gallery" className="btn-luxury">
                                 <span>{t.nav.viewMore}</span>

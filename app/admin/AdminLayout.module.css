@@ -1,0 +1,120 @@
+.adminLayout {
+    display: flex;
+    min-height: 100vh;
+    background: #0D0D0D;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+.sidebar {
+    width: 260px;
+    background: #151515;
+    border-right: 1px solid rgba(198, 167, 94, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+}
+
+.logoArea {
+    padding: 2rem;
+    border-bottom: 1px solid rgba(198, 167, 94, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.logoText {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: #C6A75E;
+}
+
+.nav {
+    flex: 1;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 2rem;
+    color: rgba(200, 191, 178, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.navLink:hover,
+.activeLink {
+    color: #C6A75E;
+    background: rgba(198, 167, 94, 0.05);
+}
+
+.activeLink {
+    border-right: 3px solid #C6A75E;
+}
+
+.main {
+    flex: 1;
+    margin-left: 260px;
+    padding: 3rem;
+}
+
+.topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.pageTitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+.adminUser {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: rgba(200, 191, 178, 0.8);
+}
+
+.logoutBtn {
+    background: none;
+    border: 1px solid rgba(255, 68, 68, 0.3);
+    color: #ff4444;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.logoutBtn:hover {
+    background: rgba(255, 68, 68, 0.1);
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: 70px;
+    }
+
+    .main {
+        margin-left: 70px;
+        padding: 1.5rem;
+    }
+
+    .navLink span {
+        display: none;
+    }
+
+    .logoText {
+        font-size: 1rem;
+    }
+}

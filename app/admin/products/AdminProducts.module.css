@@ -1,0 +1,342 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.actionBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.searchWrapper {
+    flex: 1;
+    max-width: 400px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.searchWrapper svg {
+    position: absolute;
+    left: 1rem;
+    color: rgba(200, 191, 178, 0.4);
+}
+
+.searchInput {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    border-radius: 4px;
+    padding: 0.8rem 1rem 0.8rem 3rem;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.addBtn {
+    background: #C6A75E;
+    color: #000;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.addBtn:hover {
+    background: #d4b87a;
+}
+
+.tableWrapper {
+    background: rgba(26, 26, 26, 0.3);
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table th {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1.2rem 1.5rem;
+    font-size: 0.85rem;
+    color: rgba(200, 191, 178, 0.6);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.table td {
+    padding: 1.2rem 1.5rem;
+    border-top: 1px solid rgba(198, 167, 94, 0.05);
+    font-size: 0.95rem;
+}
+
+.productCell {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.thumb {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.nameGrp {
+    display: flex;
+    flex-direction: column;
+}
+
+.enName {
+    color: #fff;
+    font-weight: 500;
+}
+
+.arName {
+    font-size: 0.75rem;
+    color: rgba(200, 191, 178, 0.4);
+}
+
+.inStock {
+    color: #44ff44;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.lowStock {
+    color: #ff4444;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 600;
+}
+
+.featuredBadge {
+    background: rgba(198, 167, 94, 0.1);
+    color: #C6A75E;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    border: 1px solid rgba(198, 167, 94, 0.2);
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.editBtn,
+.deleteBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    transition: all 0.3s;
+}
+
+.editBtn {
+    color: rgba(200, 191, 178, 0.5);
+}
+
+.editBtn:hover {
+    color: #C6A75E;
+}
+
+.deleteBtn {
+    color: rgba(255, 68, 68, 0.5);
+}
+
+.deleteBtn:hover {
+    color: #ff4444;
+}
+
+/* Modal Styles */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal {
+    background: #151515;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.modalHeader {
+    padding: 2rem;
+    border-bottom: 1px solid rgba(198, 167, 94, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.form {
+    padding: 2.5rem;
+    overflow-y: auto;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroupFull {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.checkboxGroup {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.form label {
+    font-size: 0.85rem;
+    color: rgba(200, 191, 178, 0.6);
+}
+
+.form input,
+.form textarea,
+.form select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    padding: 0.8rem;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.imageUploadSection {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(198, 167, 94, 0.05);
+    border: 1px dashed rgba(198, 167, 94, 0.2);
+    border-radius: 4px;
+}
+
+.imagePreviewWrapper {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.mainPreview {
+    width: 120px;
+    height: 120px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 1px solid rgba(198, 167, 94, 0.3);
+}
+
+.uploadControls {
+    flex: 1;
+}
+
+.fileLabel {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background: rgba(198, 167, 94, 0.1);
+    border: 1px solid #C6A75E;
+    color: #C6A75E;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.fileLabel:hover {
+    background: #C6A75E;
+    color: #000;
+}
+
+.fileInput {
+    display: none;
+}
+
+.uploadHint {
+    font-size: 0.7rem;
+    color: rgba(200, 191, 178, 0.5);
+    margin-top: 0.5rem;
+}
+
+.formActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(198, 167, 94, 0.15);
+}
+
+.saveBtn {
+    background: #C6A75E;
+    color: #000;
+    border: none;
+    padding: 0.8rem 2.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cancelBtn {
+    background: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}

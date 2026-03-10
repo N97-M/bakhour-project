@@ -114,17 +114,17 @@ export const translations = {
             continue: '← Continue Shopping'
         },
         products: [
-            { id: 1, name: 'Bakhour Al Shaf (500ml)', price: '80 AED', category: 'Heritage', notes: 'Sudanese Shaf · Oudh', desc: 'Premium Sudanese Shaf bakhour in 500ml size. Handcrafted with care. Preserve in a cool, dry place.' },
-            { id: 2, name: 'Bakhour Al Anfar (500ml)', price: '80 AED', category: 'Heritage', notes: 'Anfar · Oudh · Amber', desc: 'Elite Al Anfar bakhour blend in a generous 500ml jar. Handcrafted with care. Preserve in a cool, dry place.' },
-            { id: 3, name: 'Bakhour Habooba (300ml)', price: '80 AED', category: 'Heritage', notes: 'Traditonal Grains · Oudh', desc: 'The beloved traditional Habooba scent in 300ml size. Handcrafted with care. Preserve in a cool, dry place.' },
-            { id: 4, name: 'Al Dalal Mix (300ml)', price: '100 AED', category: 'Signature', notes: 'Secret Blend · Oudh · Spices', desc: 'Our signature luxurious mix of the finest bakhour ingredients. Handcrafted with care. Preserve in a cool, dry place.' },
-            { id: 5, name: 'Sandalwood Balls (300ml)', price: '100 AED', category: 'Sandalwood', notes: 'Sandalwood · Musk · Oils', desc: 'Hand-rolled premium sandalwood balls for a lasting fragrance. Handcrafted with care. Preserve in a cool, dry place.' },
-            { id: 6, name: 'Sandalwood Shavings (300ml)', price: '80 AED', category: 'Sandalwood', notes: 'Pure Sandal Shavings', desc: 'High-quality sandalwood shavings, finely prepared for everyday luxury. Handcrafted with care. Preserve in a cool, dry place.' },
-            { id: 7, name: 'Rooh Al Oud (300ml)', price: '110 AED', category: 'Oud', notes: 'Pure Oud · Musk · Amber', desc: 'The soul of wood, a powerful and authentic oud experience. Handcrafted with care. Preserve in a cool, dry place.' },
-            { id: 8, name: 'Mahlab Mukhamariya (300ml)', price: '100 AED', category: 'Mukhamariya', notes: 'Mahlab · Essential Oils', desc: 'Traditional Sudanese hair and body fragrance with mahlab. Handcrafted with care. Preserve in a cool, dry place.' },
-            { id: 9, name: 'Dhufra Khamra (50ml)', price: '80 AED', category: 'Khumra', notes: 'Dhufra · Sandalwood', desc: 'Concentrated Dhufra Khamra, a deep and mysterious heritage scent. Handcrafted with care. Preserve in a cool, dry place.' },
-            { id: 10, name: 'Musk Khamra (50ml)', price: '80 AED', category: 'Khumra', notes: 'Soft Musk · Rose', desc: 'Elegant and soft musk-based concentrated fragrance. Handcrafted with care. Preserve in a cool, dry place.' },
-            { id: 11, name: 'Sandalwood Khamra (50ml)', price: '80 AED', category: 'Khumra', notes: 'Sandalwood · Essential Oils', desc: 'Warm and inviting sandalwood concentrated essence. Handcrafted with care. Preserve in a cool, dry place.' },
+            { id: 1, name: 'Bakhour Al Shaf (500ml)', price: '80 AED', category: 'Heritage', image: '/product-hero.png', notes: 'Sudanese Shaf · Oudh', desc: 'Premium Sudanese Shaf bakhour in 500ml size. Handcrafted with care. Preserve in a cool, dry place.' },
+            { id: 2, name: 'Bakhour Al Anfar (500ml)', price: '80 AED', category: 'Heritage', image: '/product-hero.png', notes: 'Anfar · Oudh · Amber', desc: 'Elite Al Anfar bakhour blend in a generous 500ml jar. Handcrafted with care. Preserve in a cool, dry place.' },
+            { id: 3, name: 'Bakhour Habooba (300ml)', price: '80 AED', category: 'Heritage', image: '/product-hero.png', notes: 'Traditonal Grains · Oudh', desc: 'The beloved traditional Habooba scent in 300ml size. Handcrafted with care. Preserve in a cool, dry place.' },
+            { id: 4, name: 'Al Dalal Mix (300ml)', price: '100 AED', category: 'Signature', image: '/product-hero.png', notes: 'Secret Blend · Oudh · Spices', desc: 'Our signature luxurious mix of the finest bakhour ingredients. Handcrafted with care. Preserve in a cool, dry place.' },
+            { id: 5, name: 'Sandalwood Balls (300ml)', price: '100 AED', category: 'Sandalwood', image: '/product-hero.png', notes: 'Sandalwood · Musk · Oils', desc: 'Hand-rolled premium sandalwood balls for a lasting fragrance. Handcrafted with care. Preserve in a cool, dry place.' },
+            { id: 6, name: 'Sandalwood Shavings (300ml)', price: '80 AED', category: 'Sandalwood', image: '/product-hero.png', notes: 'Pure Sandal Shavings', desc: 'High-quality sandalwood shavings, finely prepared for everyday luxury. Handcrafted with care. Preserve in a cool, dry place.' },
+            { id: 7, name: 'Rooh Al Oud (300ml)', price: '110 AED', category: 'Oud', image: '/product-hero.png', notes: 'Pure Oud · Musk · Amber', desc: 'The soul of wood, a powerful and authentic oud experience. Handcrafted with care. Preserve in a cool, dry place.' },
+            { id: 8, name: 'Mahlab Mukhamariya (300ml)', price: '100 AED', category: 'Mukhamariya', image: '/product-hero.png', notes: 'Mahlab · Essential Oils', desc: 'Traditional Sudanese hair and body fragrance with mahlab. Handcrafted with care. Preserve in a cool, dry place.' },
+            { id: 9, name: 'Dhufra Khamra (50ml)', price: '80 AED', category: 'Khumra', image: '/product-hero.png', notes: 'Dhufra · Sandalwood', desc: 'Concentrated Dhufra Khamra, a deep and mysterious heritage scent. Handcrafted with care. Preserve in a cool, dry place.' },
+            { id: 10, name: 'Musk Khamra (50ml)', price: '80 AED', category: 'Khumra', image: '/product-hero.png', notes: 'Soft Musk · Rose', desc: 'Elegant and soft musk-based concentrated fragrance. Handcrafted with care. Preserve in a cool, dry place.' },
+            { id: 11, name: 'Sandalwood Khamra (50ml)', price: '80 AED', category: 'Khumra', image: '/product-hero.png', notes: 'Sandalwood · Essential Oils', desc: 'Warm and inviting sandalwood concentrated essence. Handcrafted with care. Preserve in a cool, dry place.' },
         ]
     },
     ar: {
@@ -242,17 +242,17 @@ export const translations = {
             continue: '← متابعة التسوق'
         },
         products: [
-            { id: 1, name: 'بخور الشاف (٥٠٠ مل)', price: '٨٠ درهم', category: 'تراثي', notes: 'شاف سوداني · عود', desc: 'بخور الشاف السوداني الفاخر بحجم ٥٠٠ مل. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
-            { id: 2, name: 'بخور العنفر (٥٠٠ مل)', price: '٨٠ درهم', category: 'تراثي', notes: 'عنفر · عود · عنبر', desc: 'مزيج بخور العنفر النخبة بحجم عائلي ٥٠٠ مل. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
-            { id: 3, name: 'بخور حبوبة (٣٠٠ مل)', price: '٨٠ درهم', category: 'تراثي', notes: 'حبوب · عود · عنبر', desc: 'بخور حبوبة التراثي الأصيل بعبقه السوداني المحبوب. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
-            { id: 4, name: 'مكس الدلال (٣٠٠ مل)', price: '١٠٠ درهم', category: 'مميز', notes: 'خلطة سرية · عود', desc: 'التوليفة الفاخرة التي تمثل توقيع بخور الدلال. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
-            { id: 5, name: 'كرات الصندل (٣٠٠ مل)', price: '١٠٠ درهم', category: 'صندل', notes: 'صندل · مسك · زيوت', desc: 'كرات الصندل الفاخرة المشغولة يدوياً لثبات يدوم طويلاً. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
-            { id: 6, name: 'مبشور صندل (٣٠٠ مل)', price: '٨٠ درهم', category: 'صندل', notes: 'مبشور صندل نقي', desc: 'رقائق خشب الصندل الفاخرة والمحضرة بعناية للاستخدام اليومي. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
-            { id: 7, name: 'روح العود (٣٠٠ مل)', price: '١١٠ درهم', category: 'عود', notes: 'عود نقي · مسك', desc: 'تجربة عطرية عميقة تمثل جوهر الخشب العتيق. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
-            { id: 8, name: 'مخمرية محلب (٣٠٠ مل)', price: '١٠٠ درهم', category: 'مخمرية', notes: 'محلب · زيوت أساسية', desc: 'عطر المحلب السوداني التقليدي للجسم والشعر. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
-            { id: 9, name: 'خمرة ضفرة (٥٠ مل)', price: '٨٠ درهم', category: 'خمرة', notes: 'ضفرة · صندل', desc: 'خمرة الضفرة المركزة بعبقها التراثي الغامض والعميق. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
-            { id: 10, name: 'خمرة مسك (٥٠ مل)', price: '٨٠ درهم', category: 'خمرة', notes: 'مسك ناعم · ورد', desc: 'خمرة المسك الأنيقة والناعمة لرائحة تبعث على الراحة. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
-            { id: 11, name: 'خمرة صندل (٥٠ مل)', price: '٨٠ درهم', category: 'خمرة', notes: 'صندل · زيوت مركزة', desc: 'جوهر الصندل الدافئ والمنعش في زجاجة مركزة. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
+            { id: 1, name: 'بخور الشاف (٥٠٠ مل)', price: '٨٠ درهم', category: 'تراثي', image: '/product-hero.png', notes: 'شاف سوداني · عود', desc: 'بخور الشاف السوداني الفاخر بحجم ٥٠٠ مل. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
+            { id: 2, name: 'بخور العنفر (٥٠٠ مل)', price: '٨٠ درهم', category: 'تراثي', image: '/product-hero.png', notes: 'عنفر · عود · عنبر', desc: 'مزيج بخور العنفر النخبة بحجم عائلي ٥٠٠ مل. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
+            { id: 3, name: 'بخور حبوبة (٣٠٠ مل)', price: '٨٠ درهم', category: 'تراثي', image: '/product-hero.png', notes: 'حبوب · عود · عنبر', desc: 'بخور حبوبة التراثي الأصيل بعبقه السوداني المحبوب. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
+            { id: 4, name: 'مكس الدلال (٣٠٠ مل)', price: '١٠٠ درهم', category: 'مميز', image: '/product-hero.png', notes: 'خلطة سرية · عود', desc: 'التوليفة الفاخرة التي تمثل توقيع بخور الدلال. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
+            { id: 5, name: 'كرات الصندل (٣٠٠ مل)', price: '١٠٠ درهم', category: 'صندل', image: '/product-hero.png', notes: 'صندل · مسك · زيوت', desc: 'كرات الصندل الفاخرة المشغولة يدوياً لثبات يدوم طويلاً. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
+            { id: 6, name: 'مبشور صندل (٣٠٠ مل)', price: '٨٠ درهم', category: 'صندل', image: '/product-hero.png', notes: 'مبشور صندل نقي', desc: 'رقائق خشب الصندل الفاخرة والمحضرة بعناية للاستخدام اليومي. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
+            { id: 7, name: 'روح العود (٣٠٠ مل)', price: '١١٠ درهم', category: 'عود', image: '/product-hero.png', notes: 'عود نقي · مسك', desc: 'تجربة عطرية عميقة تمثل جوهر الخشب العتيق. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
+            { id: 8, name: 'مخمرية محلب (٣٠٠ مل)', price: '١٠٠ درهم', category: 'مخمرية', image: '/product-hero.png', notes: 'محلب · زيوت أساسية', desc: 'عطر المحلب السوداني التقليدي للجسم والشعر. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
+            { id: 9, name: 'خمرة ضفرة (٥٠ مل)', price: '٨٠ درهم', category: 'خمرة', image: '/product-hero.png', notes: 'ضفرة · صندل', desc: 'خمرة الضفرة المركزة بعبقها التراثي الغامض والعميق. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
+            { id: 10, name: 'خمرة مسك (٥٠ مل)', price: '٨٠ درهم', category: 'خمرة', image: '/product-hero.png', notes: 'مسك ناعم · ورد', desc: 'خمرة المسك الأنيقة والناعمة لرائحة تبعث على الراحة. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
+            { id: 11, name: 'خمرة صندل (٥٠ مل)', price: '٨٠ درهم', category: 'خمرة', image: '/product-hero.png', notes: 'صندل · زيوت مركزة', desc: 'جوهر الصندل الدافئ والمنعش في زجاجة مركزة. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
         ]
     }
 };

@@ -1,5 +1,6 @@
 import { CartProvider } from '@/context/CartContext';
 import { LanguageProvider } from '@/context/LanguageContext';
+import OnboardingPopup from '@/components/ui/OnboardingPopup';
 import './globals.css';
 
 export const metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
                 <LanguageProvider>
                     <CartProvider>
                         {children}
+                        <OnboardingPopup />
                     </CartProvider>
                 </LanguageProvider>
             </body>

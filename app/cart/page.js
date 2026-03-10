@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
 import { useCart } from '@/context/CartContext';
@@ -6,12 +7,40 @@ import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/utils/translations';
 import { Trash2, Minus, Plus, ShoppingBag, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import ProductRecommendations from '@/components/ui/ProductRecommendations';
 import styles from './page.module.css';
 
 export default function CartPage() {
-    const { cart, removeFromCart, updateQuantity, cartTotal, cartCount } = useCart();
+    const {
+        cart,
+        removeFromCart,
+        updateQuantity,
+        cartTotal,
+        cartCount,
+        cartDiscount,
+        couponDiscount,
+        appliedCoupon,
+        applyCoupon,
+        removeCoupon,
+        finalTotal
+    } = useCart();
+
     const { lang } = useLanguage();
     const t = translations[lang].cart;
+
+    const [couponCode, setCouponCode] = useState('');
+    const [couponMsg, setCouponMsg] = useState({ type: '', text: '' });
+    const [isValidating, setIsValidating] = useState(false);
+
+    const handleApplyCoupon = async (e) => {
+        e.preventDefault();
+        if (!couponCode) return;
+        setIsValidating(true);
+        const result = await applyCoupon(couponCode);
+        setCouponMsg({ type: result.success ? 'success' : 'error', text: result.message });
+        if (result.success) setCouponCode('');
+        setIsValidating(false);
+    };
 
     return (
         <>
@@ -75,6 +104,37 @@ export default function CartPage() {
                                 <aside className={styles.summary}>
                                     <div className={styles.summaryCard}>
                                         <h2 className={styles.summaryTitle}>{t.summary}</h2>
+
+                                        {/* Coupon Section */}
+                                        <div className={styles.couponSection}>
+                                            {appliedCoupon ? (
+                                                <div className={styles.activeCoupon}>
+                                                    <div className={styles.couponLabel}>
+                                                        <span className="gold-text">CODE: {appliedCoupon.code}</span>
+                                                        <button onClick={removeCoupon} className={styles.removeCouponBtn}>Remove</button>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <form onSubmit={handleApplyCoupon} className={styles.couponForm}>
+                                                    <input
+                                                        type="text"
+                                                        placeholder={lang === 'en' ? 'Coupon Code' : 'كود الخصم'}
+                                                        value={couponCode}
+                                                        onChange={(e) => setCouponCode(e.target.value)}
+                                                        className={styles.couponInput}
+                                                    />
+                                                    <button type="submit" disabled={isValidating} className={styles.applyBtn}>
+                                                        {isValidating ? '...' : (lang === 'en' ? 'Apply' : 'تطبيق')}
+                                                    </button>
+                                                </form>
+                                            )}
+                                            {couponMsg.text && (
+                                                <p className={couponMsg.type === 'error' ? styles.errorMsg : styles.successMsg}>
+                                                    {couponMsg.text}
+                                                </p>
+                                            )}
+                                        </div>
+
                                         <div className={styles.summaryDetail}>
                                             <span>{t.subtotal}</span>
                                             <span>{cartTotal.toFixed(2)} AED</span>
@@ -83,9 +143,24 @@ export default function CartPage() {
                                             <span>{t.shipping}</span>
                                             <span className={styles.complimentary}>{t.complimentary}</span>
                                         </div>
+
+                                        {cartDiscount > 0 && (
+                                            <div className={styles.summaryDetail} style={{ color: '#C6A75E' }}>
+                                                <span>{lang === 'en' ? 'Quantity Discount (10%)' : 'خصم الكمية (10%)'}</span>
+                                                <span>-{cartDiscount.toFixed(2)} AED</span>
+                                            </div>
+                                        )}
+
+                                        {appliedCoupon && (
+                                            <div className={styles.summaryDetail} style={{ color: '#C6A75E' }}>
+                                                <span>{lang === 'en' ? `Coupon (${appliedCoupon.code})` : `كوبون (${appliedCoupon.code})`}</span>
+                                                <span>-{couponDiscount.toFixed(2)} AED</span>
+                                            </div>
+                                        )}
+
                                         <div className={styles.summaryTotal}>
                                             <span>{t.total}</span>
-                                            <span className="gold-text">{cartTotal.toFixed(2)} AED</span>
+                                            <span className="gold-text">{finalTotal.toFixed(2)} AED</span>
                                         </div>
 
                                         <button className={`${styles.checkoutBtn} btn-luxury w-100`}>
@@ -105,6 +180,7 @@ export default function CartPage() {
                         )}
                     </div>
                 </section>
+                <ProductRecommendations />
             </main>
             <Footer />
         </>

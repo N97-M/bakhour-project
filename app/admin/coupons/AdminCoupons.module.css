@@ -1,0 +1,191 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.actionBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.secTitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    color: rgba(200, 191, 178, 0.7);
+}
+
+.addBtn {
+    background: #C6A75E;
+    color: #000;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.couponGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.couponCard {
+    background: rgba(26, 26, 26, 0.5);
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+    border-radius: 8px;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.codeWrap {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.code {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.deleteBtn {
+    background: none;
+    border: none;
+    color: rgba(255, 68, 68, 0.4);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.deleteBtn:hover {
+    color: #ff4444;
+}
+
+.discount {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #C6A75E;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: rgba(200, 191, 178, 0.5);
+}
+
+.activeStatus {
+    font-size: 0.75rem;
+    color: #44ff44;
+    background: rgba(68, 255, 68, 0.05);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    width: fit-content;
+    border: 1px solid rgba(68, 255, 68, 0.2);
+}
+
+.inactiveStatus {
+    font-size: 0.75rem;
+    color: #ff4444;
+    background: rgba(255, 68, 68, 0.05);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    width: fit-content;
+    border: 1px solid rgba(255, 68, 68, 0.2);
+}
+
+/* Modal Styles */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal {
+    background: #151515;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    padding: 2.5rem;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form input,
+.form select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    padding: 0.8rem;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.saveBtn {
+    background: #C6A75E;
+    color: #000;
+    border: none;
+    padding: 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+}

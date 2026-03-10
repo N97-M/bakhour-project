@@ -138,6 +138,73 @@
     background: rgba(198, 167, 94, 0.05);
 }
 
+.userSection {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 4px 10px;
+    background: rgba(198, 167, 94, 0.05);
+    border: 1px solid rgba(198, 167, 94, 0.15);
+    border-radius: 4px;
+}
+
+.adminLink {
+    font-size: 0.65rem;
+    color: #000;
+    background: #C6A75E;
+    padding: 2px 6px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.adminLink:hover {
+    background: #d4b87a;
+    transform: translateY(-1px);
+}
+
+.userName {
+    font-size: 0.65rem;
+    color: #f7eed7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.logoutBtn {
+    background: none;
+    border: none;
+    color: #C8BFB2;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    transition: all 0.3s ease;
+}
+
+.logoutBtn:hover {
+    color: #ff4444;
+    transform: scale(1.1);
+}
+
+.loginLink {
+    font-size: 0.65rem;
+    color: #C6A75E;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.loginLink:hover {
+    border-color: #C6A75E;
+    letter-spacing: 3px;
+}
+
 .ctaNav {
     background: transparent !important;
     border: 1px solid rgba(198, 167, 94, 0.6) !important;

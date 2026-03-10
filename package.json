@@ -9,15 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.99.0",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.9",
     "framer-motion": "^12.4.0",
     "gsap": "^3.12.5",
     "lucide-react": "^0.475.0",
+    "next": "15.1.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "three": "^0.170.0",
-    "next": "15.1.9",
-    "eslint": "^9",
-    "eslint-config-next": "15.1.9"
-  },
-  "devDependencies": {}
+    "resend": "^6.9.3",
+    "three": "^0.170.0"
+  }
 }
