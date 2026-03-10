@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-// This endpoint is meant to be called periodically (e.g., hourly) by a service like Vercel Cron.
 export async function GET(req) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
     try {
         // Authenticate the cron request to ensure external actors cannot trigger it
         /*

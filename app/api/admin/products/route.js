@@ -1,11 +1,8 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-// import { Resend } from 'resend';
-// import { createClient } from '@supabase/supabase-js';
-
 export async function POST(req) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
     try {
         const body = await req.json();
         const { productName, productUrl } = body;
