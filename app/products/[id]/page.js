@@ -2,6 +2,7 @@
 import { use, useEffect, useState } from 'react';
 import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
+import Image from 'next/image';
 import ProductReviews from '@/components/ui/ProductReviews';
 import { useLanguage } from '@/context/LanguageContext';
 import { useCart } from '@/context/CartContext';
@@ -77,8 +78,14 @@ export default function ProductPage({ params }) {
                     <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
 
                         <div className={styles.imagePlaceholder}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={product.image || '/product-hero.png'} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'relative', zIndex: 2 }} />
+                            <Image
+                                src={product.image || '/product-hero.png'}
+                                alt={product.name}
+                                width={800}
+                                height={1000}
+                                className={styles.mainImage}
+                                priority
+                            />
                             <div className={styles.imageGlow} />
                         </div>
 

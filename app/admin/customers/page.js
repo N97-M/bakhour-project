@@ -24,7 +24,8 @@ export default function AdminCustomersPage() {
         // We derive customers from the orders table
         const { data, error } = await supabase
             .from('orders')
-            .select('customer_name, customer_email, customer_phone, total_amount, created_at');
+            .select('customer_name, customer_email, customer_phone, total_amount, created_at')
+            .neq('status', 'pending');
 
         if (data) {
             // Group by email/phone to find unique customers

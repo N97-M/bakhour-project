@@ -102,19 +102,81 @@
 
 @media (max-width: 900px) {
     .sidebar {
-        width: 70px;
+        width: 60px;
     }
 
-    .main {
-        margin-left: 70px;
-        padding: 1.5rem;
+    .logoArea {
+        padding: 1rem 0;
+        align-items: center;
+    }
+
+    .logoText {
+        display: none;
+    }
+
+    .logoArea > a {
+        justify-content: center;
+        margin-top: 0 !important;
+        padding: 0.5rem !important;
+        width: 100%;
+        display: flex;
+    }
+
+    .nav {
+        padding: 1rem 0;
+    }
+
+    .navLink {
+        padding: 1rem 0;
+        justify-content: center;
     }
 
     .navLink span {
         display: none;
     }
 
-    .logoText {
-        font-size: 1rem;
+    .activeLink {
+        border-right: none;
+        background: rgba(198, 167, 94, 0.1);
+        border-left: 3px solid #C6A75E;
+    }
+
+    .sidebar > div:last-child {
+        padding: 1rem 0 !important;
+        display: flex;
+        justify-content: center;
+    }
+
+    .logoutBtn {
+        border: none;
+        padding: 0.5rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    .logoutBtn span {
+        display: none;
+    }
+
+    .main {
+        margin-left: 60px;
+        padding: 1rem;
+        max-width: calc(100vw - 60px);
+    }
+
+    .topBar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .pageTitle {
+        font-size: 1.4rem;
+    }
+
+    .adminUser {
+        font-size: 0.75rem;
+        word-break: break-all;
     }
 }

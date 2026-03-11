@@ -48,7 +48,6 @@ export default function Navbar() {
 
     const links = [
         { href: '/', label: t.home },
-        { href: '/gallery', label: t.collection },
         { href: '/story', label: t.story },
         { href: '/packaging', label: t.packaging },
     ];
@@ -64,13 +63,33 @@ export default function Navbar() {
 
             <div className={styles.navRight}>
                 <ul className={`${styles.links} ${menuOpen ? styles.open : ''}`}>
-                    {links.map((l) => (
-                        <li key={l.href}>
-                            <Link href={l.href} onClick={() => setMenuOpen(false)}>
-                                {l.label}
-                            </Link>
-                        </li>
-                    ))}
+                    <li>
+                        <Link href="/" onClick={() => setMenuOpen(false)}>
+                            {t.home}
+                        </Link>
+                    </li>
+                    <li className={styles.dropdownContainer}>
+                        <Link href="/gallery" onClick={() => setMenuOpen(false)}>
+                            {t.collection}
+                        </Link>
+                        <ul className={styles.dropdownMenu}>
+                            <li><Link href="/gallery?category=bakhour" onClick={() => setMenuOpen(false)}>{t.bakhour}</Link></li>
+                            <li><Link href="/gallery?category=khamriyat" onClick={() => setMenuOpen(false)}>{t.khamriyat}</Link></li>
+                            <li><Link href="/gallery?category=mahlab" onClick={() => setMenuOpen(false)}>{t.mahlab}</Link></li>
+                            <li><Link href="/gallery?category=gifts" onClick={() => setMenuOpen(false)}>{t.gifts}</Link></li>
+                            <li><Link href="/gallery?category=bestSellers" onClick={() => setMenuOpen(false)}>{t.bestSellers}</Link></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <Link href="/story" onClick={() => setMenuOpen(false)}>
+                            {t.story}
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/packaging" onClick={() => setMenuOpen(false)}>
+                            {t.packaging}
+                        </Link>
+                    </li>
                     <li>
                         <Link href="/gallery" className={styles.ctaNav} onClick={() => setMenuOpen(false)}>
                             {t.shopNow}

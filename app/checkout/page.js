@@ -18,10 +18,13 @@ import {
 import styles from './page.module.css';
 
 export default function CheckoutPage() {
-    const { cart, cartTotal, finalTotal, cartDiscount, couponDiscount, appliedCoupon, clearCart } = useCart();
+    const { cart, cartTotal, finalTotal: cartFinalTotal, cartDiscount, couponDiscount, appliedCoupon, clearCart } = useCart();
     const { lang } = useLanguage();
     const router = useRouter();
     const t = translations[lang].checkout;
+
+    const [shippingRates, setShippingRates] = useState({ uae: 25, intl: 45 });
+    const [calculatedShipping, setCalculatedShipping] = useState(0);
 
     const [form, setForm] = useState({
         name: '',
@@ -41,60 +44,70 @@ export default function CheckoutPage() {
         }
     }, [cart, router]);
 
+    // Fetch Rates
+    useEffect(() => {
+        const fetchRates = async () => {
+            const { data } = await supabase.from('site_config').select('*').in('key', ['shipping_uae_flat', 'shipping_intl_kg']);
+            if (data) {
+                const rates = { uae: 25, intl: 45 };
+                data.forEach(row => {
+                    if (row.key === 'shipping_uae_flat') rates.uae = Number(row.value);
+                    if (row.key === 'shipping_intl_kg') rates.intl = Number(row.value);
+                });
+                setShippingRates(rates);
+            }
+        };
+        fetchRates();
+    }, []);
+
+    // Calculate Shipping
+    useEffect(() => {
+        if (!form.country) return;
+        
+        if (form.country === 'United Arab Emirates') {
+            setCalculatedShipping(shippingRates.uae);
+        } else {
+            // Calculate total weight
+            const totalKg = cart.reduce((acc, item) => {
+                const weight = item.weight_kg !== undefined ? Number(item.weight_kg) : 0.5;
+                return acc + (weight * item.quantity);
+            }, 0);
+            
+            // Round up to nearest KG for pricing
+            const chargeableWeight = Math.ceil(totalKg);
+            setCalculatedShipping(chargeableWeight * shippingRates.intl);
+        }
+    }, [form.country, cart, shippingRates]);
+
+    // Add shipping to the original cart final total
+    const grandTotal = cartFinalTotal + calculatedShipping;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
         try {
-            // 1. Get current session if exists
-            const { data: { session } } = await supabase.auth.getSession();
+            // 1. Call our API Route
+            const res = await fetch('/api/checkout/ziina', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    form,
+                    cart,
+                    finalTotal: grandTotal,
+                    shippingCost: calculatedShipping
+                })
+            });
 
-            // 2. Create Order
-            const { data: order, error: orderError } = await supabase
-                .from('orders')
-                .insert([{
-                    user_id: session?.user?.id || null,
-                    customer_name: form.name,
-                    customer_email: form.email,
-                    customer_phone: form.phone,
-                    shipping_address: `${form.address}, ${form.city}`,
-                    total_amount: finalTotal,
-                    status: 'pending',
-                    is_gift: form.is_gift,
-                    gift_message: form.gift_message
-                }])
-                .select()
-                .single();
-
-            if (orderError) throw orderError;
-
-            // 3. Create Order Items
-            const orderItems = cart.map(item => ({
-                order_id: order.id,
-                product_id: item.id,
-                quantity: item.quantity,
-                unit_price: parseFloat(item.price.replace(/[^0-9.]/g, ''))
-            }));
-
-            const { error: itemsError } = await supabase
-                .from('order_items')
-                .insert(orderItems);
-
-            if (itemsError) throw itemsError;
-
-            // 4. Reduce Stock (Bonus)
-            for (const item of cart) {
-                const { data: p } = await supabase.from('products').select('stock_quantity').eq('id', item.id).single();
-                if (p) {
-                    await supabase.from('products')
-                        .update({ stock_quantity: p.stock_quantity - item.quantity })
-                        .eq('id', item.id);
-                }
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || 'Failed to initialize payment');
             }
 
-            // 5. Cleanup & Redirect
-            clearCart();
-            router.push(`/checkout/success?orderId=${order.id}`);
+            const data = await res.json();
+
+            // 2. Redirect User to Ziina Payment Page
+            window.location.href = data.url;
 
         } catch (err) {
             alert('Checkout Error: ' + err.message);
@@ -149,19 +162,45 @@ export default function CheckoutPage() {
                                             />
                                         </div>
                                         <div className={styles.formGroup}>
-                                            <label>{lang === 'en' ? 'City' : 'المدينة'}</label>
+                                            <label>{lang === 'en' ? 'Country' : 'الدولة'}</label>
                                             <select
                                                 required
-                                                value={form.city}
-                                                onChange={e => setForm({ ...form, city: e.target.value })}
+                                                value={form.country}
+                                                onChange={e => setForm({ ...form, country: e.target.value, city: '' })}
                                             >
-                                                <option value="">{lang === 'en' ? 'Select City' : 'اختر المدينة'}</option>
-                                                <option value="Dubai">Dubai</option>
-                                                <option value="Abu Dhabi">Abu Dhabi</option>
-                                                <option value="Sharjah">Sharjah</option>
-                                                <option value="Ajman">Ajman</option>
-                                                <option value="RAK">Ras Al Khaimah</option>
+                                                <option value="">{lang === 'en' ? 'Select Country' : 'اختر الدولة'}</option>
+                                                <option value="United Arab Emirates">{lang === 'en' ? 'United Arab Emirates' : 'الإمارات العربية المتحدة'}</option>
+                                                <option value="Saudi Arabia">{lang === 'en' ? 'Saudi Arabia' : 'المملكة العربية السعودية'}</option>
+                                                <option value="Kuwait">{lang === 'en' ? 'Kuwait' : 'الكويت'}</option>
+                                                <option value="Qatar">{lang === 'en' ? 'Qatar' : 'قطر'}</option>
+                                                <option value="Bahrain">{lang === 'en' ? 'Bahrain' : 'البحرين'}</option>
+                                                <option value="Oman">{lang === 'en' ? 'Oman' : 'عُمان'}</option>
                                             </select>
+                                        </div>
+                                        <div className={styles.formGroup}>
+                                            <label>{lang === 'en' ? 'City' : 'المدينة'}</label>
+                                            {form.country === 'United Arab Emirates' ? (
+                                                <select
+                                                    required
+                                                    value={form.city}
+                                                    onChange={e => setForm({ ...form, city: e.target.value })}
+                                                >
+                                                    <option value="">{lang === 'en' ? 'Select City' : 'اختر المدينة'}</option>
+                                                    <option value="Dubai">Dubai</option>
+                                                    <option value="Abu Dhabi">Abu Dhabi</option>
+                                                    <option value="Sharjah">Sharjah</option>
+                                                    <option value="Ajman">Ajman</option>
+                                                    <option value="RAK">Ras Al Khaimah</option>
+                                                </select>
+                                            ) : (
+                                                <input
+                                                    type="text"
+                                                    required
+                                                    placeholder={lang === 'en' ? 'Enter your city' : 'أدخل مدينتك'}
+                                                    value={form.city}
+                                                    onChange={e => setForm({ ...form, city: e.target.value })}
+                                                />
+                                            )}
                                         </div>
                                         <div className={`${styles.formGroup} ${styles.fullRow}`}>
                                             <label>{lang === 'en' ? 'Delivery Address (Apartment, Street, Landmark)' : 'عنوان التوصيل (الشقة، الشارع، علامة مميزة)'}</label>
@@ -217,7 +256,7 @@ export default function CheckoutPage() {
 
                                 <div className={styles.secureBadge}>
                                     <ShieldCheck size={16} />
-                                    <span>{lang === 'en' ? 'Secure Payment on Delivery' : 'دفع آمن عند الاستلام'}</span>
+                                    <span>{lang === 'en' ? 'Secure Online Payment' : 'دفع إلكتروني آمن'}</span>
                                 </div>
                             </form>
                         </section>
@@ -250,7 +289,11 @@ export default function CheckoutPage() {
                                     </div>
                                     <div className={styles.row}>
                                         <span>{lang === 'en' ? 'Shipping' : 'الشحن'}</span>
-                                        <span className={styles.free}>{lang === 'en' ? 'Complimentary' : 'مجاني'}</span>
+                                        {form.country ? (
+                                            <span>{calculatedShipping.toFixed(2)} AED</span>
+                                        ) : (
+                                            <span className={styles.free}>{lang === 'en' ? 'Select Country' : 'اختر الدولة'}</span>
+                                        )}
                                     </div>
 
                                     {cartDiscount > 0 && (
@@ -269,7 +312,7 @@ export default function CheckoutPage() {
 
                                     <div className={styles.totalRow}>
                                         <span>{lang === 'en' ? 'Total' : 'الإجمالي'}</span>
-                                        <span className="gold-text">{finalTotal.toFixed(2)} AED</span>
+                                        <span className="gold-text">{grandTotal.toFixed(2)} AED</span>
                                     </div>
                                 </div>
                             </div>

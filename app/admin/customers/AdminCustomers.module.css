@@ -161,4 +161,8 @@
     .tableWrapper {
         overflow-x: auto;
     }
+
+    .table {
+        min-width: 600px;
+    }
 }

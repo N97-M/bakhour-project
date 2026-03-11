@@ -235,6 +235,41 @@
     margin-top: 1rem;
 }
 
+.categoryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.categoryCheckbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.8rem;
+    border: 1px solid rgba(198, 167, 94, 0.1);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.categoryCheckbox:hover {
+    background: rgba(198, 167, 94, 0.05);
+    border-color: rgba(198, 167, 94, 0.3);
+}
+
+.categoryCheckbox input {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.categoryCheckbox span {
+    font-size: 0.85rem;
+    color: #fff;
+}
+
 .form label {
     font-size: 0.85rem;
     color: rgba(200, 191, 178, 0.6);
@@ -339,4 +374,42 @@
     color: #fff;
     border: none;
     cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .actionBar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .searchWrapper {
+        max-width: 100%;
+    }
+
+    .tableWrapper {
+        overflow-x: auto;
+    }
+
+    .table {
+        min-width: 500px;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .imagePreviewWrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .formActions {
+        flex-direction: column-reverse;
+    }
+    
+    .saveBtn, .cancelBtn {
+        width: 100%;
+        padding: 1rem;
+    }
 }

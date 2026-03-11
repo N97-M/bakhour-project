@@ -24,7 +24,7 @@ import styles from './AdminOrders.module.css';
 export default function AdminOrdersPage() {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [filter, setFilter] = useState('all');
+    const [filter, setFilter] = useState('active');
     const [expandedOrder, setExpandedOrder] = useState(null);
     const [updatingId, setUpdatingId] = useState(null);
 
@@ -41,7 +41,14 @@ export default function AdminOrdersPage() {
             `)
             .order('created_at', { ascending: false });
 
-        if (filter !== 'all') {
+        if (filter === 'active') {
+            query.neq('status', 'pending').neq('status', 'cancelled');
+        } else if (filter === 'all') {
+            // Still hide pending from 'all' to avoid clutter
+            query.neq('status', 'pending');
+        } else if (filter === 'abandoned') {
+            query.eq('status', 'pending');
+        } else {
             query.eq('status', filter);
         }
 
@@ -92,12 +99,13 @@ export default function AdminOrdersPage() {
                     <div className={styles.filterGroup}>
                         <Filter size={18} color="#C6A75E" />
                         <select value={filter} onChange={e => setFilter(e.target.value)} className={styles.statusSelect}>
-                            <option value="all">All Statuses</option>
-                            <option value="pending">Pending</option>
+                            <option value="active">Active Orders</option>
+                            <option value="all">All (Excl. Abandoned)</option>
                             <option value="processing">Processing</option>
                             <option value="shipped">Shipped</option>
                             <option value="delivered">Delivered</option>
                             <option value="cancelled">Cancelled</option>
+                            <option value="abandoned">Abandoned Checkouts</option>
                         </select>
                     </div>
                 </div>
@@ -143,8 +151,8 @@ export default function AdminOrdersPage() {
                                             <div className={styles.infoColumn}>
                                                 <h4>Customer Details</h4>
                                                 <div className={styles.infoRow}><UserIcon /> <span>{order.customer_name}</span></div>
-                                                <div className={styles.infoRow}><Mail size={16} /> <span>{order.customer_email}</span></div>
-                                                <div className={styles.infoRow}><Phone size={16} /> <span>{order.customer_phone}</span></div>
+                                                <div className={styles.infoRow}><Mail size={16} /> <span style={{wordBreak: 'break-all'}}>{order.customer_email}</span></div>
+                                                <div className={styles.infoRow}><Phone size={16} /> <span style={{wordBreak: 'break-all'}}>{order.customer_phone}</span></div>
 
                                                 <h4 style={{ marginTop: '1.5rem' }}>Shipping Address</h4>
                                                 <div className={styles.infoRow}><MapPin size={16} /> <span>{order.shipping_address}</span></div>
@@ -172,8 +180,8 @@ export default function AdminOrdersPage() {
                                                                     className={styles.itemImg}
                                                                 />
                                                                 <div>
-                                                                    <p className={styles.itemName}>{item.product?.name_en}</p>
-                                                                    <p className={styles.itemPrice}>{item.unit_price} AED x {item.quantity}</p>
+                                                                    <div className={styles.itemName}>{item.product?.name_en}</div>
+                                                                    <div className={styles.itemPrice}>{item.unit_price} AED x {item.quantity}</div>
                                                                 </div>
                                                             </div>
                                                             <div className={styles.itemSubtotal}>{(item.unit_price * item.quantity).toFixed(2)} AED</div>

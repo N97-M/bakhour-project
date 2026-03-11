@@ -13,7 +13,9 @@ import styles from './AdminSettings.module.css';
 export default function AdminSettingsPage() {
     const [settings, setSettings] = useState({
         whatsapp: { number: '', enabled: true },
-        announcement: { text_en: '', text_ar: '', active: true }
+        announcement: { text_en: '', text_ar: '', active: true },
+        shipping_uae_flat: '25',
+        shipping_intl_kg: '45'
     });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -134,6 +136,57 @@ export default function AdminSettingsPage() {
                         disabled={saving}
                     >
                         <Save size={18} /> Update Banner
+                    </button>
+                </div>
+            </div>
+
+            <div className={styles.section}>
+                <div className={styles.sectionHeader}>
+                    <Globe size={24} color="#C6A75E" />
+                    <div>
+                        <h3>Shipping Rates</h3>
+                        <p>Configure delivery fees for local and international orders.</p>
+                    </div>
+                </div>
+                <div className={styles.card}>
+                    <div className={styles.formGrid}>
+                        <div className={styles.formGroup}>
+                            <label>UAE Flat Rate (AED)</label>
+                            <input
+                                type="number"
+                                min="0"
+                                value={settings.shipping_uae_flat}
+                                onChange={e => setSettings({ ...settings, shipping_uae_flat: e.target.value })}
+                            />
+                            <p className={styles.uploadHint}>Fixed rate for all orders inside UAE.</p>
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>International Rate (AED per KG)</label>
+                            <input
+                                type="number"
+                                min="0"
+                                value={settings.shipping_intl_kg}
+                                onChange={e => setSettings({ ...settings, shipping_intl_kg: e.target.value })}
+                            />
+                            <p className={styles.uploadHint}>Rate multiplied by total cart weight.</p>
+                        </div>
+                    </div>
+                    <button
+                        className={styles.saveBtn}
+                        onClick={async () => {
+                            setSaving(true);
+                            await supabase.from('site_config').upsert([
+                                { key: 'shipping_uae_flat', value: settings.shipping_uae_flat },
+                                { key: 'shipping_intl_kg', value: settings.shipping_intl_kg }
+                            ]);
+                            alert('Shipping rates updated!');
+                            setSaving(false);
+                            fetchSettings();
+                        }}
+                        disabled={saving}
+                        style={{ marginTop: '1.5rem' }}
+                    >
+                        <Save size={18} /> Update Shipping Rates
                     </button>
                 </div>
             </div>

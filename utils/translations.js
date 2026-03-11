@@ -2,6 +2,11 @@ export const translations = {
     en: {
         nav: {
             home: 'Home',
+            bakhour: 'Bakhour',
+            khamriyat: 'Khomrah',
+            mahlab: 'Mahlab',
+            gifts: 'Packages & Gifts',
+            bestSellers: 'Best Sellers',
             collection: 'Collection',
             story: 'Our Story',
             packaging: 'Packaging',
@@ -138,6 +143,11 @@ export const translations = {
     ar: {
         nav: {
             home: 'الرئيسية',
+            bakhour: 'البخور',
+            khamriyat: 'الخمر',
+            mahlab: 'محلب',
+            gifts: 'البكجات والهدايا',
+            bestSellers: 'الأكثر مبيعاً',
             collection: 'التشكيلة',
             story: 'قصتنا',
             packaging: 'تغليفنا',

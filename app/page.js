@@ -13,10 +13,8 @@ import { supabase } from '@/utils/supabase';
 import styles from './page.module.css';
 import { flyToCart } from '@/utils/flyToCart';
 
-function FeaturedCard({ product, index }) {
+function CategoryCard({ category, index }) {
     const ref = useRef(null);
-    const { addToCart } = useCart();
-    const { lang } = useLanguage();
     const router = useRouter();
 
     useEffect(() => {
@@ -35,30 +33,19 @@ function FeaturedCard({ product, index }) {
             ref={ref}
             className={styles.productCard}
             style={{ transitionDelay: `${index * 0.15}s`, cursor: 'pointer' }}
-            onClick={() => router.push(`/products/${product.id}`)}
+            onClick={() => router.push(`/gallery?category=${category.id}`)}
         >
             <div className={styles.cardImageWrapper}>
                 <Image
-                    src={product.image || '/product-hero.png'}
-                    alt={product.name}
+                    src={category.image}
+                    alt={category.name}
                     width={400}
                     height={400}
                     className={styles.cardImage}
                 />
             </div>
-            <div className={styles.cardInfo}>
-                <h3 className={styles.cardName}>{product.name}</h3>
-                <p className={styles.price}>{product.price}</p>
-                <button
-                    className={`${styles.addBtn} btn-luxury`}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        addToCart(product);
-                        flyToCart(e);
-                    }}
-                >
-                    <span>{translations[lang].nav.cart}</span>
-                </button>
+            <div className={styles.cardInfo} style={{ justifyContent: 'center' }}>
+                <h3 className={styles.cardName} style={{ marginBottom: 0 }}>{category.name}</h3>
             </div>
         </div>
     );
@@ -67,32 +54,14 @@ function FeaturedCard({ product, index }) {
 export default function Home() {
     const sectionRef = useRef(null);
     const { lang } = useLanguage();
-    const [featured, setFeatured] = useState([]);
-    const [loading, setLoading] = useState(true);
     const t = translations[lang];
-
-    useEffect(() => {
-        const fetchFeatured = async () => {
-            setLoading(true);
-            const { data } = await supabase
-                .from('products')
-                .select('*')
-                .eq('is_featured', true)
-                .limit(4);
-
-            if (data) {
-                const mapped = data.map(p => ({
-                    ...p,
-                    name: lang === 'en' ? p.name_en : p.name_ar,
-                    price: `${p.price} AED`,
-                    image: p.image_url
-                }));
-                setFeatured(mapped);
-            }
-            setLoading(false);
-        };
-        fetchFeatured();
-    }, [lang]);
+    const categories = [
+        { id: 'bakhour', name: lang === 'en' ? 'Bakhour' : 'البخور', image: '/product-hero.png' },
+        { id: 'khamriyat', name: lang === 'en' ? 'Khomrah' : 'الخمر', image: '/product-hero.png' },
+        { id: 'mahlab', name: lang === 'en' ? 'Mahlab' : 'محلب', image: '/product-hero.png' },
+        { id: 'gifts', name: lang === 'en' ? 'Packages & Gifts' : 'البكجات والهدايا', image: '/product-hero.png' },
+        { id: 'bestSellers', name: lang === 'en' ? 'Best Sellers' : 'الأكثر مبيعاً', image: '/product-hero.png' }
+    ];
 
     useEffect(() => {
         const el = sectionRef.current;
@@ -124,22 +93,11 @@ export default function Home() {
                             <span className="gold-divider" />
                         </div>
 
-                        {loading ? (
-                            <div className="gold-text" style={{ textAlign: 'center', padding: '2rem' }}>
-                                {lang === 'en' ? 'Discovering treasures...' : 'جاري عرض المجموعات المميزة...'}
-                            </div>
-                        ) : (
                             <div className={styles.grid}>
-                                {featured.map((p, i) => (
-                                    <FeaturedCard key={p.id} product={p} index={i} />
+                                {categories.map((c, i) => (
+                                    <CategoryCard key={c.id} category={c} index={i} />
                                 ))}
-                                {featured.length === 0 && (
-                                    <p className="gold-text" style={{ gridColumn: '1/-1', textAlign: 'center' }}>
-                                        {lang === 'en' ? 'More treasures coming soon.' : 'المزيد من الروائع قريباً.'}
-                                    </p>
-                                )}
                             </div>
-                        )}
 
                         <div className={styles.viewMoreWrapper}>
                             <Link href="/gallery" className="btn-luxury">

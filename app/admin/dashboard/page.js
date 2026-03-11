@@ -30,11 +30,11 @@ export default function DashboardPage() {
                 // 1. Fetch Real Low Stock
                 const { data: lowStockItems } = await supabase.from('products').select('*').lt('stock_quantity', 5);
 
-                // 2. Fetch Active Orders (not delivered/cancelled)
+                // 2. Fetch Active Orders (not delivered/cancelled/pending)
                 const { count: activeOrdersCount } = await supabase
                     .from('orders')
                     .select('*', { count: 'exact', head: true })
-                    .not('status', 'in', '("delivered","cancelled")');
+                    .not('status', 'in', '("delivered","cancelled","pending")');
 
                 // 3. Fetch Pending Shipment
                 const { count: pendingShipmentCount } = await supabase
@@ -50,10 +50,11 @@ export default function DashboardPage() {
 
                 const totalRevenue = orders?.reduce((sum, order) => sum + parseFloat(order.total_amount), 0) || 0;
 
-                // 5. Fetch Recent Activity (Real)
+                // 5. Fetch Recent Activity (Real, excluding pending checkouts)
                 const { data: recentOrders } = await supabase
                     .from('orders')
                     .select('id, customer_name, created_at') // Added id to select
+                    .neq('status', 'pending')
                     .order('created_at', { ascending: false })
                     .limit(3);
 

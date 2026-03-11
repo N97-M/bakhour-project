@@ -94,11 +94,21 @@ BEGIN
     DROP POLICY IF EXISTS "Admins manage config" ON public.site_config;
 END $$;
 
-CREATE POLICY "Admins manage all" ON public.products FOR ALL USING (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'));
-CREATE POLICY "Admins manage orders" ON public.orders FOR ALL USING (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'));
-CREATE POLICY "Admins manage order_items" ON public.order_items FOR ALL USING (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'));
-CREATE POLICY "Admins manage coupons" ON public.coupons FOR ALL USING (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'));
-CREATE POLICY "Admins manage config" ON public.site_config FOR ALL USING (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'));
+CREATE POLICY "Admins manage all" ON public.products FOR ALL
+    USING (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'))
+    WITH CHECK (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'));
+CREATE POLICY "Admins manage orders" ON public.orders FOR ALL
+    USING (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'))
+    WITH CHECK (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'));
+CREATE POLICY "Admins manage order_items" ON public.order_items FOR ALL
+    USING (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'))
+    WITH CHECK (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'));
+CREATE POLICY "Admins manage coupons" ON public.coupons FOR ALL
+    USING (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'))
+    WITH CHECK (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'));
+CREATE POLICY "Admins manage config" ON public.site_config FOR ALL
+    USING (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'))
+    WITH CHECK (auth.jwt() ->> 'email' IN ('aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'));
 
 -- 10. STORAGE POLICIES (Run these after creating the 'products' bucket in the UI)
 DO $$ 

@@ -106,8 +106,14 @@ export default function PackagingPage() {
                     <div className={styles.lightbox} onClick={() => setSelectedImg(null)}>
                         <div className={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
                             <button className={styles.closeBtn} onClick={() => setSelectedImg(null)}>&times;</button>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={selectedImg} alt="Enlarged Packaging" className={styles.fullImage} />
+                            <Image
+                                src={selectedImg}
+                                alt="Enlarged Packaging"
+                                width={1200}
+                                height={1600}
+                                className={styles.fullImage}
+                                unoptimized={true}
+                            />
                         </div>
                     </div>
                 )}

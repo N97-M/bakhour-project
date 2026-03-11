@@ -27,10 +27,11 @@ export default function AdminProductsPage() {
     const [formData, setFormData] = useState({
         name_en: '', name_ar: '',
         price: '', category_en: '', category_ar: '',
-        stock_quantity: 10, is_featured: false,
+        stock_quantity: '', is_featured: false,
         notes_en: '', notes_ar: '',
         desc_en: '', desc_ar: '',
-        image_url: '/product-hero.png'
+        image_url: '',
+        weight_kg: 0.5
     });
 
     const fetchProducts = async () => {
@@ -52,17 +53,32 @@ export default function AdminProductsPage() {
         setSelectedFile(null);
         if (product) {
             setEditingProduct(product);
-            setFormData({ ...product });
+            setFormData({
+                name_en: product.name_en || '',
+                name_ar: product.name_ar || '',
+                price: product.price || '',
+                category_en: product.category_en || '',
+                category_ar: product.category_ar || '',
+                stock_quantity: product.stock_quantity || '',
+                is_featured: product.is_featured || false,
+                notes_en: product.notes_en || '',
+                notes_ar: product.notes_ar || '',
+                desc_en: product.desc_en || '',
+                desc_ar: product.desc_ar || '',
+                image_url: product.image_url || '',
+                weight_kg: product.weight_kg !== undefined ? product.weight_kg : 0.5
+            });
             setImagePreview(product.image_url);
         } else {
             setEditingProduct(null);
             setFormData({
                 name_en: '', name_ar: '',
                 price: '', category_en: '', category_ar: '',
-                stock_quantity: 10, is_featured: false,
+                stock_quantity: '', is_featured: false,
                 notes_en: '', notes_ar: '',
                 desc_en: '', desc_ar: '',
-                image_url: '/product-hero.png'
+                image_url: '',
+                weight_kg: 0.5
             });
             setImagePreview('/product-hero.png');
         }
@@ -275,12 +291,54 @@ export default function AdminProductsPage() {
                                     <input required type="number" value={formData.stock_quantity} onChange={e => setFormData({ ...formData, stock_quantity: e.target.value })} />
                                 </div>
                                 <div className={styles.formGroup}>
-                                    <label>Category (EN)</label>
-                                    <input value={formData.category_en} onChange={e => setFormData({ ...formData, category_en: e.target.value })} />
+                                    <label>Weight (KG) per item</label>
+                                    <input required type="number" step="0.1" min="0.1" value={formData.weight_kg} onChange={e => setFormData({ ...formData, weight_kg: parseFloat(e.target.value) || 0.5 })} />
                                 </div>
-                                <div className={styles.formGroup}>
-                                    <label>Category (AR)</label>
-                                    <input value={formData.category_ar} onChange={e => setFormData({ ...formData, category_ar: e.target.value })} />
+                                <div className={styles.formGroupFull}>
+                                    <label>Collections / Categories</label>
+                                    <div className={styles.categoryGrid}>
+                                        {['Bakhour', 'Khomrah', 'Mahlab', 'Packages & Gifts', 'Oud', 'Heritage', 'Signature', 'Sandalwood'].map(cat => {
+                                            const isSelected = (formData.category_en || '').split(',').map(s => s.trim()).includes(cat);
+                                            return (
+                                                <div key={cat} className={styles.categoryCheckbox}>
+                                                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', margin: 0, padding: 0 }}>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={isSelected}
+                                                            onChange={(e) => {
+                                                                let selectedCats = (formData.category_en || '').split(',').map(s => s.trim()).filter(Boolean);
+                                                                if (e.target.checked) {
+                                                                    if (!selectedCats.includes(cat)) selectedCats.push(cat);
+                                                                } else {
+                                                                    selectedCats = selectedCats.filter(c => c !== cat);
+                                                                }
+
+                                                                const translateCat = (c) => {
+                                                                    if (c === 'Bakhour') return 'البخور';
+                                                                    if (c === 'Khomrah') return 'الخمر';
+                                                                    if (c === 'Mahlab') return 'محلب';
+                                                                    if (c === 'Packages & Gifts') return 'البكجات والهدايا';
+                                                                    if (c === 'Oud') return 'عود';
+                                                                    if (c === 'Heritage') return 'تراثي';
+                                                                    if (c === 'Signature') return 'مميز';
+                                                                    if (c === 'Sandalwood') return 'صندل';
+                                                                    return c;
+                                                                };
+
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    category_en: selectedCats.join(', '),
+                                                                    category_ar: selectedCats.map(translateCat).join('، ')
+                                                                });
+                                                            }}
+                                                        />
+                                                        <span style={{ fontSize: '0.85rem', color: '#fff' }}>{cat}</span>
+                                                    </label>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                    <p className={styles.uploadHint} style={{marginTop: '0.5rem'}}>Select one or more categories.</p>
                                 </div>
                                 <div className={styles.formGroupFull}>
                                     <label>Description (EN)</label>
@@ -292,7 +350,7 @@ export default function AdminProductsPage() {
                                 </div>
                                 <div className={styles.checkboxGroup}>
                                     <input type="checkbox" id="featured" checked={formData.is_featured} onChange={e => setFormData({ ...formData, is_featured: e.target.checked })} />
-                                    <label htmlFor="featured">Feature this product on homepage</label>
+                                    <label htmlFor="featured">Add to "Best Sellers" collection / Feature on homepage</label>
                                 </div>
                             </div>
                             <div className={styles.formActions}>

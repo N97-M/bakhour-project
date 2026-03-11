@@ -4,17 +4,17 @@ import { createContext, useContext, useState, useEffect } from 'react';
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
-    const [lang, setLang] = useState('en');
+    const [lang, setLang] = useState('ar');
 
     useEffect(() => {
-        const savedLang = localStorage.getItem('al-dalal-lang');
+        const savedLang = localStorage.getItem('al-dalal-language');
         if (savedLang) {
             setLang(savedLang);
         }
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('al-dalal-lang', lang);
+        localStorage.setItem('al-dalal-language', lang);
         // Set document direction and lang attribute
         document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
         document.documentElement.lang = lang;

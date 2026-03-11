@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState, Suspense } from 'react';
+import { useCart } from '@/context/CartContext';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
@@ -12,14 +13,17 @@ function SuccessContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const { lang } = useLanguage();
+    const { clearCart } = useCart();
     const orderId = searchParams.get('orderId');
     const t = translations[lang].checkout;
 
     useEffect(() => {
         if (!orderId) {
             router.push('/');
+        } else {
+            clearCart();
         }
-    }, [orderId, router]);
+    }, [orderId, router, clearCart]);
 
     return (
         <div className={styles.successCard}>
