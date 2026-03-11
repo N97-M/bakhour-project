@@ -138,7 +138,69 @@ export const translations = {
             { id: 9, name: 'Dhufra Khamra (50ml)', price: '80 AED', category: 'Khumra', image: '/product-hero.png', notes: 'Dhufra · Sandalwood', desc: 'Concentrated Dhufra Khamra, a deep and mysterious heritage scent. Handcrafted with care. Preserve in a cool, dry place.' },
             { id: 10, name: 'Musk Khamra (50ml)', price: '80 AED', category: 'Khumra', image: '/product-hero.png', notes: 'Soft Musk · Rose', desc: 'Elegant and soft musk-based concentrated fragrance. Handcrafted with care. Preserve in a cool, dry place.' },
             { id: 11, name: 'Sandalwood Khamra (50ml)', price: '80 AED', category: 'Khumra', image: '/product-hero.png', notes: 'Sandalwood · Essential Oils', desc: 'Warm and inviting sandalwood concentrated essence. Handcrafted with care. Preserve in a cool, dry place.' },
-        ]
+        ],
+        auth: {
+            signup: {
+                overline: 'Join the Legacy',
+                title: 'Create Account',
+                name: 'Full Name',
+                namePlaceholder: 'Enter your full name',
+                email: 'Email',
+                emailPlaceholder: 'Enter your email',
+                password: 'Password',
+                passwordPlaceholder: 'Create a password',
+                repeatPassword: 'Repeat Password',
+                repeatPasswordPlaceholder: 'Repeat your password',
+                newsletter: 'Send me emails when new products are added.',
+                submit: 'Sign Up',
+                loading: 'Creating...',
+                success: 'Account created! Please check your email to verify your account before logging in.',
+                errorMismatch: 'Passwords do not match',
+                loginPrompt: 'Already have an account?',
+                loginLink: 'Login',
+                backHome: 'Back to Home'
+            },
+            login: {
+                overline: 'Welcome Back',
+                title: 'Login',
+                email: 'Email',
+                emailPlaceholder: 'Enter your email',
+                password: 'Password',
+                passwordPlaceholder: 'Enter your password',
+                forgotPassword: 'Forgot Password?',
+                submit: 'Login',
+                loading: 'Logging in...',
+                signupPrompt: "Don't have an account?",
+                signupLink: 'Sign up',
+                backHome: 'Back to Home'
+            },
+            forgot: {
+                overline: 'Account Recovery',
+                title: 'Reset Password',
+                description: 'Enter your email address and we will send you a link to reset your password.',
+                email: 'Email',
+                emailPlaceholder: 'Enter your email',
+                submit: 'Send Reset Link',
+                loading: 'Sending...',
+                success: 'Password reset instructions have been sent to your email.',
+                loginPrompt: 'Remembered your password?',
+                loginLink: 'Login',
+                backHome: 'Back to Home'
+            },
+            reset: {
+                overline: 'Secure Your Account',
+                title: 'Create New Password',
+                password: 'New Password',
+                passwordPlaceholder: 'Enter new password',
+                repeatPassword: 'Repeat New Password',
+                repeatPasswordPlaceholder: 'Repeat new password',
+                submit: 'Update Password',
+                loading: 'Updating...',
+                success: 'Your password has been securely updated. You can now log in.',
+                errorMismatch: 'Passwords do not match',
+                backLogin: 'Back to Login'
+            }
+        }
     },
     ar: {
         nav: {
@@ -279,6 +341,68 @@ export const translations = {
             { id: 9, name: 'خمرة ضفرة (٥٠ مل)', price: '٨٠ درهم', category: 'خمرة', image: '/product-hero.png', notes: 'ضفرة · صندل', desc: 'خمرة الضفرة المركزة بعبقها التراثي الغامض والعميق. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
             { id: 10, name: 'خمرة مسك (٥٠ مل)', price: '٨٠ درهم', category: 'خمرة', image: '/product-hero.png', notes: 'مسك ناعم · ورد', desc: 'خمرة المسك الأنيقة والناعمة لرائحة تبعث على الراحة. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
             { id: 11, name: 'خمرة صندل (٥٠ مل)', price: '٨٠ درهم', category: 'خمرة', image: '/product-hero.png', notes: 'صندل · زيوت مركزة', desc: 'جوهر الصندل الدافئ والمنعش في زجاجة مركزة. صُنع يدويًا بعناية. يُحفظ في مكان بارد وجاف.' },
-        ]
+        ],
+        auth: {
+            signup: {
+                overline: 'انضم إلى إرثنا',
+                title: 'إنشاء حساب',
+                name: 'الاسم الكامل',
+                namePlaceholder: 'أدخل اسمك الكامل',
+                email: 'البريد الإلكتروني',
+                emailPlaceholder: 'أدخل بريدك الإلكتروني',
+                password: 'كلمة المرور',
+                passwordPlaceholder: 'أنشئ كلمة مرور',
+                repeatPassword: 'تأكيد كلمة المرور',
+                repeatPasswordPlaceholder: 'أعد كتابة كلمة المرور',
+                newsletter: 'أرسل لي رسائل إلكترونية عند إضافة منتجات جديدة.',
+                submit: 'إنشاء حساب',
+                loading: 'جاري الإنشاء...',
+                success: 'تم إنشاء الحساب! يرجى التحقق من بريدك الإلكتروني لتفعيل حسابك قبل تسجيل الدخول.',
+                errorMismatch: 'كلمات المرور غير متطابقة',
+                loginPrompt: 'لديك حساب بالفعل؟',
+                loginLink: 'تسجيل الدخول',
+                backHome: 'العودة للرئيسية'
+            },
+            login: {
+                overline: 'مرحباً بعودتك',
+                title: 'تسجيل الدخول',
+                email: 'البريد الإلكتروني',
+                emailPlaceholder: 'أدخل بريدك الإلكتروني',
+                password: 'كلمة المرور',
+                passwordPlaceholder: 'أدخل كلمة المرور',
+                forgotPassword: 'نسيت كلمة المرور؟',
+                submit: 'دخول',
+                loading: 'جاري الدخول...',
+                signupPrompt: 'ليس لديك حساب؟',
+                signupLink: 'سجل الآن',
+                backHome: 'العودة للرئيسية'
+            },
+            forgot: {
+                overline: 'استعادة الحساب',
+                title: 'إعادة تعيين كلمة المرور',
+                description: 'أدخل بريدك الإلكتروني وسنرسل لك رابطاً لإعادة تعيين كلمة المرور الخاصة بك.',
+                email: 'البريد الإلكتروني',
+                emailPlaceholder: 'أدخل بريدك الإلكتروني',
+                submit: 'إرسال رابط الإعادة',
+                loading: 'جاري الإرسال...',
+                success: 'تم إرسال تعليمات إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.',
+                loginPrompt: 'تذكرت كلمة المرور؟',
+                loginLink: 'تسجيل الدخول',
+                backHome: 'العودة للرئيسية'
+            },
+            reset: {
+                overline: 'تأمين حسابك',
+                title: 'إنشاء كلمة مرور جديدة',
+                password: 'كلمة المرور الجديدة',
+                passwordPlaceholder: 'أدخل كلمة المرور الجديدة',
+                repeatPassword: 'تأكيد كلمة المرور الجديدة',
+                repeatPasswordPlaceholder: 'أعد إدخال كلمة المرور الجديدة',
+                submit: 'تحديث كلمة المرور',
+                loading: 'جاري التحديث...',
+                success: 'تم تحديث كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول.',
+                errorMismatch: 'كلمات المرور غير متطابقة',
+                backLogin: 'العودة لتسجيل الدخول'
+            }
+        }
     }
 };

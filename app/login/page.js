@@ -1,9 +1,7 @@
-'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { supabase } from '@/utils/supabase';
 import styles from './auth.module.css';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/utils/translations';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -11,6 +9,9 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const { lang } = useLanguage();
+    const t = translations[lang].auth.login;
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -35,34 +36,34 @@ export default function LoginPage() {
         <div className={styles.container}>
             <div className={styles.authBox}>
                 <div className={styles.header}>
-                    <p className={styles.overline}>Welcome Back</p>
-                    <h1 className={styles.title}>Login</h1>
+                    <p className={styles.overline}>{t.overline}</p>
+                    <h1 className={styles.title}>{t.title}</h1>
                 </div>
 
                 {error && <p style={{ color: '#ff4444', textAlign: 'center', marginBottom: '1rem', fontSize: '0.85rem' }}>{error}</p>}
 
                 <form className={styles.form} onSubmit={handleLogin}>
                     <div className={styles.inputGroup}>
-                        <label htmlFor="email">Email</label>
-                        <input type="email" id="email" required placeholder="Enter your email" value={email} onChange={e => setEmail(e.target.value)} />
+                        <label htmlFor="email">{t.email}</label>
+                        <input type="email" id="email" required placeholder={t.emailPlaceholder} value={email} onChange={e => setEmail(e.target.value)} />
                     </div>
 
                     <div className={styles.inputGroup}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <label htmlFor="password">Password</label>
-                            <Link href="/forgot-password" style={{ fontSize: '0.75rem', color: '#C6A75E', textDecoration: 'underline' }}>Forgot Password?</Link>
+                            <label htmlFor="password">{t.password}</label>
+                            <Link href="/forgot-password" style={{ fontSize: '0.75rem', color: '#C6A75E', textDecoration: 'underline' }}>{t.forgotPassword}</Link>
                         </div>
-                        <input type="password" id="password" required placeholder="Enter your password" value={password} onChange={e => setPassword(e.target.value)} />
+                        <input type="password" id="password" required placeholder={t.passwordPlaceholder} value={password} onChange={e => setPassword(e.target.value)} />
                     </div>
 
                     <button type="submit" className={`btn-luxury ${styles.submitBtn}`} disabled={loading}>
-                        <span>{loading ? 'Logging in...' : 'Login'}</span>
+                        <span>{loading ? t.loading : t.submit}</span>
                     </button>
                 </form>
 
                 <div className={styles.footer}>
-                    <p>Don&apos;t have an account? <Link href="/signup">Sign up</Link></p>
-                    <Link href="/" className={styles.backLink}>Back to Home</Link>
+                    <p>{t.signupPrompt} <Link href="/signup">{t.signupLink}</Link></p>
+                    <Link href="/" className={styles.backLink}>{t.backHome}</Link>
                 </div>
             </div>
         </div>

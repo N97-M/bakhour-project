@@ -1,9 +1,10 @@
-'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/utils/supabase';
 import styles from '../login/auth.module.css';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/utils/translations';
 
 export default function SignupPage() {
     const router = useRouter();
@@ -16,12 +17,15 @@ export default function SignupPage() {
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
 
+    const { lang } = useLanguage();
+    const t = translations[lang].auth.signup;
+
     const handleSignup = async (e) => {
         e.preventDefault();
         setError('');
 
         if (password !== repeatPassword) {
-            return setError("Passwords do not match");
+            return setError(t.errorMismatch);
         }
 
         setLoading(true);
@@ -40,7 +44,7 @@ export default function SignupPage() {
         if (authError) {
             setError(authError.message);
         } else {
-            setSuccess('Account created! Please check your email to verify your account before logging in.');
+            setSuccess(t.success);
             // Optionally redirect instantly if email confirmation is off in Supabase:
             // router.push('/');
         }
@@ -51,8 +55,8 @@ export default function SignupPage() {
         <div className={styles.container}>
             <div className={styles.authBox}>
                 <div className={styles.header}>
-                    <p className={styles.overline}>Join the Legacy</p>
-                    <h1 className={styles.title}>Create Account</h1>
+                    <p className={styles.overline}>{t.overline}</p>
+                    <h1 className={styles.title}>{t.title}</h1>
                 </div>
 
                 {error && <p style={{ color: '#ff4444', textAlign: 'center', marginBottom: '1rem', fontSize: '0.85rem' }}>{error}</p>}
@@ -60,38 +64,38 @@ export default function SignupPage() {
 
                 <form className={styles.form} onSubmit={handleSignup}>
                     <div className={styles.inputGroup}>
-                        <label htmlFor="name">Full Name</label>
-                        <input type="text" id="name" required placeholder="Enter your full name" value={name} onChange={e => setName(e.target.value)} />
+                        <label htmlFor="name">{t.name}</label>
+                        <input type="text" id="name" required placeholder={t.namePlaceholder} value={name} onChange={e => setName(e.target.value)} />
                     </div>
 
                     <div className={styles.inputGroup}>
-                        <label htmlFor="email">Email</label>
-                        <input type="email" id="email" required placeholder="Enter your email" value={email} onChange={e => setEmail(e.target.value)} />
+                        <label htmlFor="email">{t.email}</label>
+                        <input type="email" id="email" required placeholder={t.emailPlaceholder} value={email} onChange={e => setEmail(e.target.value)} />
                     </div>
 
                     <div className={styles.inputGroup}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" required placeholder="Create a password" value={password} onChange={e => setPassword(e.target.value)} />
+                        <label htmlFor="password">{t.password}</label>
+                        <input type="password" id="password" required placeholder={t.passwordPlaceholder} value={password} onChange={e => setPassword(e.target.value)} />
                     </div>
 
                     <div className={styles.inputGroup}>
-                        <label htmlFor="repeat-password">Repeat Password</label>
-                        <input type="password" id="repeat-password" required placeholder="Repeat your password" value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)} />
+                        <label htmlFor="repeat-password">{t.repeatPassword}</label>
+                        <input type="password" id="repeat-password" required placeholder={t.repeatPasswordPlaceholder} value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)} />
                     </div>
 
                     <div className={styles.checkboxGroup}>
                         <input type="checkbox" id="newsletter" checked={newsletter} onChange={e => setNewsletter(e.target.checked)} />
-                        <label htmlFor="newsletter">Send me emails when new products are added.</label>
+                        <label htmlFor="newsletter">{t.newsletter}</label>
                     </div>
 
                     <button type="submit" className={`btn-luxury ${styles.submitBtn}`} disabled={loading}>
-                        <span>{loading ? 'Creating...' : 'Sign Up'}</span>
+                        <span>{loading ? t.loading : t.submit}</span>
                     </button>
                 </form>
 
                 <div className={styles.footer}>
-                    <p>Already have an account? <Link href="/login">Login</Link></p>
-                    <Link href="/" className={styles.backLink}>Back to Home</Link>
+                    <p>{t.loginPrompt} <Link href="/login">{t.loginLink}</Link></p>
+                    <Link href="/" className={styles.backLink}>{t.backHome}</Link>
                 </div>
             </div>
         </div>

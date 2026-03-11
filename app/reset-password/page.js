@@ -1,9 +1,7 @@
-'use client';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { supabase } from '@/utils/supabase';
 import styles from '../login/auth.module.css';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
+import { translations } from '@/utils/translations';
 
 export default function ResetPasswordPage() {
     const router = useRouter();
@@ -12,6 +10,9 @@ export default function ResetPasswordPage() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const { lang } = useLanguage();
+    const t = translations[lang].auth.reset;
 
     // This page should only be accessed via the link sent to the user's email.
     // Supabase automatically handles the session token in the URL fragment.
@@ -22,7 +23,7 @@ export default function ResetPasswordPage() {
         setSuccess('');
 
         if (password !== repeatPassword) {
-            return setError("Passwords do not match");
+            return setError(t.errorMismatch);
         }
 
         setLoading(true);
@@ -34,7 +35,7 @@ export default function ResetPasswordPage() {
         if (updateError) {
             setError(updateError.message);
         } else {
-            setSuccess('Your password has been securely updated. You can now log in.');
+            setSuccess(t.success);
             setTimeout(() => {
                 router.push('/login');
             }, 3000);
@@ -46,8 +47,8 @@ export default function ResetPasswordPage() {
         <div className={styles.container}>
             <div className={styles.authBox}>
                 <div className={styles.header}>
-                    <p className={styles.overline}>Secure Your Account</p>
-                    <h1 className={styles.title}>Create New Password</h1>
+                    <p className={styles.overline}>{t.overline}</p>
+                    <h1 className={styles.title}>{t.title}</h1>
                 </div>
 
                 {error && <p style={{ color: '#ff4444', textAlign: 'center', marginBottom: '1rem', fontSize: '0.85rem' }}>{error}</p>}
@@ -55,36 +56,36 @@ export default function ResetPasswordPage() {
 
                 <form className={styles.form} onSubmit={handleUpdatePassword}>
                     <div className={styles.inputGroup}>
-                        <label htmlFor="password">New Password</label>
+                        <label htmlFor="password">{t.password}</label>
                         <input
                             type="password"
                             id="password"
                             required
-                            placeholder="Enter new password"
+                            placeholder={t.passwordPlaceholder}
                             value={password}
                             onChange={e => setPassword(e.target.value)}
                         />
                     </div>
 
                     <div className={styles.inputGroup}>
-                        <label htmlFor="repeat-password">Repeat New Password</label>
+                        <label htmlFor="repeat-password">{t.repeatPassword}</label>
                         <input
                             type="password"
                             id="repeat-password"
                             required
-                            placeholder="Repeat new password"
+                            placeholder={t.repeatPasswordPlaceholder}
                             value={repeatPassword}
                             onChange={e => setRepeatPassword(e.target.value)}
                         />
                     </div>
 
                     <button type="submit" className={`btn-luxury ${styles.submitBtn}`} disabled={loading}>
-                        <span>{loading ? 'Updating...' : 'Update Password'}</span>
+                        <span>{loading ? t.loading : t.submit}</span>
                     </button>
                 </form>
 
                 <div className={styles.footer}>
-                    <Link href="/login" className={styles.backLink}>Back to Login</Link>
+                    <Link href="/login" className={styles.backLink}>{t.backLogin}</Link>
                 </div>
             </div>
         </div>
