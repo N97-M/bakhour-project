@@ -350,7 +350,7 @@ export default function AdminProductsPage() {
                                 </div>
                                 <div className={styles.checkboxGroup}>
                                     <input type="checkbox" id="featured" checked={formData.is_featured} onChange={e => setFormData({ ...formData, is_featured: e.target.checked })} />
-                                    <label htmlFor="featured">Add to "Best Sellers" collection / Feature on homepage</label>
+                                    <label htmlFor="featured">Add to &quot;Best Sellers&quot; collection / Feature on homepage</label>
                                 </div>
                             </div>
                             <div className={styles.formActions}>
