@@ -1,5 +1,8 @@
+'use client';
 import styles from '../login/auth.module.css';
 import Link from 'next/link';
+import { useState } from 'react';
+import { supabase } from '@/utils/supabase';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/utils/translations';
 

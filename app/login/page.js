@@ -1,7 +1,11 @@
+'use client';
 import styles from './auth.module.css';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/utils/translations';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/utils/supabase';
 
 export default function LoginPage() {
     const router = useRouter();
