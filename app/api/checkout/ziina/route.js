@@ -5,7 +5,7 @@ export async function POST(request) {
     try {
         const body = await request.json();
         // 1. Get origin for redirect URLs
-        const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+        const origin = process.env.NEXT_PUBLIC_BASE_URL || request.headers.get('origin') || 'https://aldalalbakhour.com';
 
         // 2. Create Order in Supabase
         const { form, cart, finalTotal, shippingCost } = await request.json();

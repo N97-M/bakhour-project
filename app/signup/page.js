@@ -38,7 +38,8 @@ export default function SignupPage() {
                 data: {
                     full_name: name,
                     wants_newsletter: newsletter,
-                }
+                },
+                emailRedirectTo: `${window.location.origin}/login`,
             }
         });
 
