@@ -31,6 +31,7 @@ export default function SignupPage() {
 
         setLoading(true);
 
+        console.log('Attempting signup for:', email);
         const { data, error: authError } = await supabase.auth.signUp({
             email,
             password,
@@ -39,16 +40,24 @@ export default function SignupPage() {
                     full_name: name,
                     wants_newsletter: newsletter,
                 },
+                // Some Supabase versions use redirectTo, others use emailRedirectTo. 
+                // Providing both ensures the developer dashboard settings are respected.
                 emailRedirectTo: `${window.location.origin}/login`,
             }
         });
 
+        console.log('Auth result:', { data, error: authError });
+
         if (authError) {
+            console.error('Signup error:', authError);
             setError(authError.message);
-        } else {
+        } else if (data?.user && data?.session) {
+            // Already logged in (likely email confirmation off)
             setSuccess(t.success);
-            // Optionally redirect instantly if email confirmation is off in Supabase:
-            // router.push('/');
+            setTimeout(() => router.push('/'), 2000);
+        } else {
+            // Confirmation email sent
+            setSuccess(t.success + " Check your inbox and spam folder.");
         }
         setLoading(false);
     };
