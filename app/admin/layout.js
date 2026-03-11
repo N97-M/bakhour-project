@@ -22,6 +22,7 @@ export default function AdminLayout({ children }) {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     const pathname = usePathname();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         const checkAdmin = async () => {
@@ -58,9 +59,16 @@ export default function AdminLayout({ children }) {
         { name: 'Site Settings', path: '/admin/settings', icon: <Settings size={20} /> },
     ];
 
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
     return (
         <div className={styles.adminLayout}>
-            <aside className={styles.sidebar}>
+            {/* Mobile Overlay */}
+            {isSidebarOpen && (
+                <div className={styles.overlay} onClick={() => setIsSidebarOpen(false)} />
+            )}
+
+            <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
                 <div className={styles.logoArea}>
                     <span className={styles.logoText}>Al Dalal Admin</span>
                     <Link href="/" className={styles.navLink} style={{ paddingLeft: 0, marginTop: '1rem' }}>
@@ -74,6 +82,7 @@ export default function AdminLayout({ children }) {
                             key={item.path}
                             href={item.path}
                             className={`${styles.navLink} ${pathname === item.path ? styles.activeLink : ''}`}
+                            onClick={() => setIsSidebarOpen(false)}
                         >
                             {item.icon}
                             <span>{item.name}</span>
@@ -90,9 +99,20 @@ export default function AdminLayout({ children }) {
 
             <main className={styles.main}>
                 <header className={styles.topBar}>
-                    <h1 className={styles.pageTitle}>
-                        {navItems.find(i => i.path === pathname)?.name || 'Admin'}
-                    </h1>
+                    <div className={styles.barLeft}>
+                        <button
+                            className={styles.burger}
+                            onClick={toggleSidebar}
+                            aria-label="Toggle menu"
+                        >
+                            <span className={isSidebarOpen ? styles.burgerX : ''} />
+                            <span className={isSidebarOpen ? styles.burgerX2 : ''} />
+                            <span className={isSidebarOpen ? styles.burgerX3 : ''} />
+                        </button>
+                        <h1 className={styles.pageTitle}>
+                            {navItems.find(i => i.path === pathname)?.name || 'Admin'}
+                        </h1>
+                    </div>
                     <div className={styles.adminUser}>
                         <span>{user.email}</span>
                         <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#44ff44' }} />

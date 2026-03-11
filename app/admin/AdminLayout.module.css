@@ -14,7 +14,8 @@
     flex-direction: column;
     position: fixed;
     height: 100vh;
-    z-index: 100;
+    z-index: 1000;
+    transition: left 0.3s ease;
 }
 
 .logoArea {
@@ -63,6 +64,58 @@
     flex: 1;
     margin-left: 260px;
     padding: 3rem;
+    min-height: 100vh;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    animation: fadeIn 0.3s ease;
+}
+
+.barLeft {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.burger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    flex-shrink: 0;
+}
+
+.burger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #C6A75E;
+    transition: all 0.3s ease;
+}
+
+.burgerX {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burgerX2 {
+    opacity: 0;
+}
+
+.burgerX3 {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .topBar {
@@ -102,81 +155,53 @@
 
 @media (max-width: 900px) {
     .sidebar {
-        width: 60px;
+        left: -280px;
+        width: 260px;
+    }
+
+    .sidebarOpen {
+        left: 0;
     }
 
     .logoArea {
-        padding: 1rem 0;
-        align-items: center;
+        padding: 2rem;
+        align-items: flex-start;
     }
 
     .logoText {
-        display: none;
-    }
-
-    .logoArea > a {
-        justify-content: center;
-        margin-top: 0 !important;
-        padding: 0.5rem !important;
-        width: 100%;
-        display: flex;
-    }
-
-    .nav {
-        padding: 1rem 0;
-    }
-
-    .navLink {
-        padding: 1rem 0;
-        justify-content: center;
+        display: block;
     }
 
     .navLink span {
-        display: none;
+        display: block;
     }
 
-    .activeLink {
-        border-right: none;
-        background: rgba(198, 167, 94, 0.1);
-        border-left: 3px solid #C6A75E;
-    }
-
-    .sidebar > div:last-child {
-        padding: 1rem 0 !important;
-        display: flex;
-        justify-content: center;
-    }
-
-    .logoutBtn {
-        border: none;
-        padding: 0.5rem;
-        display: flex;
-        justify-content: center;
-    }
-
-    .logoutBtn span {
-        display: none;
+    .navLink {
+        padding: 0.8rem 2rem;
+        justify-content: flex-start;
     }
 
     .main {
-        margin-left: 60px;
-        padding: 1rem;
-        max-width: calc(100vw - 60px);
+        margin-left: 0;
+        padding: 1.5rem;
+        max-width: 100vw;
+    }
+
+    .burger {
+        display: flex;
     }
 
     .topBar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-        margin-bottom: 1.5rem;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 2rem;
     }
 
     .pageTitle {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
     }
 
-    .adminUser {
-        font-size: 0.75rem;
-        word-break: break-all;
+    .adminUser span {
+        display: none;
     }
 }

@@ -195,21 +195,29 @@
 .userSection {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    padding: 4px 10px;
+    gap: 0.6rem;
+    padding: 6px 12px;
     background: rgba(198, 167, 94, 0.05);
     border: 1px solid rgba(198, 167, 94, 0.15);
     border-radius: 4px;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
 }
 
 .adminLink {
     font-size: 0.65rem;
     color: #000;
     background: #C6A75E;
-    padding: 2px 6px;
+    padding: 1px 4px;
     border-radius: 2px;
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 800;
+    line-height: 1;
     text-decoration: none;
     transition: all 0.3s;
 }
@@ -277,18 +285,19 @@
 .burger {
     display: none;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 4px;
+    padding: 10px;
+    flex-shrink: 0;
 }
 
 .burger span {
     display: block;
-    width: 24px;
-    height: 1px;
-    background: #C8BFB2;
+    width: 26px;
+    height: 2px;
+    background: #C6A75E;
     transition: all 0.3s ease;
 }
 
@@ -320,7 +329,11 @@
     }
 
     .navRight {
-        gap: 0.8rem;
+        gap: 0.5rem;
+    }
+
+    .controls {
+        gap: 0.6rem;
     }
 
     .burger {

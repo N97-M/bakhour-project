@@ -100,14 +100,16 @@ export default function Navbar() {
                 <div className={styles.controls}>
                     {user ? (
                         <div className={styles.userSection}>
-                            {['aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'].includes(user.email) && (
-                                <Link href="/admin/dashboard" className={styles.adminLink} title="Admin Dashboard">
-                                    Admin
-                                </Link>
-                            )}
-                            <span className={styles.userName}>
-                                <User size={16} /> {user.user_metadata?.full_name?.split(' ')[0] || 'Member'}
-                            </span>
+                            <div className={styles.userInfo}>
+                                <span className={styles.userName}>
+                                    <User size={16} /> {user.user_metadata?.full_name?.split(' ')[0] || 'Member'}
+                                </span>
+                                {['aldalalbakhour@gmail.com', 'monzerhafiz83@gmail.com'].includes(user.email) && (
+                                    <Link href="/admin/dashboard" className={styles.adminLink} title="Admin Dashboard">
+                                        Admin
+                                    </Link>
+                                )}
+                            </div>
                             <button onClick={handleLogout} className={styles.logoutBtn} title="Logout">
                                 <LogOut size={16} />
                             </button>
