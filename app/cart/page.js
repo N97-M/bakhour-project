@@ -5,6 +5,7 @@ import Footer from '@/components/ui/Footer';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/utils/translations';
+import { supabase } from '@/utils/supabase';
 import { Trash2, Minus, Plus, ShoppingBag, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import ProductRecommendations from '@/components/ui/ProductRecommendations';
@@ -163,12 +164,20 @@ export default function CartPage() {
                                             <span className="gold-text">{finalTotal.toFixed(2)} AED</span>
                                         </div>
 
-                                        <Link href="/checkout" className="w-100">
-                                            <button className={`${styles.checkoutBtn} btn-luxury w-100`}>
-                                                <span>{t.checkout}</span>
-                                                <ArrowRight size={18} />
-                                            </button>
-                                        </Link>
+                                        <button 
+                                            onClick={async () => {
+                                                const { data: { session } } = await supabase.auth.getSession();
+                                                if (session) {
+                                                    window.location.href = '/checkout';
+                                                } else {
+                                                    window.location.href = '/login?redirect=/checkout';
+                                                }
+                                            }} 
+                                            className={`${styles.checkoutBtn} btn-luxury w-100`}
+                                        >
+                                            <span>{t.checkout}</span>
+                                            <ArrowRight size={18} />
+                                        </button>
 
                                         <p className={styles.secureText}>
                                             {t.secure}

@@ -189,3 +189,98 @@
     cursor: pointer;
     margin-top: 1rem;
 }
+
+/* Promo Popup Settings Styles */
+.settingsSection {
+    background: rgba(198, 167, 94, 0.05);
+    border: 1px solid rgba(198, 167, 94, 0.2);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.settingsHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.settingsHeader h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: #C6A75E;
+    margin: 0;
+}
+
+.settingsHeader p {
+    font-size: 0.9rem;
+    color: rgba(200, 191, 178, 0.6);
+    margin: 0;
+}
+
+.settingsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.fullRow {
+    grid-column: span 2;
+}
+
+.checkboxGroup {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkboxGroup input {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+}
+
+.checkboxGroup label {
+    font-size: 0.95rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.saveBtnSmall {
+    background: #C6A75E;
+    color: #000;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    transition: background 0.3s;
+}
+
+.saveBtnSmall:hover {
+    background: #d4b87a;
+}
+
+.saveBtnSmall:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .settingsGrid {
+        grid-template-columns: 1fr;
+    }
+    .fullRow {
+        grid-column: span 1;
+    }
+}

@@ -3,12 +3,14 @@ import styles from './auth.module.css';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/utils/translations';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/utils/supabase';
 
 export default function LoginPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -32,7 +34,8 @@ export default function LoginPage() {
             setLoading(false);
         } else {
             // Login successful
-            router.push('/');
+            const redirectTo = searchParams.get('redirect') || '/';
+            router.push(redirectTo);
         }
     };
 

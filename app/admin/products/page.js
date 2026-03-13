@@ -31,7 +31,8 @@ export default function AdminProductsPage() {
         notes_en: '', notes_ar: '',
         desc_en: '', desc_ar: '',
         image_url: '',
-        weight_kg: 0.5
+        weight_kg: 0.5,
+        size_ml: 100
     });
 
     const fetchProducts = async () => {
@@ -66,7 +67,8 @@ export default function AdminProductsPage() {
                 desc_en: product.desc_en || '',
                 desc_ar: product.desc_ar || '',
                 image_url: product.image_url || '',
-                weight_kg: product.weight_kg !== undefined ? product.weight_kg : 0.5
+                weight_kg: product.weight_kg !== undefined ? product.weight_kg : 0.5,
+                size_ml: product.size_ml || 100
             });
             setImagePreview(product.image_url);
         } else {
@@ -78,7 +80,8 @@ export default function AdminProductsPage() {
                 notes_en: '', notes_ar: '',
                 desc_en: '', desc_ar: '',
                 image_url: '',
-                weight_kg: 0.5
+                weight_kg: 0.5,
+                size_ml: 100
             });
             setImagePreview('/product-hero.png');
         }
@@ -131,6 +134,8 @@ export default function AdminProductsPage() {
             const payload = {
                 ...formData,
                 price: parseFloat(formData.price),
+                weight_kg: parseFloat(formData.weight_kg) || 0.5,
+                size_ml: parseInt(formData.size_ml) || 0,
                 image_url: finalImageUrl
             };
 
@@ -196,6 +201,7 @@ export default function AdminProductsPage() {
                                 <th>Product</th>
                                 <th>Category</th>
                                 <th>Price</th>
+                                <th>Weight</th>
                                 <th>Stock</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -219,6 +225,7 @@ export default function AdminProductsPage() {
                                     </td>
                                     <td>{p.category_en}</td>
                                     <td>{p.price} AED</td>
+                                    <td>{p.size_ml || 0} ml</td>
                                     <td>
                                         <div className={p.stock_quantity < 5 ? styles.lowStock : styles.inStock}>
                                             {p.stock_quantity < 5 ? <AlertTriangle size={14} /> : <CheckCircle size={14} />}
@@ -291,8 +298,12 @@ export default function AdminProductsPage() {
                                     <input required type="number" value={formData.stock_quantity} onChange={e => setFormData({ ...formData, stock_quantity: e.target.value })} />
                                 </div>
                                 <div className={styles.formGroup}>
-                                    <label>Weight (KG) per item</label>
+                                    <label>Weight (KG) - (Internal Use)</label>
                                     <input required type="number" step="0.1" min="0.1" value={formData.weight_kg} onChange={e => setFormData({ ...formData, weight_kg: parseFloat(e.target.value) || 0.5 })} />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Size (ml) - (Shown to Customers)</label>
+                                    <input required type="number" value={formData.size_ml} onChange={e => setFormData({ ...formData, size_ml: e.target.value })} />
                                 </div>
                                 <div className={styles.formGroupFull}>
                                     <label>Collections / Categories</label>

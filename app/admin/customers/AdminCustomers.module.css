@@ -119,26 +119,45 @@
 
 .date {
     font-size: 0.85rem;
-    color: rgba(200, 191, 178, 0.5);
+    color: rgba(200, 191, 178, 0.6);
 }
 
 .center {
     text-align: center;
 }
 
-.viewBtn {
-    background: transparent;
-    border: none;
-    color: rgba(198, 167, 94, 0.6);
-    cursor: pointer;
+.actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: flex-end;
+}
+
+.viewBtn, .deleteBtn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(198, 167, 94, 0.2);
+    color: #C6A75E;
     padding: 0.5rem;
     border-radius: 4px;
-    transition: all 0.2s ease;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .viewBtn:hover {
-    color: #C6A75E;
     background: rgba(198, 167, 94, 0.1);
+    border-color: #C6A75E;
+}
+
+.deleteBtn {
+    color: #ff4444;
+    border-color: rgba(255, 0, 0, 0.2);
+}
+
+.deleteBtn:hover {
+    background: rgba(255, 0, 0, 0.1);
+    border-color: #ff4444;
 }
 
 .empty {

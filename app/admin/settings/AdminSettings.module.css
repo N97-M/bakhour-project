@@ -37,12 +37,18 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .formGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
+}
+
+.span2 {
+    grid-column: span 2;
 }
 
 .formGroup {
@@ -113,8 +119,124 @@
     background: rgba(198, 167, 94, 0.1);
 }
 
-@media (max-width: 700px) {
+.collectionsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.collectionItem {
+    border-bottom: 1px solid rgba(198, 167, 94, 0.1);
+    padding-bottom: 2rem;
+}
+
+.collectionItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.itemTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #C6A75E;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.itemHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.addBtn {
+    background: transparent;
+    border: 1px dashed rgba(198, 167, 94, 0.4);
+    color: #d4b87a;
+    padding: 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 100%;
+    margin-top: 2rem;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+.addBtn:hover {
+    background: rgba(198, 167, 94, 0.05);
+    border-color: #C6A75E;
+}
+
+.deleteBtn {
+    background: rgba(255, 0, 0, 0.1);
+    color: #ff4444;
+    border: 1px solid rgba(255, 0, 0, 0.2);
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.deleteBtn:hover {
+    background: rgba(255, 0, 0, 0.2);
+    border-color: #ff4444;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
     .formGrid {
-        grid-template-columns: 1fr;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1.2rem;
+    }
+
+    .card {
+        padding: 1.2rem;
+    }
+
+    .imageRow {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
+    }
+
+    .imagePreview {
+        width: 60px !important;
+        height: 60px !important;
+    }
+
+    .uploadControls {
+        width: 100%;
+    }
+
+    .uploadBtnGroup {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.8rem;
+    }
+
+    .uploadBtnGroup button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .imageUrlInput {
+        width: 100% !important;
+        margin-top: 0.5rem;
+    }
+
+    .collectionItem {
+        padding-bottom: 1.5rem; /* Adjust padding for smaller screens */
     }
 }

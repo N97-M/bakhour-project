@@ -130,6 +130,10 @@ export function CartProvider({ children }) {
     }
 
     const finalTotal = cartTotal - cartDiscount - couponDiscount;
+    const totalWeight = cart.reduce((acc, item) => {
+        const weight = item.weight_kg !== undefined ? Number(item.weight_kg) : 0.5;
+        return acc + (weight * item.quantity);
+    }, 0);
 
     return (
         <CartContext.Provider value={{
@@ -145,7 +149,9 @@ export function CartProvider({ children }) {
             appliedCoupon,
             applyCoupon,
             removeCoupon,
-            finalTotal
+            finalTotal,
+            totalWeight,
+            isLoaded
         }}>
             {children}
         </CartContext.Provider>

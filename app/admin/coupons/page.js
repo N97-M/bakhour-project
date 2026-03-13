@@ -9,7 +9,9 @@ import {
     DollarSign,
     Percent,
     X,
-    Filter
+    Filter,
+    Save,
+    Megaphone
 } from 'lucide-react';
 import styles from './AdminCoupons.module.css';
 
@@ -27,11 +29,27 @@ export default function AdminCouponsPage() {
         active: true,
         expiry_date: ''
     });
+    const [promoSettings, setPromoSettings] = useState({
+        active: false,
+        title_en: '',
+        title_ar: '',
+        text_en: '',
+        text_ar: '',
+        code: '',
+        discount: 10
+    });
 
     const fetchCoupons = async () => {
         setLoading(true);
-        const { data } = await supabase.from('coupons').select('*').order('created_at', { ascending: false });
-        if (data) setCoupons(data);
+        // Fetch Coupons
+        const { data: couponsData } = await supabase.from('coupons').select('*').order('created_at', { ascending: false });
+        if (couponsData) setCoupons(couponsData);
+
+        // Fetch Promo Popup Settings
+        const { data: configData } = await supabase.from('site_config').select('*').eq('key', 'promo_popup').single();
+        if (configData) {
+            setPromoSettings(configData.value);
+        }
         setLoading(false);
     };
 
@@ -64,8 +82,120 @@ export default function AdminCouponsPage() {
         fetchCoupons();
     };
 
+    const handleSavePromo = async () => {
+        setIsSaving(true);
+        const { error } = await supabase
+            .from('site_config')
+            .upsert({ key: 'promo_popup', value: promoSettings });
+
+        // Also ensure the coupon exists or is updated in the coupons table
+        if (!error && promoSettings.code) {
+            await supabase.from('coupons').upsert({
+                code: promoSettings.code.toUpperCase(),
+                discount_type: 'percentage',
+                discount_value: parseFloat(promoSettings.discount),
+                active: promoSettings.active,
+                min_order_value: 0
+            }, { onConflict: 'code' });
+        }
+
+        if (error) alert('Error: ' + error.message);
+        else alert('Promo popup settings updated!');
+        
+        setIsSaving(false);
+        fetchCoupons();
+    };
+
     return (
         <div className={styles.container}>
+            <div className={styles.settingsSection}>
+                <div className={styles.settingsHeader}>
+                    <Megaphone size={24} color="#C6A75E" />
+                    <div>
+                        <h3>First Order Promotional Popup</h3>
+                        <p>Configure the high-conversion welcome offer for new customers.</p>
+                    </div>
+                </div>
+
+                <div className={styles.settingsGrid}>
+                    <div className={styles.checkboxGroup} style={{ gridColumn: 'span 2' }}>
+                        <input
+                            type="checkbox"
+                            id="promo_active"
+                            checked={promoSettings.active}
+                            onChange={(e) => setPromoSettings({ ...promoSettings, active: e.target.checked })}
+                        />
+                        <label htmlFor="promo_active">Enable welcome popup for first-time visitors</label>
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label>Popup Title (English)</label>
+                        <input
+                            type="text"
+                            value={promoSettings.title_en}
+                            onChange={(e) => setPromoSettings({ ...promoSettings, title_en: e.target.value })}
+                            placeholder="e.g. 10% OFF Your First Order"
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label>Popup Title (Arabic)</label>
+                        <input
+                            type="text"
+                            value={promoSettings.title_ar}
+                            onChange={(e) => setPromoSettings({ ...promoSettings, title_ar: e.target.value })}
+                            placeholder="مثال: خصم ١٠٪ على طلبك الأول"
+                        />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label>Message (English)</label>
+                        <input
+                            type="text"
+                            value={promoSettings.text_en}
+                            onChange={(e) => setPromoSettings({ ...promoSettings, text_en: e.target.value })}
+                            placeholder="Use this promo code at checkout"
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label>Message (Arabic)</label>
+                        <input
+                            type="text"
+                            value={promoSettings.text_ar}
+                            onChange={(e) => setPromoSettings({ ...promoSettings, text_ar: e.target.value })}
+                            placeholder="استخدم كود الخصم هذا عند الدفع"
+                        />
+                    </div>
+
+                    <div className={styles.formGroup}>
+                        <label>Promo Code</label>
+                        <input
+                            type="text"
+                            value={promoSettings.code}
+                            onChange={(e) => setPromoSettings({ ...promoSettings, code: e.target.value.toUpperCase() })}
+                            placeholder="FIRST10"
+                        />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label>Discount Percentage (%)</label>
+                        <input
+                            type="number"
+                            value={promoSettings.discount}
+                            onChange={(e) => setPromoSettings({ ...promoSettings, discount: e.target.value })}
+                            placeholder="10"
+                        />
+                    </div>
+                </div>
+
+                <button
+                    onClick={handleSavePromo}
+                    disabled={isSaving}
+                    className={styles.saveBtnSmall}
+                >
+                    <Save size={18} />
+                    {isSaving ? 'Updating...' : 'Update Popup Settings'}
+                </button>
+            </div>
+
             <div className={styles.actionBar}>
                 <h2 className={styles.secTitle}>Active & Scheduled Coupons</h2>
                 <button onClick={() => setShowModal(true)} className={styles.addBtn}>

@@ -18,12 +18,13 @@ import {
 import styles from './page.module.css';
 
 export default function CheckoutPage() {
-    const { cart, cartTotal, finalTotal: cartFinalTotal, cartDiscount, couponDiscount, appliedCoupon, clearCart } = useCart();
+    const { cart, cartTotal, finalTotal: cartFinalTotal, cartDiscount, couponDiscount, appliedCoupon, clearCart, isLoaded } = useCart();
     const { lang } = useLanguage();
     const router = useRouter();
     const t = translations[lang].checkout;
 
     const [shippingRates, setShippingRates] = useState({ uae: 25, intl: 45 });
+    const [shippingNote, setShippingNote] = useState(null);
     const [calculatedShipping, setCalculatedShipping] = useState(0);
 
     const [form, setForm] = useState({
@@ -37,24 +38,61 @@ export default function CheckoutPage() {
     });
 
     const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState(null);
+    const [saveAddress, setSaveAddress] = useState(true);
+
+    // Fetch User & Profile
+    useEffect(() => {
+        const checkUser = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) {
+                setUser(session.user);
+                // Fetch profile
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', session.user.id)
+                    .single();
+                
+                if (profile) {
+                    setForm(prev => ({
+                        ...prev,
+                        name: profile.full_name || prev.name,
+                        phone: profile.phone || prev.phone,
+                        address: profile.address || prev.address,
+                        city: profile.city || prev.city,
+                        country: profile.country || prev.country || '',
+                        email: session.user.email || prev.email
+                    }));
+                } else {
+                    // Pre-fill email from session at least
+                    setForm(prev => ({ ...prev, email: session.user.email }));
+                }
+            }
+        };
+        checkUser();
+    }, []);
 
     useEffect(() => {
-        if (cart.length === 0) {
+        if (isLoaded && cart.length === 0) {
             router.push('/cart');
         }
-    }, [cart, router]);
+    }, [cart, isLoaded, router]);
 
-    // Fetch Rates
+    // Fetch Rates & Settings
     useEffect(() => {
         const fetchRates = async () => {
-            const { data } = await supabase.from('site_config').select('*').in('key', ['shipping_uae_flat', 'shipping_intl_kg']);
+            const { data } = await supabase.from('site_config').select('*').in('key', ['shipping_uae_flat', 'shipping_intl_kg', 'announcement']);
             if (data) {
                 const rates = { uae: 25, intl: 45 };
+                let ann = null;
                 data.forEach(row => {
                     if (row.key === 'shipping_uae_flat') rates.uae = Number(row.value);
                     if (row.key === 'shipping_intl_kg') rates.intl = Number(row.value);
+                    if (row.key === 'announcement') ann = row.value;
                 });
                 setShippingRates(rates);
+                if (ann) setShippingNote(ann);
             }
         };
         fetchRates();
@@ -65,17 +103,21 @@ export default function CheckoutPage() {
         if (!form.country) return;
         
         if (form.country === 'United Arab Emirates') {
-            setCalculatedShipping(shippingRates.uae);
-        } else {
-            // Calculate total weight
-            const totalKg = cart.reduce((acc, item) => {
-                const weight = item.weight_kg !== undefined ? Number(item.weight_kg) : 0.5;
-                return acc + (weight * item.quantity);
+            setCalculatedShipping(25);
+        } else if (['Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman'].includes(form.country)) {
+            const weight = cart.reduce((acc, item) => {
+                const w = item.weight_kg !== undefined ? Number(item.weight_kg) : 0.5;
+                return acc + (w * item.quantity);
             }, 0);
-            
-            // Round up to nearest KG for pricing
-            const chargeableWeight = Math.ceil(totalKg);
-            setCalculatedShipping(chargeableWeight * shippingRates.intl);
+
+            if (weight <= 0.5) {
+                setCalculatedShipping(30);
+            } else {
+                // 30 AED for first 0.5 + 30 AED per 0.5 additional
+                const extraWeight = weight - 0.5;
+                const extraChunks = Math.ceil(extraWeight / 0.5);
+                setCalculatedShipping(30 + (extraChunks * 30));
+            }
         }
     }, [form.country, cart, shippingRates]);
 
@@ -87,6 +129,22 @@ export default function CheckoutPage() {
         setLoading(true);
 
         try {
+            // Save Profile if requested and user is logged in
+            if (user && saveAddress) {
+                const { error: profileError } = await supabase
+                    .from('profiles')
+                    .upsert({
+                        id: user.id,
+                        full_name: form.name,
+                        phone: form.phone,
+                        address: form.address,
+                        city: form.city,
+                        country: form.country,
+                        updated_at: new Date().toISOString()
+                    });
+                if (profileError) console.error('Error saving profile:', profileError);
+            }
+
             // 1. Call our API Route
             const res = await fetch('/api/checkout/ziina', {
                 method: 'POST',
@@ -95,7 +153,8 @@ export default function CheckoutPage() {
                     form,
                     cart,
                     finalTotal: grandTotal,
-                    shippingCost: calculatedShipping
+                    shippingCost: calculatedShipping,
+                    appliedCoupon // Pass the coupon to the backend for validation
                 })
             });
 
@@ -210,6 +269,18 @@ export default function CheckoutPage() {
                                                 onChange={e => setForm({ ...form, address: e.target.value })}
                                             />
                                         </div>
+
+                                        {user && (
+                                            <div className={styles.saveAddressToggle}>
+                                                <input
+                                                    type="checkbox"
+                                                    id="save_address"
+                                                    checked={saveAddress}
+                                                    onChange={e => setSaveAddress(e.target.checked)}
+                                                />
+                                                <label htmlFor="save_address">{t.saveAddress}</label>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
 
@@ -266,6 +337,13 @@ export default function CheckoutPage() {
                             <div className={styles.summaryCard}>
                                 <h2>{lang === 'en' ? 'Order Summary' : 'ملخص الطلب'}</h2>
 
+                                {shippingNote && shippingNote.active && (
+                                    <div className={styles.shippingNote}>
+                                        <Truck size={20} />
+                                        <span>{lang === 'en' ? shippingNote.text_en : shippingNote.text_ar}</span>
+                                    </div>
+                                )}
+
                                 <div className={styles.itemsList}>
                                     {cart.map(item => (
                                         <div key={item.id} className={styles.summaryItem}>
@@ -286,6 +364,10 @@ export default function CheckoutPage() {
                                     <div className={styles.row}>
                                         <span>{lang === 'en' ? 'Subtotal' : 'المجموع الفرعي'}</span>
                                         <span>{cartTotal.toFixed(2)} AED</span>
+                                    </div>
+                                    <div className={styles.row}>
+                                        <span style={{ color: 'rgba(200, 191, 178, 0.5)', fontSize: '0.85rem' }}>{lang === 'en' ? 'International Shipping Note' : 'ملاحظة الشحن الدولي'}</span>
+                                        <span style={{ color: '#C6A75E', fontSize: '0.85rem' }}>{lang === 'en' ? '30 AED for every 0.5 kg' : 'لكل نصف كيلو 30 درهم'}</span>
                                     </div>
                                     <div className={styles.row}>
                                         <span>{lang === 'en' ? 'Shipping' : 'الشحن'}</span>

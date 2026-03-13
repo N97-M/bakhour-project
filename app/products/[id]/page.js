@@ -92,7 +92,12 @@ export default function ProductPage({ params }) {
                         <div className={styles.info}>
                             <p className={styles.category}>{product.category}</p>
                             <h1 className={styles.title}>{product.name}</h1>
-                            <p className={styles.price}>{product.price}</p>
+                            {product.size_ml && (
+                                <p className={styles.size}>{product.size_ml} ml</p>
+                            )}
+                            <div className={styles.priceRow}>
+                                <p className={styles.price}>{product.price}</p>
+                            </div>
 
                             <span className="gold-divider" style={{ margin: '2rem 0', marginLeft: 0 }} />
 

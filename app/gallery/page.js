@@ -114,12 +114,17 @@ function GalleryContent() {
                                                 alt={p.name_en}
                                                 width={400}
                                                 height={400}
-                                                className={styles.image}
+                                                className={styles.cardImage}
                                             />
                                         </div>
                                         <div className={styles.cardInfo}>
                                             <h2 className={styles.cardName}>{p.name}</h2>
-                                            <p className={styles.cardPrice}>{p.price}</p>
+                                            {p.size_ml && (
+                                                <p className={styles.cardSize}>{p.size_ml} ml</p>
+                                            )}
+                                            <div className={styles.priceRow}>
+                                                <p className={styles.cardPrice}>{p.price}</p>
+                                            </div>
                                             <button
                                                 className={`btn-luxury ${styles.addToCartBtn}`}
                                                 onClick={(e) => {

@@ -13,7 +13,7 @@ import { supabase } from '@/utils/supabase';
 import styles from './page.module.css';
 import { flyToCart } from '@/utils/flyToCart';
 
-function CategoryCard({ category, index }) {
+function CategoryCard({ category, index, lang }) {
     const ref = useRef(null);
     const router = useRouter();
 
@@ -43,9 +43,12 @@ function CategoryCard({ category, index }) {
                     height={400}
                     className={styles.cardImage}
                 />
+                <div className={styles.shopBtn}>
+                    {lang === 'en' ? 'Shop Collection' : 'تسوق المجموعة'}
+                </div>
             </div>
-            <div className={styles.cardInfo} style={{ justifyContent: 'center' }}>
-                <h3 className={styles.cardName} style={{ marginBottom: 0 }}>{category.name}</h3>
+            <div className={styles.cardInfo}>
+                <h3 className={styles.cardName}>{category.name}</h3>
             </div>
         </div>
     );
@@ -55,13 +58,29 @@ export default function Home() {
     const sectionRef = useRef(null);
     const { lang } = useLanguage();
     const t = translations[lang];
-    const categories = [
+    const [categories, setCategories] = useState([
         { id: 'bakhour', name: lang === 'en' ? 'Bakhour' : 'البخور', image: '/product-hero.png' },
         { id: 'khamriyat', name: lang === 'en' ? 'Khomrah' : 'الخمر', image: '/product-hero.png' },
         { id: 'mahlab', name: lang === 'en' ? 'Mahlab' : 'محلب', image: '/product-hero.png' },
         { id: 'gifts', name: lang === 'en' ? 'Packages & Gifts' : 'البكجات والهدايا', image: '/product-hero.png' },
         { id: 'bestSellers', name: lang === 'en' ? 'Best Sellers' : 'الأكثر مبيعاً', image: '/product-hero.png' }
-    ];
+    ]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const { data } = await supabase.from('site_config').select('*').eq('key', 'home_collections');
+            if (data && data.length > 0 && data[0].value) {
+                const configValue = data[0].value;
+                const mapped = configValue.map(c => ({
+                    id: c.id,
+                    name: lang === 'en' ? c.name_en : c.name_ar,
+                    image: c.image
+                }));
+                setCategories(mapped);
+            }
+        };
+        fetchCategories();
+    }, [lang]);
 
     useEffect(() => {
         const el = sectionRef.current;
@@ -95,7 +114,7 @@ export default function Home() {
 
                             <div className={styles.grid}>
                                 {categories.map((c, i) => (
-                                    <CategoryCard key={c.id} category={c} index={i} />
+                                    <CategoryCard key={c.id} category={c} index={i} lang={lang} />
                                 ))}
                             </div>
 

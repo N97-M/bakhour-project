@@ -10,7 +10,8 @@ import {
     ShoppingBag,
     DollarSign,
     ChevronRight,
-    ArrowUpRight
+    ArrowUpRight,
+    Trash2
 } from 'lucide-react';
 import styles from './AdminCustomers.module.css';
 
@@ -51,6 +52,30 @@ export default function AdminCustomersPage() {
             setCustomers(Object.values(customerMap));
         }
         setLoading(false);
+    };
+
+    const handleDeleteCustomer = async (customer) => {
+        const confirmMsg = `هل أنت متأكد من حذف العميل "${customer.name || customer.email}"؟ سيتم حذف جميع الطلبات والبيانات المتعلقة به.\n\nAre you sure you want to delete customer "${customer.name || customer.email}"? This will delete all their orders and associated data.`;
+        
+        if (!window.confirm(confirmMsg)) return;
+
+        setLoading(true);
+        try {
+            // 1. Delete orders matching email OR phone
+            const { error: orderError } = await supabase
+                .from('orders')
+                .delete()
+                .or(`customer_email.eq.${customer.email},customer_phone.eq.${customer.phone}`);
+
+            if (orderError) throw orderError;
+
+            // 2. Refresh list
+            alert('تم حذف العميل بنجاح. / Customer deleted successfully.');
+            fetchCustomers();
+        } catch (err) {
+            alert('حدث خطأ أثناء الحذف: ' + err.message);
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -117,9 +142,16 @@ export default function AdminCustomersPage() {
                                         <td className={styles.center}><span className={styles.badge}>{c.totalOrders}</span></td>
                                         <td className="gold-text"><strong>{c.totalSpent.toFixed(2)} AED</strong></td>
                                         <td className={styles.date}>{new Date(c.lastOrder).toLocaleDateString()}</td>
-                                        <td>
+                                        <td className={styles.actions}>
                                             <button className={styles.viewBtn} title="View Orders">
                                                 <ArrowUpRight size={16} />
+                                            </button>
+                                            <button 
+                                                className={styles.deleteBtn} 
+                                                title="Delete Customer"
+                                                onClick={() => handleDeleteCustomer(c)}
+                                            >
+                                                <Trash2 size={16} />
                                             </button>
                                         </td>
                                     </tr>

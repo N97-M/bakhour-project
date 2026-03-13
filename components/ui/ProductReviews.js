@@ -3,10 +3,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/utils/supabase';
 import { useLanguage } from '@/context/LanguageContext';
 import { Star, Image as ImageIcon, CheckCircle, Filter, Trash2 } from 'lucide-react';
+import { translations } from '@/utils/translations';
 import styles from './ProductReviews.module.css';
 
 export default function ProductReviews({ productId }) {
     const { lang } = useLanguage();
+    const t = translations[lang].reviews;
     const [reviews, setReviews] = useState([]);
     const [filter, setFilter] = useState('all'); // 'all', '5-star', 'with-photos'
     const [user, setUser] = useState(null);
@@ -54,14 +56,14 @@ export default function ProductReviews({ productId }) {
         if (dbReviews && dbReviews.length > 0) {
             const formattedReviews = dbReviews.map(r => ({
                 ...r,
-                user_name: r.user_name || 'Al Dalal Customer'
+                user_name: r.user_name || t.defaultUser
             }));
             setReviews([...formattedReviews, ...mockReviews]);
         } else {
             setReviews(mockReviews);
         }
         setLoading(false);
-    }, [productId]);
+    }, [productId, t.defaultUser]);
 
     useEffect(() => {
         fetchReviewsAndUser();
@@ -74,7 +76,7 @@ export default function ProductReviews({ productId }) {
 
     const submitReview = async (e) => {
         e.preventDefault();
-        if (!user) return alert('Please login to leave a review.');
+        if (!user) return alert(t.form.errorAuth);
         setSubmitting(true);
 
         const uploadedUrls = [];
@@ -96,7 +98,7 @@ export default function ProductReviews({ productId }) {
         const { error } = await supabase.from('reviews').insert({
             product_id: productId,
             user_id: user.id,
-            user_name: user.user_metadata?.full_name || 'Al Dalal Customer',
+            user_name: user.user_metadata?.full_name || t.defaultUser,
             rating,
             comment,
             image_urls: uploadedUrls,
@@ -104,19 +106,19 @@ export default function ProductReviews({ productId }) {
         });
 
         if (!error) {
-            setSubmitSuccess('Thank you! Your review has been posted.');
+            setSubmitSuccess(t.form.successMsg);
             setComment('');
             setRating(5);
             setFiles([]);
             fetchReviewsAndUser(); // Refresh the list immediately
         } else {
-            alert('Error posting review: ' + error.message);
+            alert(t.form.errorSubmit + error.message);
         }
         setSubmitting(false);
     };
 
     const handleDeleteReview = async (reviewId) => {
-        if (!window.confirm('Are you sure you want to delete this review?')) return;
+        if (!window.confirm(t.item.deleteConfirm)) return;
 
         const { error } = await supabase
             .from('reviews')
@@ -124,7 +126,7 @@ export default function ProductReviews({ productId }) {
             .eq('review_id', reviewId);
 
         if (error) {
-            alert('Error deleting review: ' + error.message);
+            alert(t.item.errorDelete + error.message);
         } else {
             fetchReviewsAndUser();
         }
@@ -159,7 +161,7 @@ export default function ProductReviews({ productId }) {
             <div className="container">
                 <div className={styles.header}>
                     <h2 className={styles.title}>
-                        {lang === 'en' ? 'Customer Reviews' : 'آراء العملاء'}
+                        {t.title}
                     </h2>
                     <span className="gold-divider" />
                 </div>
@@ -170,29 +172,29 @@ export default function ProductReviews({ productId }) {
                         <div className={styles.summaryCard}>
                             <div className={styles.avgScore}>{averageRating}</div>
                             <div className={styles.avgStars}>{renderStars(Math.round(averageRating))}</div>
-                            <p className={styles.totalCount}>Based on {reviews.length} reviews</p>
+                            <p className={styles.totalCount}>{t.basedOn} {reviews.length} {t.reviewsCount}</p>
                         </div>
 
                         <div className={styles.filters}>
                             <button className={`${styles.filterBtn} ${filter === 'all' ? styles.active : ''}`} onClick={() => setFilter('all')}>
-                                All Reviews
+                                {t.filters.all}
                             </button>
                             <button className={`${styles.filterBtn} ${filter === '5-star' ? styles.active : ''}`} onClick={() => setFilter('5-star')}>
-                                5 Stars ⭐
+                                {t.filters.stars5}
                             </button>
                             <button className={`${styles.filterBtn} ${filter === 'with-photos' ? styles.active : ''}`} onClick={() => setFilter('with-photos')}>
-                                With Photos 📸
+                                {t.filters.withPhotos}
                             </button>
                         </div>
 
                         {/* Submission Form */}
                         {user ? (
                             <div className={styles.submitCard}>
-                                <h3>Leave a Review</h3>
+                                <h3>{t.form.title}</h3>
                                 {submitSuccess && <p className={styles.success}>{submitSuccess}</p>}
                                 <form onSubmit={submitReview} className={styles.form}>
                                     <div className={styles.ratingSelect}>
-                                        <p>Tap a star to rate:</p>
+                                        <p>{t.form.tapStar}</p>
                                         <div className={styles.interactiveStars}>
                                             {[1, 2, 3, 4, 5].map(star => (
                                                 <Star
@@ -208,7 +210,7 @@ export default function ProductReviews({ productId }) {
                                     </div>
 
                                     <textarea
-                                        placeholder="Share your experience..."
+                                        placeholder={t.form.placeholder}
                                         className={styles.textarea}
                                         value={comment}
                                         onChange={e => setComment(e.target.value)}
@@ -217,7 +219,7 @@ export default function ProductReviews({ productId }) {
 
                                     <div className={styles.fileUpload}>
                                         <label htmlFor="photos" className={styles.uploadLabel}>
-                                            <ImageIcon size={20} /> Add Photos {files.length > 0 && `(${files.length})`}
+                                            <ImageIcon size={20} /> {t.form.addPhotos} {files.length > 0 && `(${files.length})`}
                                         </label>
                                         <input
                                             type="file"
@@ -230,14 +232,14 @@ export default function ProductReviews({ productId }) {
                                     </div>
 
                                     <button type="submit" className={`btn-luxury w-100 ${styles.submitBtn}`} disabled={submitting}>
-                                        {submitting ? 'Posting...' : 'Post Review'}
+                                        {submitting ? t.form.submitting : t.form.submit}
                                     </button>
                                 </form>
                             </div>
                         ) : (
                             <div className={styles.loginPrompt}>
-                                <p>Please login to leave a review.</p>
-                                <a href="/login" className="btn-luxury">Login</a>
+                                <p>{t.form.loginPrompt}</p>
+                                <a href="/login" className="btn-luxury">{t.form.loginBtn}</a>
                             </div>
                         )}
                     </div>
@@ -247,7 +249,7 @@ export default function ProductReviews({ productId }) {
 
                         <div className={styles.reviewList}>
                             {filteredReviews.length === 0 ? (
-                                <p>No reviews match this filter.</p>
+                                <p>{t.empty}</p>
                             ) : (
                                 filteredReviews.map(r => (
                                     <div key={r.review_id} className={styles.reviewItem}>
@@ -256,12 +258,12 @@ export default function ProductReviews({ productId }) {
                                                 <strong>{r.user_name}</strong>
                                                 {r.is_verified_purchase && (
                                                     <span className={styles.verified}>
-                                                        <CheckCircle size={12} /> Verified Buyer
+                                                        <CheckCircle size={12} /> {t.item.verified}
                                                     </span>
                                                 )}
                                             </div>
                                             <span className={styles.date}>
-                                                {new Date(r.review_date).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                                                {new Date(r.review_date).toLocaleDateString(lang === 'en' ? 'en-US' : 'ar-AE', { month: 'long', year: 'numeric' })}
                                             </span>
                                             {(isAdmin || (user && r.user_id === user.id)) && (
                                                 <button

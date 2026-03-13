@@ -31,35 +31,41 @@ export default function SignupPage() {
 
         setLoading(true);
 
-        console.log('Attempting signup for:', email);
-        const { data, error: authError } = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                data: {
-                    full_name: name,
-                    wants_newsletter: newsletter,
-                },
-                // Some Supabase versions use redirectTo, others use emailRedirectTo. 
-                // Providing both ensures the developer dashboard settings are respected.
-                emailRedirectTo: `${window.location.origin}/login`,
+        try {
+            console.log('Attempting signup for:', email);
+            const { data, error: authError } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: {
+                        full_name: name,
+                        wants_newsletter: newsletter,
+                    },
+                    // Some Supabase versions use redirectTo, others use emailRedirectTo. 
+                    // Providing both ensures the developer dashboard settings are respected.
+                    emailRedirectTo: `${window.location.origin}/verify`,
+                }
+            });
+
+            console.log('Auth result:', { data, error: authError });
+
+            if (authError) {
+                console.error('Signup error:', authError);
+                setError(authError.message || t.errorGeneral || 'An error occurred. Please try again.');
+            } else if (data?.user && data?.session) {
+                // Already logged in (likely email confirmation off)
+                setSuccess(t.success);
+                setTimeout(() => router.push('/'), 2000);
+            } else {
+                // Confirmation email sent
+                setSuccess(t.success + " Check your inbox and spam folder.");
             }
-        });
-
-        console.log('Auth result:', { data, error: authError });
-
-        if (authError) {
-            console.error('Signup error:', authError);
-            setError(authError.message);
-        } else if (data?.user && data?.session) {
-            // Already logged in (likely email confirmation off)
-            setSuccess(t.success);
-            setTimeout(() => router.push('/'), 2000);
-        } else {
-            // Confirmation email sent
-            setSuccess(t.success + " Check your inbox and spam folder.");
+        } catch (err) {
+            console.error('Unexpected signup error:', err);
+            setError('Network error: Could not reach authentication service. Please check your connection or try again later.');
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     return (

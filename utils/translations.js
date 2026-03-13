@@ -122,6 +122,7 @@ export const translations = {
             title: 'Checkout',
             shipping: 'Shipping Information',
             gift: 'Gift Options',
+            saveAddress: 'Save this address for future use',
             confirm: 'Confirm Order',
             success: 'Order Successful',
             thankyou: 'Thank you for choosing Al Dalal. Your order is being prepared with care.'
@@ -199,7 +200,47 @@ export const translations = {
                 success: 'Your password has been securely updated. You can now log in.',
                 errorMismatch: 'Passwords do not match',
                 backLogin: 'Back to Login'
+            },
+            verify: {
+                successTitle: 'Account Verified Successfully',
+                successText: 'Your email has been confirmed successfully. You can now log in to your account.',
+                alreadyTitle: 'Already Verified',
+                alreadyText: 'This account has already been verified. You can log in.',
+                errorTitle: 'Verification Link Error',
+                errorText: 'The verification link is invalid or has expired. Please try logging in or signing up again.',
+                loginBtn: 'Login to Your Account',
+                backHome: 'Back to Home'
             }
+        },
+        reviews: {
+            title: 'Customer Reviews',
+            basedOn: 'Based on',
+            reviewsCount: 'reviews',
+            filters: {
+                all: 'All Reviews',
+                stars5: '5 Stars ⭐',
+                withPhotos: 'With Photos 📸'
+            },
+            form: {
+                title: 'Leave a Review',
+                tapStar: 'Tap a star to rate:',
+                placeholder: 'Share your experience...',
+                addPhotos: 'Add Photos',
+                submit: 'Post Review',
+                submitting: 'Posting...',
+                loginPrompt: 'Please login to leave a review.',
+                loginBtn: 'Login',
+                errorAuth: 'Please login to leave a review.',
+                successMsg: 'Thank you! Your review has been posted.',
+                errorSubmit: 'Error posting review: '
+            },
+            item: {
+                verified: 'Verified Buyer',
+                deleteConfirm: 'Are you sure you want to delete this review?',
+                errorDelete: 'Error deleting review: '
+            },
+            empty: 'No reviews match this filter.',
+            defaultUser: 'Al Dalal Customer'
         }
     },
     ar: {
@@ -325,6 +366,7 @@ export const translations = {
             title: 'إتمام الطلب',
             shipping: 'معلومات الشحن',
             gift: 'خيارات الهدايا',
+            saveAddress: 'حفظ العنوان لاستخدامه لاحقاً',
             confirm: 'تأكيد الطلب',
             success: 'تم الطلب بنجاح',
             thankyou: 'شكراً لاختيارك بخور الدلال. سيتم تجهيز طلبك بكل عناية واهتمام.'
@@ -402,7 +444,47 @@ export const translations = {
                 success: 'تم تحديث كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول.',
                 errorMismatch: 'كلمات المرور غير متطابقة',
                 backLogin: 'العودة لتسجيل الدخول'
+            },
+            verify: {
+                successTitle: 'تم تفعيل الحساب بنجاح',
+                successText: 'تم تأكيد بريدك الإلكتروني بنجاح. يمكنك الآن تسجيل الدخول إلى حسابك.',
+                alreadyTitle: 'الحساب مفعل بالفعل',
+                alreadyText: 'هذا الحساب مفعل بالفعل. يمكنك تسجيل الدخول.',
+                errorTitle: 'خطأ في رابط التفعيل',
+                errorText: 'رابط التفعيل غير صالح أو منتهي الصلاحية. يرجى محاولة تسجيل الدخول أو التسجيل مرة أخرى.',
+                loginBtn: 'تسجيل الدخول إلى حسابك',
+                backHome: 'العودة للرئيسية'
             }
+        },
+        reviews: {
+            title: 'آراء العملاء',
+            basedOn: 'بناءً على',
+            reviewsCount: 'تقييم',
+            filters: {
+                all: 'جميع الآراء',
+                stars5: '٥ نجوم ⭐',
+                withPhotos: 'مع صور 📸'
+            },
+            form: {
+                title: 'أضف تقييمك',
+                tapStar: 'اضغط على التقييم:',
+                placeholder: 'شاركنا تجربتك...',
+                addPhotos: 'أضف صور',
+                submit: 'إرسال التقييم',
+                submitting: 'جاري الإرسال...',
+                loginPrompt: 'يرجى تسجيل الدخول لإضافة تقييم.',
+                loginBtn: 'تسجيل الدخول',
+                errorAuth: 'يرجى تسجيل الدخول لإضافة تقييم.',
+                successMsg: 'شكراً لك! تم نشر تقييمك بنجاح.',
+                errorSubmit: 'حدث خطأ أثناء الإرسال: '
+            },
+            item: {
+                verified: 'مشتري معتمد',
+                deleteConfirm: 'هل أنت متأكد أنك تريد حذف هذا التقييم؟',
+                errorDelete: 'حدث خطأ أثناء الحذف: '
+            },
+            empty: 'لا توجد تقييمات تطابق هذا الفلتر.',
+            defaultUser: 'عميل بخور الدلال'
         }
     }
 };

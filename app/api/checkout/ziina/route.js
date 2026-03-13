@@ -8,11 +8,34 @@ export async function POST(request) {
         const origin = process.env.NEXT_PUBLIC_BASE_URL || request.headers.get('origin') || 'https://aldalalbakhour.com';
 
         // 2. Create Order in Supabase
-        const { form, cart, finalTotal, shippingCost } = await request.json();
+        const { form, cart, finalTotal, shippingCost, appliedCoupon } = body;
 
         if (!cart || cart.length === 0) {
             return NextResponse.json({ error: 'Cart is empty' }, { status: 400 });
         }
+
+        // --- FIRST ORDER DISCOUNT VALIDATION ---
+        if (appliedCoupon) {
+            const { data: promoConfig } = await supabase.from('site_config').select('*').eq('key', 'promo_popup').single();
+            const promoCode = promoConfig?.value?.code;
+
+            if (promoCode && appliedCoupon.code.toUpperCase() === promoCode.toUpperCase()) {
+                // Check for existing orders with this email
+                const { data: existingOrders, error: checkError } = await supabase
+                    .from('orders')
+                    .select('id')
+                    .eq('customer_email', form.email.trim())
+                    .neq('ziina_status', 'failed') // Ignore failed attempts if necessary
+                    .limit(1);
+
+                if (existingOrders && existingOrders.length > 0) {
+                    return NextResponse.json({ 
+                        error: 'This promo code is valid for first-time purchases only.' 
+                    }, { status: 400 });
+                }
+            }
+        }
+        // ---------------------------------------
 
         // Generate a unique order tracking ID
         const orderId = 'ORD-' + Date.now().toString(36).toUpperCase();
