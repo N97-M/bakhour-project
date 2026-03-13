@@ -55,25 +55,37 @@ export default function AdminCustomersPage() {
     };
 
     const handleDeleteCustomer = async (customer) => {
-        const confirmMsg = `هل أنت متأكد من حذف العميل "${customer.name || customer.email}"؟ سيتم حذف جميع الطلبات والبيانات المتعلقة به.\n\nAre you sure you want to delete customer "${customer.name || customer.email}"? This will delete all their orders and associated data.`;
+        const confirmMsg = `هل أنت متأكد من حذف العميل "${customer.name || customer.email || customer.phone}"؟\nسيتم حذف جميع الطلبات والبيانات المتعلقة به نهائياً.\n\nAre you sure you want to delete customer "${customer.name || customer.email || customer.phone}"?\nThis will permanently delete all their orders and associated data.`;
         
         if (!window.confirm(confirmMsg)) return;
 
         setLoading(true);
         try {
-            // 1. Delete orders matching email OR phone
+            // Build the OR query dynamically to avoid errors with null/undefined values
+            const conditions = [];
+            if (customer.email) conditions.push(`customer_email.eq.${customer.email}`);
+            if (customer.phone) conditions.push(`customer_phone.eq.${customer.phone}`);
+            
+            if (conditions.length === 0) {
+                throw new Error('No email or phone available to identify customer.');
+            }
+
             const { error: orderError } = await supabase
                 .from('orders')
                 .delete()
-                .or(`customer_email.eq.${customer.email},customer_phone.eq.${customer.phone}`);
+                .or(conditions.join(','));
 
             if (orderError) throw orderError;
 
-            // 2. Refresh list
+            // Also try to delete profile if it exists (by email or phone matching isn't direct here, but if we have UUID we should use it)
+            // For now, since directory is derived from orders, deleting from orders is the main goal.
+
             alert('تم حذف العميل بنجاح. / Customer deleted successfully.');
-            fetchCustomers();
+            await fetchCustomers();
         } catch (err) {
+            console.error('Delete error:', err);
             alert('حدث خطأ أثناء الحذف: ' + err.message);
+        } finally {
             setLoading(false);
         }
     };
