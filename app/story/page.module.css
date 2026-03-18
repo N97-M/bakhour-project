@@ -6,9 +6,12 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: linear-gradient(160deg, #1A0A10 0%, #2D0810 40%, #0D0D0D 100%);
-    overflow: hidden;
-    padding-top: 80px;
+    background:
+        linear-gradient(rgba(13, 13, 13, 0.7), rgba(13, 13, 13, 0.7)),
+        url("/Our Packaging for بخور الدلال/1.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .heroOverlay {

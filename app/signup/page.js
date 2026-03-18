@@ -33,36 +33,47 @@ export default function SignupPage() {
 
         try {
             console.log('Attempting signup for:', email);
+            const signupOptions = {
+                data: {
+                    full_name: name,
+                    wants_newsletter: newsletter,
+                },
+                emailRedirectTo: `${window.location.origin}/verify`,
+            };
+
             const { data, error: authError } = await supabase.auth.signUp({
                 email,
                 password,
-                options: {
-                    data: {
-                        full_name: name,
-                        wants_newsletter: newsletter,
-                    },
-                    // Some Supabase versions use redirectTo, others use emailRedirectTo. 
-                    // Providing both ensures the developer dashboard settings are respected.
-                    emailRedirectTo: `${window.location.origin}/verify`,
-                }
+                options: signupOptions
             });
 
-            console.log('Auth result:', { data, error: authError });
+            console.log('Auth signup raw response:', { data, error: authError });
 
             if (authError) {
                 console.error('Signup error:', authError);
-                setError(authError.message || t.errorGeneral || 'An error occurred. Please try again.');
-            } else if (data?.user && data?.session) {
-                // Already logged in (likely email confirmation off)
-                setSuccess(t.success);
-                setTimeout(() => router.push('/'), 2000);
+                // Handle specific error codes if possible, otherwise use generic message
+                if (authError.status === 422 || authError.message.includes('already registered')) {
+                     setError(translations[lang].auth.login.signupPrompt + " " + translations[lang].auth.login.signupLink);
+                } else {
+                    setError(authError.message || t.errorGeneral || 'An error occurred during signup.');
+                }
+            } else if (data?.user) {
+                // Check if user is already "confirmed" (e.g. if email confirmation is OFF in Supabase)
+                if (data.session) {
+                    console.log('Signup successful, session created immediately.');
+                    setSuccess(t.success);
+                    setTimeout(() => router.push('/'), 2000);
+                } else {
+                    // Confirmation email sent
+                    console.log('Signup successful, confirmation email required.');
+                    setSuccess(t.success);
+                }
             } else {
-                // Confirmation email sent
-                setSuccess(t.success + " Check your inbox and spam folder.");
+                setError('Unexpected response from authentication service. Please try again.');
             }
         } catch (err) {
             console.error('Unexpected signup error:', err);
-            setError('Network error: Could not reach authentication service. Please check your connection or try again later.');
+            setError('Network error: Could not reach authentication service. Please check your connection.');
         } finally {
             setLoading(false);
         }

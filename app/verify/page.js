@@ -17,21 +17,36 @@ function VerifyContent() {
     const [errorMsg, setErrorMsg] = useState('');
 
     useEffect(() => {
-        const error = searchParams.get('error');
-        const errorDescription = searchParams.get('error_description');
-
-        if (error) {
-            // Check for common 'already verified' error strings from Supabase
-            if (errorDescription?.toLowerCase().includes('already verified') || 
-                errorDescription?.toLowerCase().includes('identity_already_verified')) {
+        const checkVerification = async () => {
+            const error = searchParams.get('error');
+            const errorDescription = searchParams.get('error_description');
+            
+            // Check if user is already logged in (might have already clicked the link)
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) {
                 setStatus('already');
-            } else {
-                setStatus('error');
-                setErrorMsg(errorDescription || error);
+                return;
             }
-        } else {
-            setStatus('success');
-        }
+
+            if (error) {
+                console.error('Verification error:', { error, errorDescription });
+                // Check for common 'already verified' error strings from Supabase
+                const desc = errorDescription?.toLowerCase() || '';
+                if (desc.includes('already verified') || 
+                    desc.includes('identity_already_verified') ||
+                    desc.includes('already_confirmed')) {
+                    setStatus('already');
+                } else {
+                    setStatus('error');
+                    setErrorMsg(errorDescription || error);
+                }
+            } else {
+                // If no error, assume success (Supabase redirects here on success)
+                setStatus('success');
+            }
+        };
+        
+        checkVerification();
     }, [searchParams]);
 
     return (
