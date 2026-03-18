@@ -28,6 +28,22 @@ export default function AdminSettingsPage() {
             { id: 'mahlab', name_en: 'Mahlab', name_ar: 'محلب', image: '/product-hero.png' },
             { id: 'gifts', name_en: 'Packages & Gifts', name_ar: 'البكجات والهدايا', image: '/product-hero.png' },
             { id: 'bestSellers', name_en: 'Best Sellers', name_ar: 'الأكثر مبيعاً', image: '/product-hero.png' }
+        ],
+        packaging_images: [
+            "/Our Packaging for بخور الدلال/1.jpeg",
+            "/Our Packaging for بخور الدلال/2.jpeg",
+            "/Our Packaging for بخور الدلال/3.jpeg",
+            "/Our Packaging for بخور الدلال/4.jpeg",
+            "/Our Packaging for بخور الدلال/5.jpeg",
+            "/Our Packaging for بخور الدلال/6.jpeg",
+            "/Our Packaging for بخور الدلال/7.PNG",
+            "/Our Packaging for بخور الدلال/8.jpeg",
+            "/Our Packaging for بخور الدلال/9.PNG",
+            "/Our Packaging for بخور الدلال/10.jpeg",
+            "/Our Packaging for بخور الدلال/11.jpg",
+            "/Our Packaging for بخور الدلال/12.jpg",
+            "/Our Packaging for بخور الدلال/13.jpg",
+            "/Our Packaging for بخور الدلال/14.jpg"
         ]
     });
     const [loading, setLoading] = useState(true);
@@ -79,6 +95,30 @@ export default function AdminSettingsPage() {
         } finally {
             setUploading(null);
         }
+    };
+
+    const [uploadingPkg, setUploadingPkg] = useState(false);
+
+    const handlePackagingFileUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        setUploadingPkg(true);
+        try {
+            const url = await uploadToStorage(file);
+            const newImages = [...settings.packaging_images, url];
+            setSettings({ ...settings, packaging_images: newImages });
+        } catch (err) {
+            alert('Upload failed: ' + err.message);
+        } finally {
+            setUploadingPkg(false);
+        }
+    };
+
+    const handleDeletePackagingImage = (idx) => {
+        if (!confirm('Are you sure you want to remove this image?')) return;
+        const newImages = settings.packaging_images.filter((_, i) => i !== idx);
+        setSettings({ ...settings, packaging_images: newImages });
     };
 
     const fetchSettings = useCallback(async () => {
@@ -382,6 +422,66 @@ export default function AdminSettingsPage() {
                         style={{ marginTop: '2rem' }}
                     >
                         <Save size={18} /> Update Home Collections
+                    </button>
+                </div>
+            </div>
+
+            <div className={styles.section}>
+                <div className={styles.sectionHeader}>
+                    <ImageIcon size={24} color="#C6A75E" />
+                    <div>
+                        <h3>Packaging Images</h3>
+                        <p>Manage the gallery photos displayed on the Packaging page.</p>
+                    </div>
+                </div>
+                <div className={styles.card}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2rem' }}>
+                        {settings.packaging_images?.map((imgUrl, idx) => (
+                            <div key={idx} style={{ position: 'relative', width: '150px', height: '200px', border: '1px solid rgba(198, 167, 94, 0.2)', borderRadius: '8px', overflow: 'hidden' }}>
+                                <img 
+                                    src={imgUrl} 
+                                    alt={`Packaging ${idx}`} 
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                                />
+                                <button 
+                                    onClick={() => handleDeletePackagingImage(idx)}
+                                    style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(0,0,0,0.6)', border: 'none', color: '#ff4444', padding: '4px', borderRadius: '4px', cursor: 'pointer', zIndex: 10 }}
+                                    title="Delete Image"
+                                    type="button"
+                                >
+                                    <Trash2 size={16} />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <input
+                            type="file"
+                            id="upload-pkg"
+                            hidden
+                            accept="image/*"
+                            onChange={handlePackagingFileUpload}
+                        />
+                        <button 
+                            type="button"
+                            className={styles.addBtn}
+                            onClick={() => document.getElementById('upload-pkg').click()}
+                            disabled={uploadingPkg}
+                        >
+                            {uploadingPkg ? <Loader2 className="spin" size={20} /> : <Plus size={20} />}
+                            {uploadingPkg ? 'Uploading...' : 'Add New Image'}
+                        </button>
+                    </div>
+
+                    <button
+                        className={styles.saveBtn}
+                        onClick={() => handleSave('packaging_images', settings.packaging_images)}
+                        disabled={saving}
+                        style={{ marginTop: '2rem' }}
+                        type="button"
+                    >
+                        <Save size={18} /> Update Packaging Images
                     </button>
                 </div>
             </div>

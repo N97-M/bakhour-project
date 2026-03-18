@@ -1,10 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/utils/translations';
 import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
 import Image from 'next/image';
+import { supabase } from '@/utils/supabase';
 import styles from './page.module.css';
 
 export default function PackagingPage() {
@@ -12,7 +13,7 @@ export default function PackagingPage() {
     const t = translations[lang].packaging;
     const [selectedImg, setSelectedImg] = useState(null);
 
-    const images = [
+    const [images, setImages] = useState([
         "/Our Packaging for بخور الدلال/1.jpeg",
         "/Our Packaging for بخور الدلال/2.jpeg",
         "/Our Packaging for بخور الدلال/3.jpeg",
@@ -27,7 +28,17 @@ export default function PackagingPage() {
         "/Our Packaging for بخور الدلال/12.jpg",
         "/Our Packaging for بخور الدلال/13.jpg",
         "/Our Packaging for بخور الدلال/14.jpg"
-    ];
+    ]);
+
+    useEffect(() => {
+        const fetchImages = async () => {
+            const { data } = await supabase.from('site_config').select('value').eq('key', 'packaging_images').single();
+            if (data && data.value && Array.isArray(data.value) && data.value.length > 0) {
+                setImages(data.value);
+            }
+        };
+        fetchImages();
+    }, []);
 
     return (
         <div className={lang === 'ar' ? 'rtl' : 'ltr'}>
