@@ -88,7 +88,7 @@ export default function AdminCountriesPage() {
             {loading ? (
                 <p className={styles.empty}>Loading countries...</p>
             ) : countries.length === 0 ? (
-                <p className={styles.empty}>No countries added yet. Click "Add Country" to get started.</p>
+                <p className={styles.empty}>No countries added yet. Click &quot;Add Country&quot; to get started.</p>
             ) : (
                 <table className={styles.table}>
                     <thead>
