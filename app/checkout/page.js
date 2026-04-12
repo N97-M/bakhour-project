@@ -25,7 +25,9 @@ export default function CheckoutPage() {
 
     const [shippingRates, setShippingRates] = useState({ uae: 25, intl: 45 });
     const [shippingNote, setShippingNote] = useState(null);
+    const [shippingNoteText, setShippingNoteText] = useState(null);
     const [calculatedShipping, setCalculatedShipping] = useState(0);
+    const [countries, setCountries] = useState([]);
 
     const [form, setForm] = useState({
         name: '',
@@ -79,10 +81,10 @@ export default function CheckoutPage() {
         }
     }, [cart, isLoaded, router]);
 
-    // Fetch Rates & Settings
+    // Fetch Rates, Settings & Active Countries
     useEffect(() => {
         const fetchRates = async () => {
-            const { data } = await supabase.from('site_config').select('*').in('key', ['shipping_uae_flat', 'shipping_intl_kg', 'announcement']);
+            const { data } = await supabase.from('site_config').select('*').in('key', ['shipping_uae_flat', 'shipping_intl_kg', 'announcement', 'shipping_note']);
             if (data) {
                 const rates = { uae: 25, intl: 45 };
                 let ann = null;
@@ -90,36 +92,31 @@ export default function CheckoutPage() {
                     if (row.key === 'shipping_uae_flat') rates.uae = Number(row.value);
                     if (row.key === 'shipping_intl_kg') rates.intl = Number(row.value);
                     if (row.key === 'announcement') ann = row.value;
+                    if (row.key === 'shipping_note') setShippingNoteText(row.value);
                 });
                 setShippingRates(rates);
                 if (ann) setShippingNote(ann);
             }
         };
+        const fetchCountries = async () => {
+            const res = await fetch('/api/admin/countries');
+            const data = await res.json();
+            if (Array.isArray(data)) setCountries(data.filter(c => c.is_active));
+        };
         fetchRates();
+        fetchCountries();
     }, []);
 
-    // Calculate Shipping
+    // Calculate Shipping from DB country record
     useEffect(() => {
-        if (!form.country) return;
-        
-        if (form.country === 'United Arab Emirates') {
-            setCalculatedShipping(25);
-        } else if (['Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman'].includes(form.country)) {
-            const weight = cart.reduce((acc, item) => {
-                const w = item.weight_kg !== undefined ? Number(item.weight_kg) : 0.5;
-                return acc + (w * item.quantity);
-            }, 0);
-
-            if (weight <= 0.5) {
-                setCalculatedShipping(30);
-            } else {
-                // 30 AED for first 0.5 + 30 AED per 0.5 additional
-                const extraWeight = weight - 0.5;
-                const extraChunks = Math.ceil(extraWeight / 0.5);
-                setCalculatedShipping(30 + (extraChunks * 30));
-            }
+        if (!form.country || countries.length === 0) return;
+        const selected = countries.find(c => c.name === form.country);
+        if (selected) {
+            setCalculatedShipping(Number(selected.shipping_price));
+        } else {
+            setCalculatedShipping(0);
         }
-    }, [form.country, cart, shippingRates]);
+    }, [form.country, countries]);
 
     // Add shipping to the original cart final total
     const grandTotal = cartFinalTotal + calculatedShipping;
@@ -228,12 +225,9 @@ export default function CheckoutPage() {
                                                 onChange={e => setForm({ ...form, country: e.target.value, city: '' })}
                                             >
                                                 <option value="">{lang === 'en' ? 'Select Country' : 'اختر الدولة'}</option>
-                                                <option value="United Arab Emirates">{lang === 'en' ? 'United Arab Emirates' : 'الإمارات العربية المتحدة'}</option>
-                                                <option value="Saudi Arabia">{lang === 'en' ? 'Saudi Arabia' : 'المملكة العربية السعودية'}</option>
-                                                <option value="Kuwait">{lang === 'en' ? 'Kuwait' : 'الكويت'}</option>
-                                                <option value="Qatar">{lang === 'en' ? 'Qatar' : 'قطر'}</option>
-                                                <option value="Bahrain">{lang === 'en' ? 'Bahrain' : 'البحرين'}</option>
-                                                <option value="Oman">{lang === 'en' ? 'Oman' : 'عُمان'}</option>
+                                                {countries.map(c => (
+                                                    <option key={c.id} value={c.name}>{c.name}</option>
+                                                ))}
                                             </select>
                                         </div>
                                         <div className={styles.formGroup}>
@@ -365,10 +359,12 @@ export default function CheckoutPage() {
                                         <span>{lang === 'en' ? 'Subtotal' : 'المجموع الفرعي'}</span>
                                         <span>{cartTotal.toFixed(2)} AED</span>
                                     </div>
-                                    <div className={styles.row}>
-                                        <span style={{ color: 'rgba(200, 191, 178, 0.5)', fontSize: '0.85rem' }}>{lang === 'en' ? 'International Shipping Note' : 'ملاحظة الشحن الدولي'}</span>
-                                        <span style={{ color: '#C6A75E', fontSize: '0.85rem' }}>{lang === 'en' ? '30 AED for every 0.5 kg' : 'لكل نصف كيلو 30 درهم'}</span>
-                                    </div>
+                                    {shippingNoteText && (shippingNoteText.text_en || shippingNoteText.text_ar) && (
+                                        <div className={styles.row}>
+                                            <span style={{ color: 'rgba(200, 191, 178, 0.5)', fontSize: '0.85rem' }}>{lang === 'en' ? 'International Shipping Note' : 'ملاحظة الشحن الدولي'}</span>
+                                            <span style={{ color: '#C6A75E', fontSize: '0.85rem' }}>{lang === 'en' ? shippingNoteText.text_en : shippingNoteText.text_ar}</span>
+                                        </div>
+                                    )}
                                     <div className={styles.row}>
                                         <span>{lang === 'en' ? 'Shipping' : 'الشحن'}</span>
                                         {form.country ? (

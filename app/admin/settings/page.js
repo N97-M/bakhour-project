@@ -22,6 +22,7 @@ export default function AdminSettingsPage() {
         announcement: { text_en: '', text_ar: '', active: true },
         shipping_uae_flat: '25',
         shipping_intl_kg: '45',
+        shipping_note: { text_en: '30 AED for every 0.5 kg', text_ar: 'لكل نصف كيلو 30 درهم' },
         home_collections: [
             { id: 'bakhour', name_en: 'Bakhour', name_ar: 'البخور', image: '/product-hero.png' },
             { id: 'khamriyat', name_en: 'Khomrah', name_ar: 'الخمر', image: '/product-hero.png' },
@@ -271,6 +272,25 @@ export default function AdminSettingsPage() {
                             />
                             <p className={styles.uploadHint}>Rate multiplied by total cart weight.</p>
                         </div>
+                        <div className={styles.formGroup}>
+                            <label>Shipping Note (English)</label>
+                            <input
+                                type="text"
+                                placeholder="e.g. 30 AED for every 0.5 kg"
+                                value={settings.shipping_note?.text_en || ''}
+                                onChange={e => setSettings({ ...settings, shipping_note: { ...settings.shipping_note, text_en: e.target.value } })}
+                            />
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>Shipping Note (Arabic)</label>
+                            <input
+                                type="text"
+                                placeholder="مثال: لكل نصف كيلو 30 درهم"
+                                value={settings.shipping_note?.text_ar || ''}
+                                onChange={e => setSettings({ ...settings, shipping_note: { ...settings.shipping_note, text_ar: e.target.value } })}
+                            />
+                            <p className={styles.uploadHint}>Shown in the order summary at checkout.</p>
+                        </div>
                     </div>
                     <button
                         className={styles.saveBtn}
@@ -278,7 +298,8 @@ export default function AdminSettingsPage() {
                             setSaving(true);
                             await supabase.from('site_config').upsert([
                                 { key: 'shipping_uae_flat', value: settings.shipping_uae_flat },
-                                { key: 'shipping_intl_kg', value: settings.shipping_intl_kg }
+                                { key: 'shipping_intl_kg', value: settings.shipping_intl_kg },
+                                { key: 'shipping_note', value: settings.shipping_note }
                             ]);
                             alert('Shipping rates updated!');
                             setSaving(false);

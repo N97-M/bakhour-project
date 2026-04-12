@@ -11,7 +11,8 @@ import {
     Settings,
     LogOut,
     Home,
-    Tag
+    Tag,
+    Globe
 } from 'lucide-react';
 import styles from './AdminLayout.module.css';
 
@@ -55,6 +56,7 @@ export default function AdminLayout({ children }) {
         { name: 'Products', path: '/admin/products', icon: <Package size={20} /> },
         { name: 'Orders', path: '/admin/orders', icon: <ShoppingCart size={20} /> },
         { name: 'Coupons', path: '/admin/coupons', icon: <Tag size={20} /> },
+        { name: 'Countries', path: '/admin/countries', icon: <Globe size={20} /> },
         { name: 'Customers', path: '/admin/customers', icon: <Users size={20} /> },
         { name: 'Site Settings', path: '/admin/settings', icon: <Settings size={20} /> },
     ];

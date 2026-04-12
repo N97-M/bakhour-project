@@ -2,6 +2,7 @@ import { CartProvider } from '@/context/CartContext';
 import { LanguageProvider } from '@/context/LanguageContext';
 import OnboardingPopup from '@/components/ui/OnboardingPopup';
 import PromoPopup from '@/components/ui/PromoPopup';
+import AuthErrorListener from '@/components/ui/AuthErrorListener';
 import './globals.css';
 
 export const metadata = {
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
                         {children}
                         <OnboardingPopup />
                         <PromoPopup />
+                        <AuthErrorListener />
                     </CartProvider>
                 </LanguageProvider>
             </body>

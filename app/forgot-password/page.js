@@ -1,7 +1,7 @@
 'use client';
 import styles from '../login/auth.module.css';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/utils/supabase';
 import { useLanguage } from '@/context/LanguageContext';
 import { translations } from '@/utils/translations';
@@ -14,6 +14,15 @@ export default function ForgotPasswordPage() {
 
     const { lang } = useLanguage();
     const t = translations[lang].auth.forgot;
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('error') === 'otp_expired') {
+                setError(lang === 'en' ? 'The password reset link is invalid or has expired. Please request a new one.' : 'رابط إعادة التعيين غير صالح أو انتهت صلاحيته. يرجى طلب رابط جديد.');
+            }
+        }
+    }, [lang]);
 
     const handleReset = async (e) => {
         e.preventDefault();
