@@ -8,7 +8,7 @@ export async function POST(request) {
         const origin = process.env.NEXT_PUBLIC_BASE_URL || request.headers.get('origin') || 'https://aldalalbakhour.com';
 
         // 2. Create Order in Supabase
-        const { form, cart, finalTotal, shippingCost, appliedCoupon } = body;
+        const { form, cart, finalTotal, shippingCost, appliedCoupon, userId } = body;
 
         if (!cart || cart.length === 0) {
             return NextResponse.json({ error: 'Cart is empty' }, { status: 400 });
@@ -42,7 +42,7 @@ export async function POST(request) {
 
         const insertPayload = {
             id: orderId,
-            user_id: null, // Depending on if we extract session on server side, let's keep it null for guest or pass it from client
+            user_id: userId || null,
             customer_name: form.name,
             customer_email: form.email,
             customer_phone: form.phone,
@@ -85,7 +85,12 @@ export async function POST(request) {
             currency_code: 'AED',
             success_url: `${origin}/checkout/success?orderId=${order.id}&session_id={PAYMENT_INTENT_ID}`,
             cancel_url: `${origin}/checkout`,
-            test: false // We assume this is a live key
+            test: false,
+            metadata: {
+                order_id: order.id,
+                customer_name: form.name,
+                customer_email: form.email
+            }
         };
 
         const ziinaResponse = await fetch('https://api-v2.ziina.com/api/payment_intent', {

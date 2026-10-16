@@ -101,22 +101,44 @@ export default function CheckoutPage() {
         const fetchCountries = async () => {
             const res = await fetch('/api/admin/countries');
             const data = await res.json();
-            if (Array.isArray(data)) setCountries(data.filter(c => c.is_active));
+            if (Array.isArray(data)) {
+                const active = data.filter(c => c.is_active);
+                setCountries(active);
+                setForm(prev => {
+                    if (!prev.country && active.length > 0) {
+                        const uae = active.find(c => c.code === 'AE' || c.name === 'United Arab Emirates') || active[0];
+                        return { ...prev, country: uae.name };
+                    }
+                    return prev;
+                });
+            }
         };
         fetchRates();
         fetchCountries();
     }, []);
 
-    // Calculate Shipping from DB country record
+    // Calculate Shipping from DB country record or site_config flat rate for UAE
     useEffect(() => {
-        if (!form.country || countries.length === 0) return;
-        const selected = countries.find(c => c.name === form.country);
-        if (selected) {
+        if (!form.country) {
+            setCalculatedShipping(0);
+            return;
+        }
+
+        const isUAE = form.country === 'United Arab Emirates' || form.country === 'UAE' || form.country === 'الإمارات العربية المتحدة';
+        const selected = countries.find(c => c.name === form.country || (isUAE && c.code === 'AE'));
+
+        if (isUAE) {
+            // Prioritize the configured shipping rate from site_config, fall back to country table price or default 25
+            const uaeRate = (shippingRates.uae !== undefined && shippingRates.uae !== null)
+                ? Number(shippingRates.uae)
+                : (selected ? Number(selected.shipping_price) : 25);
+            setCalculatedShipping(uaeRate);
+        } else if (selected) {
             setCalculatedShipping(Number(selected.shipping_price));
         } else {
             setCalculatedShipping(0);
         }
-    }, [form.country, countries]);
+    }, [form.country, countries, shippingRates]);
 
     // Add shipping to the original cart final total
     const grandTotal = cartFinalTotal + calculatedShipping;
@@ -151,7 +173,8 @@ export default function CheckoutPage() {
                     cart,
                     finalTotal: grandTotal,
                     shippingCost: calculatedShipping,
-                    appliedCoupon // Pass the coupon to the backend for validation
+                    appliedCoupon, // Pass the coupon to the backend for validation
+                    userId: user?.id || null
                 })
             });
 
@@ -244,6 +267,9 @@ export default function CheckoutPage() {
                                                     <option value="Sharjah">Sharjah</option>
                                                     <option value="Ajman">Ajman</option>
                                                     <option value="RAK">Ras Al Khaimah</option>
+                                                    <option value="Fujairah">Fujairah</option>
+                                                    <option value="UAQ">Umm Al Quwain</option>
+                                                    <option value="Al Ain">Al Ain</option>
                                                 </select>
                                             ) : (
                                                 <input

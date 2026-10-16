@@ -135,6 +135,24 @@ export default function AdminSettingsPage() {
                 return updated;
             });
         }
+
+        // Also check countries table for UAE price if shipping_uae_flat wasn't set
+        try {
+            const res = await fetch('/api/admin/countries');
+            if (res.ok) {
+                const cList = await res.json();
+                const uae = Array.isArray(cList) && cList.find(c => c.code === 'AE' || c.name === 'United Arab Emirates');
+                if (uae && uae.shipping_price !== undefined) {
+                    setSettings(prev => ({
+                        ...prev,
+                        shipping_uae_flat: prev.shipping_uae_flat || String(uae.shipping_price)
+                    }));
+                }
+            }
+        } catch (err) {
+            console.error('Error fetching country rates:', err);
+        }
+
         setLoading(false);
     }, []);
 
@@ -296,14 +314,54 @@ export default function AdminSettingsPage() {
                         className={styles.saveBtn}
                         onClick={async () => {
                             setSaving(true);
-                            await supabase.from('site_config').upsert([
-                                { key: 'shipping_uae_flat', value: settings.shipping_uae_flat },
-                                { key: 'shipping_intl_kg', value: settings.shipping_intl_kg },
-                                { key: 'shipping_note', value: settings.shipping_note }
-                            ]);
-                            alert('Shipping rates updated!');
-                            setSaving(false);
-                            fetchSettings();
+                            try {
+                                // 1. Save to site_config
+                                await supabase.from('site_config').upsert([
+                                    { key: 'shipping_uae_flat', value: settings.shipping_uae_flat },
+                                    { key: 'shipping_intl_kg', value: settings.shipping_intl_kg },
+                                    { key: 'shipping_note', value: settings.shipping_note }
+                                ]);
+
+                                // 2. Sync with countries table for UAE
+                                const uaeRate = Number(settings.shipping_uae_flat) || 0;
+                                const countriesRes = await fetch('/api/admin/countries');
+                                if (countriesRes.ok) {
+                                    const countriesList = await countriesRes.json();
+                                    const uae = Array.isArray(countriesList) && countriesList.find(c => c.code === 'AE' || c.name === 'United Arab Emirates');
+                                    if (uae) {
+                                        await fetch('/api/admin/countries', {
+                                            method: 'PUT',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({
+                                                id: uae.id,
+                                                name: uae.name,
+                                                code: uae.code,
+                                                shipping_price: uaeRate,
+                                                is_active: uae.is_active
+                                            })
+                                        });
+                                    } else {
+                                        // Create UAE country entry if it doesn't exist yet
+                                        await fetch('/api/admin/countries', {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({
+                                                name: 'United Arab Emirates',
+                                                code: 'AE',
+                                                shipping_price: uaeRate,
+                                                is_active: true
+                                            })
+                                        });
+                                    }
+                                }
+
+                                alert('Shipping rates updated and synced across all pages!');
+                            } catch (err) {
+                                alert('Error saving rates: ' + err.message);
+                            } finally {
+                                setSaving(false);
+                                fetchSettings();
+                            }
                         }}
                         disabled={saving}
                         style={{ marginTop: '1.5rem' }}

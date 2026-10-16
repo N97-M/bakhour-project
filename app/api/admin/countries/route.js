@@ -1,10 +1,7 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { supabase as supabaseAdmin } from '@/utils/supabase';
 
-const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+export const dynamic = 'force-dynamic';
 
 // GET — fetch all countries (used publicly by checkout)
 export async function GET() {
@@ -51,6 +48,18 @@ export async function PUT(req) {
         .single();
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    // Keep site_config in sync if UAE is updated
+    if (code?.toUpperCase() === 'AE' || name === 'United Arab Emirates') {
+        try {
+            await supabaseAdmin
+                .from('site_config')
+                .upsert({ key: 'shipping_uae_flat', value: String(shipping_price) });
+        } catch (scErr) {
+            console.error('Error syncing site_config:', scErr);
+        }
+    }
+
     return NextResponse.json(data);
 }
 

@@ -22,35 +22,84 @@ export default function AdminCustomersPage() {
 
     const fetchCustomers = async () => {
         setLoading(true);
-        // We derive customers from the orders table
-        const { data, error } = await supabase
-            .from('orders')
-            .select('customer_name, customer_email, customer_phone, total_amount, created_at')
-            .neq('status', 'pending');
+        const customerMap = {};
 
-        if (data) {
-            // Group by email/phone to find unique customers
-            const customerMap = {};
-            data.forEach(order => {
-                const key = order.customer_email || order.customer_phone;
-                if (!customerMap[key]) {
-                    customerMap[key] = {
-                        name: order.customer_name,
-                        email: order.customer_email,
-                        phone: order.customer_phone,
+        // 1. Fetch from profiles table (registered users)
+        try {
+            const { data: profiles } = await supabase
+                .from('profiles')
+                .select('*');
+
+            if (profiles) {
+                profiles.forEach(p => {
+                    const key = (p.phone || p.id || '').trim();
+                    if (key) {
+                        customerMap[key] = {
+                            name: p.full_name || 'Registered Member',
+                            email: '—',
+                            phone: p.phone || '—',
+                            totalOrders: 0,
+                            totalSpent: 0,
+                            lastOrder: p.created_at || new Date().toISOString()
+                        };
+                    }
+                });
+            }
+        } catch (pErr) {
+            console.error('Error fetching profiles:', pErr);
+        }
+
+        // 2. Fetch from orders table (all orders including pending)
+        const { data: orders } = await supabase
+            .from('orders')
+            .select('customer_name, customer_email, customer_phone, total_amount, created_at, status');
+
+        if (orders) {
+            orders.forEach(order => {
+                const emailKey = order.customer_email?.trim()?.toLowerCase();
+                const phoneKey = order.customer_phone?.trim();
+                const key = emailKey || phoneKey;
+                if (!key) return;
+
+                // Match existing customer by email or phone
+                const existingKey = Object.keys(customerMap).find(k => 
+                    (emailKey && customerMap[k].email?.toLowerCase() === emailKey) ||
+                    (phoneKey && customerMap[k].phone === phoneKey)
+                );
+
+                const targetKey = existingKey || key;
+
+                if (!customerMap[targetKey]) {
+                    customerMap[targetKey] = {
+                        name: order.customer_name || 'Customer',
+                        email: order.customer_email || '—',
+                        phone: order.customer_phone || '—',
                         totalOrders: 0,
                         totalSpent: 0,
                         lastOrder: order.created_at
                     };
                 }
-                customerMap[key].totalOrders += 1;
-                customerMap[key].totalSpent += parseFloat(order.total_amount);
-                if (new Date(order.created_at) > new Date(customerMap[key].lastOrder)) {
-                    customerMap[key].lastOrder = order.created_at;
+
+                customerMap[targetKey].totalOrders += 1;
+                if (order.status !== 'cancelled') {
+                    customerMap[targetKey].totalSpent += parseFloat(order.total_amount || 0);
+                }
+                if (order.customer_name && (customerMap[targetKey].name === 'Customer' || customerMap[targetKey].name === 'Registered Member')) {
+                    customerMap[targetKey].name = order.customer_name;
+                }
+                if (order.customer_phone && customerMap[targetKey].phone === '—') {
+                    customerMap[targetKey].phone = order.customer_phone;
+                }
+                if (order.customer_email && customerMap[targetKey].email === '—') {
+                    customerMap[targetKey].email = order.customer_email;
+                }
+                if (new Date(order.created_at) > new Date(customerMap[targetKey].lastOrder)) {
+                    customerMap[targetKey].lastOrder = order.created_at;
                 }
             });
-            setCustomers(Object.values(customerMap));
         }
+
+        setCustomers(Object.values(customerMap));
         setLoading(false);
     };
 

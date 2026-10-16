@@ -15,15 +15,35 @@ function SuccessContent() {
     const { lang } = useLanguage();
     const { clearCart } = useCart();
     const orderId = searchParams.get('orderId');
+    const sessionId = searchParams.get('session_id');
     const t = translations[lang].checkout;
+    const [verifying, setVerifying] = useState(true);
 
     useEffect(() => {
         if (!orderId) {
             router.push('/');
-        } else {
-            clearCart();
+            return;
         }
-    }, [orderId, router, clearCart]);
+
+        clearCart();
+
+        // Automatically confirm and update the order in Supabase
+        const confirmOrder = async () => {
+            try {
+                await fetch('/api/checkout/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ orderId, sessionId })
+                });
+            } catch (err) {
+                console.error('Error confirming order:', err);
+            } finally {
+                setVerifying(false);
+            }
+        };
+
+        confirmOrder();
+    }, [orderId, sessionId, router, clearCart]);
 
     return (
         <div className={styles.successCard}>

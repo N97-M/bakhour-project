@@ -42,11 +42,10 @@ export default function AdminOrdersPage() {
             .order('created_at', { ascending: false });
 
         if (filter === 'active') {
-            query.neq('status', 'pending').neq('status', 'cancelled');
+            query.neq('status', 'cancelled').neq('status', 'delivered').neq('status', 'pending');
         } else if (filter === 'all') {
-            // Still hide pending from 'all' to avoid clutter
-            query.neq('status', 'pending');
-        } else if (filter === 'abandoned') {
+            // Show all orders including pending and completed
+        } else if (filter === 'abandoned' || filter === 'pending') {
             query.eq('status', 'pending');
         } else {
             query.eq('status', filter);
@@ -63,9 +62,13 @@ export default function AdminOrdersPage() {
 
     const updateStatus = async (orderId, newStatus) => {
         setUpdatingId(orderId);
+        const updatePayload = { status: newStatus };
+        if (newStatus === 'processing') {
+            updatePayload.ziina_status = 'completed';
+        }
         const { error } = await supabase
             .from('orders')
-            .update({ status: newStatus })
+            .update(updatePayload)
             .eq('id', orderId);
 
         if (error) {
@@ -99,13 +102,13 @@ export default function AdminOrdersPage() {
                     <div className={styles.filterGroup}>
                         <Filter size={18} color="#C6A75E" />
                         <select value={filter} onChange={e => setFilter(e.target.value)} className={styles.statusSelect}>
-                            <option value="active">Active Orders</option>
-                            <option value="all">All (Excl. Abandoned)</option>
-                            <option value="processing">Processing</option>
-                            <option value="shipped">Shipped</option>
-                            <option value="delivered">Delivered</option>
-                            <option value="cancelled">Cancelled</option>
-                            <option value="abandoned">Abandoned Checkouts</option>
+                            <option value="all">All Orders (جميع الطلبات)</option>
+                            <option value="active">Active Orders (قيد التنفيذ)</option>
+                            <option value="pending">Pending Payment (في انتظار التأكيد / الدفع)</option>
+                            <option value="processing">Processing (قيد التجهيز)</option>
+                            <option value="shipped">Shipped (تم الشحن)</option>
+                            <option value="delivered">Delivered (تم التوصيل)</option>
+                            <option value="cancelled">Cancelled (ملغية)</option>
                         </select>
                     </div>
                 </div>
@@ -194,6 +197,16 @@ export default function AdminOrdersPage() {
                                             <div className={styles.actionsColumn}>
                                                 <h4>Update Order Status</h4>
                                                 <div className={styles.statusActions}>
+                                                    {order.status === 'pending' && (
+                                                        <button
+                                                            onClick={(e) => { e.stopPropagation(); updateStatus(order.id, 'processing'); }}
+                                                            disabled={updatingId === order.id}
+                                                            className={styles.statusBtn}
+                                                            style={{ background: '#2ecc71', color: '#000', fontWeight: 'bold', marginBottom: '0.5rem' }}
+                                                        >
+                                                            ✓ Confirm Payment & Process
+                                                        </button>
+                                                    )}
                                                     <button
                                                         onClick={(e) => { e.stopPropagation(); updateStatus(order.id, 'processing'); }}
                                                         disabled={updatingId === order.id || order.status === 'processing'}
